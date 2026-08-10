@@ -1,0 +1,39 @@
+# Response headers — Handbook §26.
+#
+# These are the controls a static site has NOWHERE ELSE to put. On a host that cannot serve custom
+# headers this file does nothing, and the section is explicit about the consequence: no enforceable
+# content policy, and NO PROTECTION AGAINST FRAMING AT ALL, because frame-ancestors cannot be
+# expressed from inside the document. That is a reason to choose a different host, not a reason to
+# proceed quietly.
+#
+# Syntax is the edge host's. Check yours before assuming this file is read.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), interest-cohort=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  # frame-ancestors is the one that cannot be done in markup. This is why the header layer matters.
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com
+  # NOTE: 'unsafe-inline' in script-src is what a tag container requires without a nonce, and a
+  # static site cannot mint a nonce per request. This is a REAL WEAKENING and it is recorded rather
+  # than hidden — see docs/technical-debt.md in the site repository.
+
+# Markup revalidates. A wrong price, telephone number or licence number stays live for exactly the
+# cache lifetime, and some hosts have no purge at all.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Corrected last, so never cached long.
+/robots.txt
+  Cache-Control: public, max-age=300
+/sitemap.xml
+  Cache-Control: public, max-age=300
+/llms.txt
+  Cache-Control: public, max-age=300
+
+# Versioned in the URL from config.assetVersion, so these are safe to freeze.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

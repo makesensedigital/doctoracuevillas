@@ -1,0 +1,19 @@
+# Redirects — Handbook §26.
+#
+# EVERY URL the predecessor site had that this one does not. The canonical-identity rule is not
+# satisfied by choosing a domain: the old URLs are indexed, linked and bookmarked, and they are the
+# traffic you already paid for.
+#
+# A host that cannot issue a real redirect status cannot do this at all. A markup page that
+# refreshes the browser is not a redirect — it does not carry the same authority signal and does not
+# work for anything that is not markup. That is why hosting is chosen BEFORE the first line of
+# markup (§26).
+#
+# Syntax is the edge host's. 301 is permanent; use 302 only while genuinely temporary.
+#
+#   /old-path            /new-path              301
+#   /old-section/*       /new-section/:splat    301
+#   /retired-offer       /                      301
+
+# Apex and www resolve to one canonical host. Which of the two is canonical is a decision, not a
+# default — record it in brief.md.

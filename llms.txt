@@ -1,0 +1,19 @@
+# Example Company
+
+> One sentence a stranger understands, in the visitor's language.
+
+Two or three sentences. What the business does, for whom, and what makes it the right choice. This text is what a generative assistant is most likely to quote, so write it to be quoted.
+
+## What we offer
+
+- **The first thing you sell** — One sentence. What the buyer gets, not how it is built.
+- **The second thing you sell** — One sentence.
+
+## Locations
+
+- Head office: Example Street 123, Buenos Aires, CABA — +540000000000 (Mon to Fri, 9 to 18)
+
+## Contact
+
+- Web: https://example.com/
+- Email: hello@example.com

@@ -1,0 +1,48 @@
+# Example Company
+# https://example.com
+
+User-agent: *
+Allow: /
+
+# Assistant and model crawlers.
+# DECISION: allowed. REASON: We want assistants to be able to answer questions about this business accurately, from a source we control.
+# The reason is written here on purpose. A policy file copied from somewhere else is not a
+# decision, and the next person to read this cannot tell the difference without it.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml

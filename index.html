@@ -1,0 +1,275 @@
+<!doctype html>
+<!-- The page — Handbook §26.
+
+     Everything a visitor needs to find this site or convert on it is IN THIS FILE, served. Nothing
+     load-bearing is generated in the browser: for search that would cost deferred and uncertain
+     rendering, and for generative retrieval it costs everything, because those crawlers largely do
+     not execute script. `scripts/check-indexability.mjs` fails the gate when conversion text is
+     missing with scripting off.
+
+     The JSON-LD block below is GENERATED from facts.js by `scripts/build-derived.mjs`. Do not hand-
+     edit it — edit facts.js and re-run the build, or the gate fails on the drift.
+
+     `lang` and every absolute URL come from facts.js and config.js. Keep them in step. -->
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Example Company — one sentence a stranger understands</title>
+    <meta
+      name="description"
+      content="Two sentences describing what the business does and for whom. This is the text most likely to be quoted by a search result or an assistant, so write it to be quoted."
+    />
+
+    <!-- Absolute, always. A relative social image resolves to nothing in a scraper, and a relative
+         canonical is not a canonical. The gate checks both. -->
+    <link rel="canonical" href="https://example.com/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Example Company" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content="Example Company — one sentence a stranger understands" />
+    <meta property="og:description" content="Two sentences describing what the business does and for whom." />
+    <meta property="og:url" content="https://example.com/" />
+    <meta property="og:image" content="https://example.com/assets/social.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Example Company" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Example Company" />
+    <meta name="twitter:description" content="Two sentences describing what the business does and for whom." />
+    <meta name="twitter:image" content="https://example.com/assets/social.png" />
+
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <meta name="theme-color" content="#1f5f4b" />
+
+    <!-- Typefaces are self-hosted. A remotely hosted typeface contacts a third party on first
+         render, before any consent choice, and with no server there is no way to proxy it (§26).
+         Self-hosting removes the question and is faster. Declare each face here with `font-display:
+         swap` when you add one. -->
+
+    <!-- Versioned from config.assetVersion. No build means no content-addressed filenames, so this
+         is the only cache invalidation there is; the gate checks the two agree. -->
+    <link rel="stylesheet" href="/styles.css?v=1" />
+
+    <!-- Order is the mechanism: config first, so the consent default executes before the tag
+         container loads. Reversed, a banner is decoration — the tags have already fired. -->
+    <script src="/config.js?v=1"></script>
+    <script src="/analytics.js?v=1"></script>
+
+    <!-- BEGIN GENERATED: json-ld -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": "https://example.com/#organization",
+        "name": "Example Company",
+        "url": "https://example.com/",
+        "description": "Two or three sentences. What the business does, for whom, and what makes it the right choice. This text is what a generative assistant is most likely to quote, so write it to be quoted.",
+        "legalName": "Example Company S.A.",
+        "foundingDate": "2020",
+        "areaServed": {
+          "@type": "Country",
+          "name": "Argentina"
+        },
+        "telephone": "+540000000000",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Example Street 123",
+          "addressLocality": "Buenos Aires",
+          "addressRegion": "CABA",
+          "addressCountry": "AR"
+        },
+        "makesOffer": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "The first thing you sell",
+              "description": "One sentence. What the buyer gets, not how it is built."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "The second thing you sell",
+              "description": "One sentence."
+            }
+          }
+        ]
+      }
+    </script>
+    <!-- END GENERATED: json-ld -->
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="nav">
+      <div class="wrap nav__inner">
+        <a href="#main" aria-label="Example Company">Example Company</a>
+
+        <button
+          id="nav-toggle"
+          class="nav__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+        >
+          Menu
+        </button>
+
+        <nav aria-label="Main">
+          <ul id="nav-menu" class="nav__menu">
+            <li><a href="#offerings">What we do</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Exactly one h1, and the heading order below it never skips a level. It is the outline a
+           screen reader announces and the one an extractor reads. -->
+      <section class="hero">
+        <div class="wrap">
+          <h1>One sentence a stranger understands, in the visitor's language</h1>
+          <p>
+            Two or three sentences. What the business does, for whom, and why it is the right
+            choice. Concrete, and free of internal vocabulary.
+          </p>
+          <div class="actions">
+            <!-- The destination is BUILT from config.js by site.js: the markup carries a key, never
+                 a URL with an identifier in it. `data-analytics-intent` is added by site.js because
+                 a messaging handoff is a departure this site cannot observe (§26). -->
+            <a
+              class="btn"
+              data-messaging="hero_primary"
+              data-analytics-event="messaging"
+              data-analytics-label="hero_primary"
+              >Talk to us</a
+            >
+            <a class="btn btn--ghost" href="#offerings" data-analytics-event="cta_click" data-analytics-label="hero_secondary"
+              >See what we do</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section id="offerings">
+        <div class="wrap">
+          <h2>What we do</h2>
+          <p>
+            One paragraph framing the offerings below. If one of these has to be findable on its own
+            terms, it needs its own URL — an architecture decision taken with the hosting decision,
+            because it implies redirects.
+          </p>
+
+          <!-- BEGIN GENERATED: offerings -->
+          <div class="grid">
+            <article class="card" id="offering-one">
+              <h3>The first thing you sell</h3>
+              <p>One sentence. What the buyer gets, not how it is built.</p>
+              <p>A paragraph a prospect can act on. Concrete, in the visitor's language, and free of internal vocabulary.</p>
+            </article>
+            <article class="card" id="offering-two">
+              <h3>The second thing you sell</h3>
+              <p>One sentence.</p>
+              <p>A paragraph.</p>
+            </article>
+          </div>
+          <!-- END GENERATED: offerings -->
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="wrap">
+          <h2>About</h2>
+          <p>
+            Who the business is, in the terms a prospect cares about. Where the sector requires a
+            registration or licence number to be visible, it belongs here and in facts.js — a
+            regulatory obligation is an acceptance criterion, not a pre-launch review item.
+          </p>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="wrap">
+          <h2>Contact</h2>
+          <p>
+            Every field below has to justify its cost in conversions: it exists only because the
+            value cannot be inferred from context and has a planned use.
+          </p>
+
+          <!-- The form posts to the receiver in config.js, which PERSISTS the record. With no
+               receiver configured, site.js says so plainly and does not claim anything was sent —
+               a control that persists nothing is not a form (§26). -->
+          <form id="contact-form" class="form" novalidate>
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+              <span class="hint">So we can reply. We do not add you to any list.</span>
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5"></textarea>
+            </div>
+
+            <button class="btn" type="submit">Send</button>
+            <p id="form-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <p>
+            Or email us at <a data-mailbox href="#"></a>. We describe what we collect and for how
+            long in our <a href="/privacy.html">privacy statement</a>.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        <p>© Example Company. <a href="/privacy.html">Privacy</a></p>
+      </div>
+    </footer>
+
+    <!-- The conversion control on a phone. Its safe-area padding is in styles.css — without it this
+         button sits under the device's gesture bar (§26). -->
+    <div class="sticky-cta" role="region" aria-label="Quick contact">
+      <span>Ready to talk?</span>
+      <a
+        class="btn"
+        data-messaging="footer_contact"
+        data-analytics-event="messaging"
+        data-analytics-label="sticky_cta"
+        >Message us</a
+      >
+    </div>
+
+    <!-- Rendered only when config.consent.mode is "explicit". Both choices are the same size and
+         the same prominence, and nothing is pre-selected (§26). -->
+    <div id="consent-banner" class="consent" role="region" aria-label="Cookie consent" hidden>
+      <p>
+        We use measurement cookies to understand how this page is used. You can decline and the site
+        works exactly the same. See our <a href="/privacy.html">privacy statement</a>.
+      </p>
+      <div class="actions">
+        <button class="btn btn--ghost" type="button" data-consent-decline>Decline</button>
+        <button class="btn" type="button" data-consent-accept>Accept</button>
+      </div>
+    </div>
+
+    <script src="/facts.js?v=1"></script>
+    <script src="/site.js?v=1"></script>
+  </body>
+</html>

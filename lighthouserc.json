@@ -1,0 +1,60 @@
+{
+  "//": "Handbook §26 — the numeric floors. They live here so a loosened threshold shows up in a diff and has to be argued for, rather than being a flag somebody passed once. NOTE: every key inside `assertions` is read as an AUDIT ID, so a comment key there is asserted as an audit that does not exist and fails the run. Explanations belong here, outside it. That defect shipped once and was found by running the gate on a real runner.",
+
+  "//accessibility": "The accessibility category IS axe-core, which is why there is no separate axe step: pinning a CLI without pinning the browser it drives breaks the moment the runner's Chrome moves, and a gate that goes red for reasons unrelated to the site is a gate people switch off. The aggregate floor is backed by explicit assertions on the load-bearing audits below, so a high score cannot hide a specific failure. What this does NOT cover is the half no tool covers — the keyboard walkthrough stays in the pull-request checklist.",
+
+  "ci": {
+    "collect": {
+      "staticDistDir": ".",
+      "url": ["http://localhost/index.html", "http://localhost/privacy.html"],
+      "numberOfRuns": 3,
+      "settings": {
+        "formFactor": "mobile",
+        "screenEmulation": {
+          "mobile": true,
+          "width": 390,
+          "height": 844,
+          "deviceScaleFactor": 3,
+          "disabled": false
+        },
+        "throttlingMethod": "simulate"
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", { "minScore": 0.9 }],
+        "categories:accessibility": ["error", { "minScore": 0.95 }],
+        "categories:best-practices": ["error", { "minScore": 0.9 }],
+        "categories:seo": ["error", { "minScore": 0.95 }],
+
+        "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }],
+        "largest-contentful-paint": ["error", { "maxNumericValue": 2500 }],
+        "total-byte-weight": ["error", { "maxNumericValue": 2097152 }],
+
+        "modern-image-formats": "error",
+        "uses-responsive-images": "warn",
+        "unsized-images": "error",
+
+        "color-contrast": "error",
+        "image-alt": "error",
+        "label": "error",
+        "link-name": "error",
+        "button-name": "error",
+        "html-has-lang": "error",
+        "meta-viewport": "error",
+        "heading-order": "error",
+        "landmark-one-main": "error",
+        "bypass": "error",
+        "aria-allowed-attr": "error",
+        "aria-required-attr": "error",
+        "aria-valid-attr-value": "error",
+
+        "meta-description": "error",
+        "document-title": "error",
+        "is-crawlable": "error",
+        "canonical": "error"
+      }
+    },
+    "upload": { "target": "temporary-public-storage" }
+  }
+}

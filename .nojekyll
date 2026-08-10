@@ -1,0 +1,9 @@
+Handbook §26. Without this file the host applies its own processing to what is
+published, and that processing SILENTLY DROPS files and directories whose names begin with an
+underscore or a dot — including _headers and _redirects, which are exactly the files that carry the
+controls this class of site has nowhere else to put.
+
+Nothing notices. The site renders, the missing headers produce no error, and the absent control
+looks exactly like a site that never needed one.
+
+Keep this file. If the host does not need it, it costs one inode.
