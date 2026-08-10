@@ -2,7 +2,7 @@
 //
 // Declared ONCE, here. The markup, the structured data (JSON-LD) and the machine-readable summary
 // (`llms.txt`) are all DERIVED from this object by `scripts/build-derived.mjs`, and
-// `scripts/check-facts.mjs` fails the gate when they have drifted.
+// `node scripts/build-derived.mjs --check` fails the gate when they have drifted.
 //
 // WHY THIS IS A RULE AND NOT A PREFERENCE
 //
@@ -12,66 +12,116 @@
 // assistant answering a question about the business confidently states whichever it read.
 //
 // That answer cannot be corrected afterwards, because nobody knows who received it.
+//
+// EVERY CLINICAL CLAIM BELOW COMES FROM THE PRACTICE'S OWN MATERIAL. Nothing here promises an
+// outcome, which is both an advertising rule for medical practice in Argentina and the register the
+// brief asks for: process and accompaniment, never a result.
 
 (function (root) {
   const FACTS = {
-    // -------------------------------------------------------------------- the organization
-    name: "Example Company",
-    legalName: "Example Company S.A.",
-    tagline: "One sentence a stranger understands, in the visitor's language.",
+    // -------------------------------------------------------------------- the practitioner
+    name: "Dra. María Guadalupe Cuevillas",
+    legalName: "María Guadalupe Cuevillas",
+    tagline: "Salud hormonal femenina en todas las etapas de la vida.",
     description:
-      "Two or three sentences. What the business does, for whom, and what makes it the right choice. This text is what a generative assistant is most likely to quote, so write it to be quoted.",
-    foundingYear: "2020",
+      "La Dra. María Guadalupe Cuevillas es médica endocrinóloga, médica de staff del Servicio de " +
+      "Endocrinología del Hospital Universitario Austral y Medical Consultant en NaProTecnología " +
+      "formada en el Pope Paul VI Institute (Omaha, Estados Unidos). Atiende fertilidad y salud del " +
+      "ciclo, climaterio y endocrinología general, con un enfoque que estudia y corrige la causa " +
+      "hormonal y metabólica en lugar de saltearla. Consulta por videollamada para todo el país y el " +
+      "exterior, y presencial en Pilar y en Tigre.",
+    // A practitioner has no founding date, and inventing one to fill a field is how a fact nobody
+    // checked ends up in the structured data.
+    foundingYear: null,
 
-    // A registration, licence or professional number where the sector requires one to be visible.
-    // Regulatory obligations of the sector are acceptance criteria, not a pre-launch review item.
-    registration: null, // e.g. { label: "Licence no.", value: "1234", authority: "Regulator", url: "https://…" }
+    // Obligatory on every page of a medical site in Argentina, so it is a fact here and a line in
+    // the footer — an acceptance criterion, not a pre-launch review item.
+    registration: {
+      label: "M.N.",
+      value: "149275",
+      authority: "Ministerio de Salud de la Nación, Argentina",
+    },
 
     // -------------------------------------------------------------------- reach
     // schema.org type. Pick the most specific one that is true.
-    schemaType: "LocalBusiness",
+    schemaType: "Physician",
+    // schema.org's MedicalSpecialty enumeration, not free text — an invented value is silently
+    // ignored by every consumer, which looks exactly like a value that worked.
+    medicalSpecialty: ["Endocrine"],
     areaServed: { type: "Country", name: "Argentina" },
     // BCP 47. Drives <html lang>, og:locale and the copy language (§13).
     locale: "es-AR",
 
     // -------------------------------------------------------------------- locations
-    // One entry per place. Empty is a valid answer for a business with no public address.
+    // One entry per place. No telephone is declared on either: the practice publishes exactly one
+    // number, it is a messaging line, and it lives in config.js like every other external
+    // identifier. The structured data derives it from there.
     locations: [
       {
-        label: "Head office",
-        street: "Example Street 123",
-        city: "Buenos Aires",
-        region: "CABA",
+        label: "Hospital Universitario Austral",
+        street: "Av. Juan Domingo Perón 1500",
+        city: "Pilar",
+        region: "Provincia de Buenos Aires",
         country: "AR",
-        telephone: "+540000000000",
-        hours: "Mon to Fri, 9 to 18",
+        telephone: null,
+        hours: "Turnos por los canales del hospital",
+      },
+      {
+        label: "Centro Médico Villanueva",
+        street: "Complejo Vila Terra",
+        city: "Tigre",
+        region: "Provincia de Buenos Aires",
+        country: "AR",
+        telephone: null,
+        hours: "Según agenda",
       },
     ],
 
-    // -------------------------------------------------------------------- what is sold
-    // Each entry becomes a section in the markup, an offer in the structured data, and a line in
-    // llms.txt. If one of these has to be findable on its own terms it needs its OWN URL — that is
+    // -------------------------------------------------------------------- the three doors
+    // Each entry becomes a card on the home page, an offer in the structured data, and a line in
+    // llms.txt. Each also has its OWN URL, because each one has to be findable on its own terms —
     // an architecture decision taken with the hosting decision, because it implies redirects (§26).
+    //
+    // NAMED BY THE PATIENT'S NEED, NEVER BY THE METHOD. Nobody searches for a technique; they search
+    // for the problem they have.
     offerings: [
       {
-        id: "offering-one",
-        name: "The first thing you sell",
-        summary: "One sentence. What the buyer gets, not how it is built.",
+        id: "fertilidad",
+        url: "/fertilidad",
+        navLabel: "Fertilidad",
+        name: "Fertilidad y salud del ciclo",
+        summary: "Buscás un embarazo y querés entender y tratar la causa.",
         detail:
-          "A paragraph a prospect can act on. Concrete, in the visitor's language, and free of internal vocabulary.",
+          "SOP y resistencia a la insulina, sospecha de endometriosis, tiroides y prolactina, abortos recurrentes, factor masculino y salida de anticonceptivos.",
       },
       {
-        id: "offering-two",
-        name: "The second thing you sell",
-        summary: "One sentence.",
-        detail: "A paragraph.",
+        id: "climaterio",
+        url: "/climaterio",
+        navLabel: "Climaterio",
+        name: "Climaterio",
+        summary: "Síntomas, prevención y un plan a tu medida para esta etapa.",
+        detail:
+          "Sofocos y trastornos del sueño, salud ósea y cardiovascular, metabolismo, salud sexual, terapia hormonal o alternativas no hormonales.",
+      },
+      {
+        id: "endocrinologia",
+        url: "/endocrinologia",
+        navLabel: "Endocrinología",
+        name: "Endocrinología general",
+        summary: "Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral.",
+        detail:
+          "Hipotiroidismo y Hashimoto, descenso de peso y resistencia a la insulina, osteoporosis y salud ósea, alteraciones del ciclo.",
       },
     ],
 
     // -------------------------------------------------------------------- presence
     // Used for `sameAs` in the structured data — the strongest signal tying this site to the
-    // organization's other profiles.
-    profiles: [],
+    // practitioner's other profiles. LinkedIn is deliberately absent: the profile is out of date, and
+    // pointing search engines at a stale credential is worse than pointing them nowhere.
+    profiles: [
+      "https://www.instagram.com/dracuevillas/",
+      "https://www.hospitalaustral.edu.ar/servicios-medicos/endocrinologia/",
+    ],
 
     // -------------------------------------------------------------------- AI crawler policy
     // §26 requires the decision AND the reason beside it, because a policy file copied from
@@ -79,7 +129,9 @@
     aiCrawlers: {
       allow: true,
       reason:
-        "We want assistants to be able to answer questions about this business accurately, from a source we control.",
+        "Patients ask assistants about symptoms and specialists before they search. We would rather " +
+        "those answers came from the practitioner's own published, accurate description than from a " +
+        "directory listing nobody maintains.",
     },
   };
 

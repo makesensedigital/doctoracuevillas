@@ -106,9 +106,13 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Serve the site
+      - name: Serve the site the way the host serves it
+        # NOT a plain file server. This site's canonical URLs are extensionless because the host
+        # resolves them that way, and a plain file server answers 404 for every one of them — the
+        # link check would go red across the whole site while the live site works, and the obvious
+        # way to make it green would be to write the wrong URLs into the markup.
         run: |
-          python3 -m http.server 8080 --directory . &
+          node scripts/serve.mjs --port 8080 &
           for i in $(seq 1 20); do
             curl -fsS http://127.0.0.1:8080/ >/dev/null && break
             sleep 0.5
@@ -163,36 +167,57 @@ jobs:
           echo "Gate passed. Publication happens only from this workflow, never from a branch (§26)."
 
   # ------------------------------------------------------------------ publication
+  # THE HOST IS CLOUDFLARE PAGES, not GitHub Pages, and that is a decision recorded in brief.md
+  # rather than a preference. GitHub Pages serves no custom response headers and issues no real
+  # redirects, which makes `_headers` and `_redirects` inert — no content policy, and no protection
+  # against framing at all on a site that gives medical information.
+  #
+  # Deployment is by DIRECT UPLOAD from this job, deliberately, rather than by connecting the host's
+  # own Git integration. The integration would deploy on push, which makes the push the deploy and
+  # leaves no point at which anything can refuse — the exact failure the gate exists to prevent.
+  #
+  # PUBLICATION IS OFF UNTIL SOMEBODY TURNS IT ON. Set the repository variable PUBLISH_ENABLED to
+  # `true` once the Cloudflare project exists, the domain resolves, and the two secrets below are
+  # present. Until then this job does not run, and nothing is published by merging.
   publish:
     name: Publish
     needs: gate
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push' &&
+      vars.PUBLISH_ENABLED == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pages: write
-      id-token: write
     environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      name: production
+      url: https://doctoracuevillas.com/
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
 
-      # The domain file must travel with the artifact. Moving the publication origin from a branch
-      # to a workflow and omitting it unbinds the custom domain SILENTLY — the site keeps working on
-      # the default host and the client's domain stops resolving (§26).
-      - name: Assert the domain file is present
+      # A deploy that runs with an empty token does not fail loudly on every host — some publish an
+      # empty or partial site. Refusing here is cheaper than discovering it live.
+      - name: Refuse to deploy without credentials
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          if [ -f CNAME ]; then
-            echo "OK — CNAME travels with the artifact: $(cat CNAME)"
-          else
-            echo "::warning::No CNAME file. If this site has a custom domain, publishing from a workflow without it unbinds the domain silently."
+          if [ -z "${CLOUDFLARE_API_TOKEN}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID}" ]; then
+            echo "::error::PUBLISH_ENABLED is true but the Cloudflare credentials are missing. Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID as repository secrets, or set PUBLISH_ENABLED back to false."
+            exit 1
           fi
+          echo "OK — credentials present."
 
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deploy
-        uses: actions/deploy-pages@v4
+      - name: Publish to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx --yes wrangler@3.99.0 pages deploy . \
+            --project-name=doctoracuevillas \
+            --branch=main \
+            --commit-dirty=true

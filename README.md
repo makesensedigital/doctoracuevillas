@@ -47,9 +47,10 @@ python3 -m http.server 8080
 | `facts.js` | **Every business fact**, declared once. The markup, the structured data and `llms.txt` derive from it. |
 | `analytics.js` | Consent default before the container; `trackEvent` for outcomes, `trackIntent` for departures. |
 | `site.js` | Builds every external destination from `config.js`, so the markup carries a key and never a URL. |
-| `index.html` | The page. Blocks marked `BEGIN GENERATED` are written by `build-derived.mjs` — never hand-edit them. |
-| `_headers` | The controls a static site has nowhere else to put. **Does nothing on a host that cannot serve headers.** |
-| `_redirects` | Every URL the predecessor had. **Impossible on a host with no real redirect** — which is why hosting is chosen first. |
+| `*.html` | The nine pages. Blocks marked `BEGIN GENERATED` — the structured data, the door cards, and the nav and footer of every page — are written by `build-derived.mjs`. Never hand-edit them. |
+| `scripts/serve.mjs` | The local server the gate runs against, mirroring the host's routing. A test fixture; nothing depends on it at runtime. |
+| `_headers` | The controls a static site has nowhere else to put. **Live on this host** — verify after the first deploy. |
+| `_redirects` | `www` to the apex. The predecessor lives on a domain we do not control, so its redirect cannot be served from here — see `brief.md`. |
 | `.gitignore` | Access control. The repository is the web root, so committing is publishing. |
 | `brief.md` | The decisions. Start here. |
 | `.github/workflows/gate.yml` | The delivery gate, and the publication origin. |
@@ -95,22 +96,20 @@ If the document carries a fact that fits no field, that is a question rather tha
 it loose in the markup — and if it conflicts with a rule, see *Input from outside this repository*
 in [`AGENTS.md`](AGENTS.md).
 
-## Choosing the host — before the markup, not after
+## The host — chosen before the markup, not after
 
-The host decides which rules you are *able* to obey. Test for the capability rather than trusting a
-product name:
+**Cloudflare Pages**, by direct upload from the delivery pipeline. The reasoning is in `brief.md`;
+the short form is that it can serve custom response headers and issue real redirects, and GitHub
+Pages can do neither — which would have made `_headers` and `_redirects` inert files, leaving a
+medical site with no content policy and **no protection against framing at all**.
 
-- Can it serve **custom response headers**? Without them there is no enforceable content policy and
-  **no protection against framing at all** — that one cannot be expressed from inside the document.
-- Can it issue a **real redirect status**? Without it §26's canonical-identity rule is
-  unimplementable, and a markup page that refreshes the browser is not a substitute.
-- Does it give **access logs**, **cache purge**, **one-click rollback**, **per-change previews**?
+Deployment is by direct upload from the `publish` job rather than through Cloudflare's own Git
+integration, deliberately. The integration deploys on push, which makes the push the deploy and
+leaves no point at which anything can refuse.
 
-The `publish` job here targets GitHub Pages because it is the common case. **GitHub Pages serves no
-custom headers and issues no real redirects**, so `_headers` and `_redirects` do nothing there. If
-this site replaces one whose URLs are indexed, or needs a content policy, that is a reason to choose
-a different host — not a reason to proceed quietly. Record what you chose and what it puts out of
-reach in `brief.md`.
+**Publication is off.** The `publish` job runs only when the repository variable `PUBLISH_ENABLED`
+is `true`, and then refuses to proceed without both Cloudflare secrets. Merging to `main` today
+publishes nothing.
 
 ## Ownership and the exit path
 
@@ -120,16 +119,18 @@ exists — which is how a client's domain becomes claimable by a stranger.
 
 | Piece | Who owns the account | How it transfers |
 |---|---|---|
-| Domain registrar | | |
-| DNS zone | | |
-| Domain verification | | |
-| Repository | | |
-| Hosting account | | |
-| Analytics property | | |
-| Tag container | | |
-| Form receiver | | |
-| Mailing platform | | |
-| Scheduling links | | |
+| Domain registrar | Juan | Registrar transfer to an account in Guadalupe's name. **Do this before anything else depends on it** — an unclaimed domain pointing at a dead resource is how a client's name becomes claimable by a stranger |
+| DNS zone | Juan (to move to Cloudflare) | Moves with the domain |
+| Domain verification | Juan | Re-verified by whoever holds the hosting account |
+| Repository | `makesensedigital` organisation | Transfer, or fork to Guadalupe's account. The site is nine static files; it does not need the org |
+| Hosting account | Juan (Cloudflare, to create) | Cloudflare Pages project transfer, or redeploy from this repository into a new account — the artifact is the repository |
+| Analytics property | Juan (not yet created) | Add Guadalupe as an administrator on the GA4 property at creation, not later |
+| Tag container | Juan — `GTM-TCHKKB37` | Add Guadalupe as a container administrator |
+| Form receiver | **None** — this site presents no form | n/a |
+| Mailing platform | Juan — EnvíaloSimple, AdministratorID 203816 | Account handover, or export the four lists |
+| Scheduling links | Guadalupe — YouCanBookMe | Already hers |
+| WhatsApp line | Guadalupe — +54 9 11 5961-2588 | Already hers |
+| Instagram | Guadalupe — @dracuevillas | Already hers |
 
 ## After launch
 
@@ -139,7 +140,23 @@ exists — which is how a client's domain becomes claimable by a stranger.
   an issue on failure.
 - The measurement **read against the question that motivated it**, in pairs and by trend.
 
-Owner: _TBD_ · Cadence: _TBD_
+Owner: **Juan** · Cadence: **monthly**, and within a week of any change to `facts.js` or `config.js`.
+
+The scheduled check is not optional here and it does not exist yet. Nothing in this architecture
+announces a failure: no logs, no alerts, no health endpoint. A scheduling link that starts returning
+404, an expired certificate, or a `_headers` file the host silently stopped reading all look exactly
+like a working site from the outside. The check to build is a scheduled workflow against the public
+URL — availability, every outbound link, the response headers, and Lighthouse — opening an issue on
+failure. It is listed as pending in `brief.md`.
+
+What to read, and against which question:
+
+| Read | Against |
+|---|---|
+| `puerta` distribution on `agenda_intent` and `messaging_intent` | Which door earns its place, and which one is a landing nobody converts on |
+| `agenda` on `agenda_intent`, first consultation versus follow-up | Whether the site brings new patients or serves existing ones |
+| `audiencia` on `newsletter_intent` | Whether the professional list is worth the line that feeds it |
+| Every intent count, in pairs and by trend, never as an absolute | Instagram's embedded browser partitions storage, so returning-visitor and attribution figures are wrong in a known direction |
 
 ## Adding a check
 

@@ -50,10 +50,17 @@ const jsonLd = () => {
   if (facts.areaServed) node.areaServed = { "@type": facts.areaServed.type, name: facts.areaServed.name };
   if (facts.profiles && facts.profiles.length) node.sameAs = facts.profiles;
 
+  if (facts.medicalSpecialty && facts.medicalSpecialty.length) {
+    node.medicalSpecialty = facts.medicalSpecialty;
+  }
+
   const locations = facts.locations || [];
   if (locations.length) {
     const first = locations[0];
-    if (first.telephone) node.telephone = first.telephone;
+    // The practice publishes exactly one number and it is the messaging line, which lives in the
+    // configuration module like every other external identifier. Deriving it from there rather than
+    // copying it into facts.js is the whole point of the rule: one number, one place.
+    node.telephone = first.telephone || `+${config.messagingNumber}`;
     node.address = locations.map((l) => ({
       "@type": "PostalAddress",
       streetAddress: l.street,
@@ -71,27 +78,113 @@ const jsonLd = () => {
     };
   }
   if (facts.offerings && facts.offerings.length) {
-    node.makesOffer = facts.offerings.map((o) => ({
-      "@type": "Offer",
-      itemOffered: { "@type": "Service", name: o.name, description: o.summary },
-    }));
+    node.makesOffer = facts.offerings.map((o) => {
+      const service = { "@type": "Service", name: o.name, description: o.summary };
+      if (o.url) service.url = `${origin}${o.url}`;
+      return { "@type": "Offer", itemOffered: service };
+    });
   }
   return JSON.stringify(node, null, 2);
 };
 
 // ------------------------------------------------------------------ offerings markup
+//
+// An offering that has its own URL gets its own link, generated here rather than written by hand
+// beside the generated block. A door whose card and whose page disagree about its name is the same
+// published contradiction one level down.
 const offeringsMarkup = () => {
   // Emitted WITHOUT leading indentation; replaceBlock indents it to its marker.
   const cards = (facts.offerings || [])
     .map(
-      (o) => `  <article class="card" id="${esc(o.id)}">
+      (o) => `  <article class="card card--door" id="${esc(o.id)}">
     <h3>${esc(o.name)}</h3>
-    <p>${esc(o.summary)}</p>
+    <p class="card__lead">${esc(o.summary)}</p>
     <p>${esc(o.detail)}</p>
+    <a class="card__go" href="${esc(o.url)}" data-analytics-event="puerta" data-analytics-label="${esc(o.id)}"
+      >Entrar a ${esc(o.name.toLowerCase())}<span aria-hidden="true"> →</span></a
+    >
   </article>`,
     )
     .join("\n");
-  return `<div class="grid">\n${cards}\n</div>`;
+  return `<div class="grid grid--doors">\n${cards}\n</div>`;
+};
+
+// ------------------------------------------------------------------ navigation and footer
+//
+// WHY THESE ARE GENERATED TOO
+//
+// The footer of every page carries the registration number, both consulting rooms and the medical
+// disclaimer. Nine hand-written copies of an address is the failure this whole file exists to
+// prevent, one level down: by the third change one has been missed, and a published contradiction
+// about where a doctor sees patients is not a stale comment.
+//
+// The navigation is site structure rather than a business fact, so its editorial entries are
+// declared here — but the three doors come from facts.js, because their names are.
+const EDITORIAL = [
+  { href: "/sobre-mi", label: "Sobre mí" },
+  { href: "/como-es-la-consulta", label: "La consulta" },
+  { href: "/contacto", label: "Contacto" },
+];
+
+const navEntries = () => [
+  ...(facts.offerings || []).map((o) => ({ href: o.url, label: o.navLabel || o.name })),
+  ...EDITORIAL,
+];
+
+const navMarkup = (path) => {
+  const items = navEntries()
+    .map(
+      (e) =>
+        `  <li><a href="${esc(e.href)}"${e.href === path ? ' aria-current="page"' : ""}>${esc(e.label)}</a></li>`,
+    )
+    .join("\n");
+  return `<ul id="nav-menu" class="nav__menu">\n${items}\n</ul>`;
+};
+
+const footerMarkup = () => {
+  const doors = (facts.offerings || [])
+    .map((o) => `      <li><a href="${esc(o.url)}">${esc(o.name)}</a></li>`)
+    .join("\n");
+  const rooms = (facts.locations || [])
+    .map((l) => `      <li>${esc(l.label)} — ${esc([l.street, l.city].filter(Boolean).join(", "))}</li>`)
+    .join("\n");
+  const reg = facts.registration
+    ? ` · ${esc(facts.registration.label)} ${esc(facts.registration.value)}`
+    : "";
+
+  return `<div class="footer__grid">
+  <div>
+    <h2>Consultas</h2>
+    <ul>
+${doors}
+      <li><a href="/como-es-la-consulta">Cómo es la consulta</a></li>
+    </ul>
+  </div>
+  <div>
+    <h2>Consultorios</h2>
+    <ul>
+${rooms}
+      <li>Videoconsulta a todo el país y el exterior</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Contacto</h2>
+    <ul>
+      <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
+      <li><a data-mailbox href="/contacto" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
+      <li><a data-profile="instagram" href="/contacto">Instagram @dracuevillas</a></li>
+      <li><a href="/contacto">Ubicaciones y mapas</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer__legal">
+  <p><strong>${esc(facts.name)}</strong> — Médica endocrinóloga${reg}</p>
+  <p>
+    El contenido de este sitio es informativo y no reemplaza la consulta médica.
+    <a href="/privacidad">Política de privacidad y aviso legal</a>.
+  </p>
+</div>`;
 };
 
 // ------------------------------------------------------------------ llms.txt
@@ -99,12 +192,14 @@ const offeringsMarkup = () => {
 // The canonical fact sheet for an assistant. FACTS, NEVER INSTRUCTIONS: this is content published
 // for agents to read, and content is data rather than instruction — which applies to the publisher
 // too. A directive here would be an attempt to steer somebody else's agent.
+// The headings are in the site's declared language, not in English: this file is published copy that
+// a reader or an assistant quotes, and §13 puts user-facing copy in the visitor's language.
 const llmsTxt = () => {
   const lines = [`# ${facts.name}`, "", `> ${facts.tagline}`, "", facts.description, ""];
 
   if (facts.registration) {
     lines.push(
-      `## Registration`,
+      `## Matrícula`,
       "",
       `${facts.registration.label} ${facts.registration.value}${facts.registration.authority ? ` — ${facts.registration.authority}` : ""}`,
       "",
@@ -112,13 +207,15 @@ const llmsTxt = () => {
   }
 
   if (facts.offerings && facts.offerings.length) {
-    lines.push("## What we offer", "");
-    for (const o of facts.offerings) lines.push(`- **${o.name}** — ${o.summary}`);
+    lines.push("## Motivos de consulta", "");
+    for (const o of facts.offerings) {
+      lines.push(`- **${o.name}** — ${o.summary}${o.url ? ` ${origin}${o.url}` : ""}`);
+    }
     lines.push("");
   }
 
   if (facts.locations && facts.locations.length) {
-    lines.push("## Locations", "");
+    lines.push("## Consultorios", "");
     for (const l of facts.locations) {
       const parts = [l.street, l.city, l.region].filter(Boolean).join(", ");
       lines.push(`- ${l.label}: ${parts}${l.telephone ? ` — ${l.telephone}` : ""}${l.hours ? ` (${l.hours})` : ""}`);
@@ -126,7 +223,7 @@ const llmsTxt = () => {
     lines.push("");
   }
 
-  lines.push("## Contact", "", `- Web: ${origin}/`, `- Email: ${config.contactMailbox}`);
+  lines.push("## Contacto", "", `- Web: ${origin}/`, `- Email: ${config.contactMailbox}`);
   if (facts.profiles && facts.profiles.length) for (const p of facts.profiles) lines.push(`- ${p}`);
   lines.push("");
   return lines.join("\n");
@@ -190,12 +287,17 @@ const sitemapXml = async (pages) => {
 // The body is re-indented to the marker's own indentation, so a generated block reads like the
 // markup around it. A generator whose output looks foreign invites someone to "tidy" it by hand,
 // which is exactly the drift being prevented.
-const replaceBlock = (text, name, body) => {
-  const re = new RegExp(
+const blockRe = (name) =>
+  new RegExp(
     `([ \\t]*)(<!-- BEGIN GENERATED: ${name} -->\\n)[\\s\\S]*?([ \\t]*<!-- END GENERATED: ${name} -->)`,
   );
+
+const hasBlock = (text, name) => blockRe(name).test(text);
+
+const replaceBlock = (text, name, body) => {
+  const re = blockRe(name);
   const m = re.exec(text);
-  if (!m) throw new Error(`index.html has no generated block named "${name}"`);
+  if (!m) throw new Error(`no generated block named "${name}"`);
   const indent = m[1];
   const indented = body
     .split("\n")
@@ -212,23 +314,40 @@ for (const e of entries) {
   if (!e.isFile() || !e.name.endsWith(".html")) continue;
   const text = await read(join(ROOT, e.name));
   if (/<meta\s+name="robots"[^>]*content="[^"]*noindex/i.test(text)) continue;
-  pages.push(e.name === "index.html" ? "/" : `/${e.name}`);
+  // Extensionless, because that is the canonical form the host serves — it resolves `/fertilidad`
+  // to `fertilidad.html` and redirects the `.html` form away. A sitemap listing a URL that redirects
+  // is a sitemap pointing at the wrong page.
+  pages.push(e.name === "index.html" ? "/" : `/${e.name.replace(/\.html$/, "")}`);
 }
 pages.sort((a, b) => (a === "/" ? -1 : b === "/" ? 1 : a.localeCompare(b)));
 
-let indexHtml = await read(join(ROOT, "index.html"));
-indexHtml = replaceBlock(
-  indexHtml,
-  "json-ld",
-  `<script type="application/ld+json">\n${jsonLd()
-    .split("\n")
-    .map((l) => "  " + l)
-    .join("\n")}\n</script>`,
-);
-indexHtml = replaceBlock(indexHtml, "offerings", offeringsMarkup());
+// Every document gets the blocks it declares, and only those. A page that carries no `nav` marker
+// simply does not have one — the generator never invents structure a page did not ask for.
+const documents = [];
+for (const e of entries) {
+  if (!e.isFile() || !e.name.endsWith(".html")) continue;
+  let text = await read(join(ROOT, e.name));
+  const path = e.name === "index.html" ? "/" : `/${e.name.replace(/\.html$/, "")}`;
+
+  if (hasBlock(text, "json-ld")) {
+    text = replaceBlock(
+      text,
+      "json-ld",
+      `<script type="application/ld+json">\n${jsonLd()
+        .split("\n")
+        .map((l) => "  " + l)
+        .join("\n")}\n</script>`,
+    );
+  }
+  if (hasBlock(text, "offerings")) text = replaceBlock(text, "offerings", offeringsMarkup());
+  if (hasBlock(text, "nav")) text = replaceBlock(text, "nav", navMarkup(path));
+  if (hasBlock(text, "footer")) text = replaceBlock(text, "footer", footerMarkup());
+
+  documents.push([e.name, text]);
+}
 
 const artifacts = [
-  ["index.html", indexHtml],
+  ...documents,
   ["llms.txt", llmsTxt()],
   ["robots.txt", robotsTxt()],
   ["sitemap.xml", await sitemapXml(pages)],

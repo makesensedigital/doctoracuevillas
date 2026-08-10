@@ -4,16 +4,31 @@
 # satisfied by choosing a domain: the old URLs are indexed, linked and bookmarked, and they are the
 # traffic you already paid for.
 #
-# A host that cannot issue a real redirect status cannot do this at all. A markup page that
-# refreshes the browser is not a redirect — it does not carry the same authority signal and does not
-# work for anything that is not markup. That is why hosting is chosen BEFORE the first line of
-# markup (§26).
+# A host that cannot issue a real redirect status cannot do this at all. A markup page that refreshes
+# the browser is not a redirect — it does not carry the same authority signal and does not work for
+# anything that is not markup. That is why hosting is chosen BEFORE the first line of markup (§26).
 #
-# Syntax is the edge host's. 301 is permanent; use 302 only while genuinely temporary.
-#
-#   /old-path            /new-path              301
-#   /old-section/*       /new-section/:splat    301
-#   /retired-offer       /                      301
+# Syntax is Cloudflare Pages'. 301 is permanent; use 302 only while genuinely temporary.
 
-# Apex and www resolve to one canonical host. Which of the two is canonical is a decision, not a
-# default — record it in brief.md.
+# ------------------------------------------------------------------ canonical host
+# The apex is canonical. `www` exists only to be redirected away from, so that one page is never
+# reachable at two addresses.
+https://www.doctoracuevillas.com/*  https://doctoracuevillas.com/:splat  301
+
+# ------------------------------------------------------------------ what CANNOT be redirected here
+#
+# The predecessor is a Google Sites page at sites.google.com/view/naprofertility. It is on a domain
+# this project does not control, so NO RULE IN THIS FILE CAN REACH IT — a redirect is served by the
+# host of the OLD address, and that host is Google's. The equity on those URLs is recovered by
+# editing the old page itself: leave one line pointing here and remove the rest of the content, so a
+# visitor who lands on it moves and a crawler sees the new address. That is a task with an owner in
+# brief.md, not a line in this file.
+#
+# The retired scheduling page naprofertilitydracuevillas.youcanbook.me is in the same position, and
+# worse: it is still indexed and still shows old prices. It is de-indexed at the provider. NEVER LINK
+# IT FROM HERE — a link would re-establish exactly the signal being removed.
+#
+# ------------------------------------------------------------------ extensionless paths
+# Not listed, deliberately: the host already resolves /fertilidad to fertilidad.html and redirects
+# the .html form to the clean one. Writing those rules by hand would duplicate behaviour that already
+# exists and would go stale the first time a page is added.

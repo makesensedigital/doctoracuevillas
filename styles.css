@@ -2,39 +2,61 @@
  *
  * The four mobile render rules of §26 are load-bearing here and each has a specific failure that is
  * invisible from a development machine. They are marked RENDER RULE where they appear.
+ *
+ * THE IDENTITY, AND WHY IT IS THIS ONE
+ *
+ * There was no prior brand, so this is designed rather than inherited. Sage green on warm paper with
+ * a clay accent: serene, luminous and clinical without being cold, and deliberately clear of the
+ * sector's clichés — no pastel pink, no stock florals. The display face is a serif and the body face
+ * a humanist sans, both from the system stack: a hosted typeface would contact a third party on
+ * first render, before any consent choice, and with no server there is nowhere to proxy it (§26).
+ *
+ * ONE SIGNATURE ELEMENT, used three or four times in the whole site and nowhere else: `.signature`,
+ * a single continuous hairline curve. It is a cycle chart — the shape of the thing this practice
+ * reads — and it is the visual form of the manifesto in the hero.
  */
 
 :root {
-  --ink: #16181c;
-  --ink-soft: #5a5f68;
-  --ground: #ffffff;
-  --surface: #f4f5f3;
-  --line: rgba(22, 24, 28, 0.14);
-  --accent: #1f5f4b;
-  --accent-ink: #ffffff;
+  --ink: #1e2a26;
+  --ink-soft: #5a6660;
+  --ground: #fbfaf7;
+  --surface: #f0eee7;
+  --line: rgba(30, 42, 38, 0.14);
+  --accent: #2f6b57;
+  --accent-ink: #fbfaf7;
+  /* Clay comes in two values on purpose. The lighter one is 3.5:1 on paper — enough for a rule or a
+   * border, NOT enough for text — so anything readable uses the darker one. One token for both would
+   * be a contrast failure waiting for the first person who reaches for it. */
+  --clay: #c2714f;
+  --clay-ink: #9c4f2c;
   --danger: #a32b1c;
-  --ok: #1f5f4b;
 
+  --font-display: ui-serif, Georgia, "Noto Serif", "Times New Roman", serif;
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --measure: 68ch;
+  --measure: 66ch;
   --gutter: 20px;
-  --radius: 6px;
+  --radius: 8px;
 
   /* RENDER RULE 4 — minimum interactive target, with spacing between adjacent ones. */
   --tap-min: 44px;
+
+  --signature: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 40'%3E%3Cpath d='M0 30 C 80 30 100 9 175 9 S 300 33 385 29 S 520 11 600 15' fill='none' stroke='%23c2714f' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --ink: #eceee9;
-    --ink-soft: #a5aaa2;
-    --ground: #14150f;
-    --surface: #1d1f19;
-    --line: rgba(236, 238, 233, 0.16);
-    --accent: #6fc4a4;
-    --accent-ink: #0d0f0a;
+    --ink: #e9ede9;
+    --ink-soft: #a3afa8;
+    --ground: #121714;
+    --surface: #1a211d;
+    --line: rgba(233, 237, 233, 0.16);
+    --accent: #7fc0a5;
+    --accent-ink: #0e1411;
+    --clay: #d08a63;
+    --clay-ink: #e8a883;
     --danger: #f08a7c;
-    --ok: #6fc4a4;
+
+    --signature: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 40'%3E%3Cpath d='M0 30 C 80 30 100 9 175 9 S 300 33 385 29 S 520 11 600 15' fill='none' stroke='%23d08a63' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
   }
 }
 
@@ -52,7 +74,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -95,11 +117,29 @@ img {
   height: auto;
 }
 
+a {
+  color: var(--accent);
+}
+
 .wrap {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 var(--gutter);
+}
+.wrap--narrow {
+  max-width: 760px;
+}
+
+/* ------------------------------------------------------------------ the signature */
+.signature {
+  height: 34px;
+  margin: 0;
+  background-image: var(--signature);
+  background-repeat: repeat-x;
+  background-position: left center;
+  background-size: 600px 34px;
+  opacity: 0.85;
 }
 
 /* ------------------------------------------------------------------ navigation */
@@ -115,11 +155,23 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  min-height: 60px;
+  min-height: 64px;
+}
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--tap-min);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
 }
 .nav__menu {
   display: flex;
-  gap: 8px;
+  gap: 4px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -129,9 +181,17 @@ img {
   align-items: center;
   /* RENDER RULE 4 */
   min-height: var(--tap-min);
-  padding: 0 12px;
+  padding: 0 11px;
   color: var(--ink);
+  font-size: 16px;
   text-decoration: none;
+}
+.nav__menu a:hover,
+.nav__menu a[aria-current="page"] {
+  color: var(--accent);
+}
+.nav__menu a[aria-current="page"] {
+  font-weight: 600;
 }
 .nav__toggle {
   display: none;
@@ -145,7 +205,7 @@ img {
   cursor: pointer;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 860px) {
   .nav__toggle {
     display: block;
   }
@@ -171,23 +231,75 @@ img {
   /* RENDER RULE 1 — `dvh`, never `vh`. With `vh` the retracting browser chrome on a phone makes
    * the section taller than the visible viewport, so the call to action is below the fold on the
    * first render, on exactly the devices most of the traffic arrives from. */
-  min-height: 78dvh;
+  min-height: 64dvh;
   display: flex;
   align-items: center;
-  padding: 56px 0;
+  padding: 48px 0;
+  border-top: 0;
+}
+.hero__grid {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+@media (min-width: 861px) {
+  .hero__grid {
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 48px;
+  }
+}
+.kicker {
+  display: block;
+  margin: 0 0 14px;
+  color: var(--clay-ink);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
 }
 .hero h1 {
-  font-size: clamp(30px, 6vw, 52px);
-  line-height: 1.08;
+  font-size: clamp(31px, 6.4vw, 54px);
+  line-height: 1.06;
   letter-spacing: -0.02em;
-  text-wrap: balance;
-  margin: 0 0 16px;
+  margin: 0 0 18px;
 }
-.hero p {
+.manifesto {
+  margin: 0 0 26px;
+  padding-left: 18px;
+  border-left: 3px solid var(--clay);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.4vw, 21px);
+  font-style: italic;
+  line-height: 1.45;
+  max-width: 46ch;
+}
+.lede {
   font-size: 19px;
   color: var(--ink-soft);
   max-width: 54ch;
-  margin: 0 0 28px;
+}
+
+.portrait {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.figure {
+  margin: 0;
+}
+.figure figcaption {
+  margin-top: 10px;
+  color: var(--ink-soft);
+  font-size: 14px;
 }
 
 .actions {
@@ -195,6 +307,7 @@ img {
   flex-wrap: wrap;
   /* RENDER RULE 4 — spacing between adjacent targets, not only their size. */
   gap: 12px;
+  margin-top: 26px;
 }
 
 .btn {
@@ -209,6 +322,7 @@ img {
   color: var(--accent-ink);
   font: inherit;
   font-weight: 600;
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
 }
@@ -228,23 +342,27 @@ section {
   border-top: 1px solid var(--line);
 }
 h2 {
-  font-size: clamp(23px, 3.6vw, 31px);
-  line-height: 1.2;
+  font-size: clamp(24px, 3.8vw, 33px);
+  line-height: 1.18;
   letter-spacing: -0.015em;
-  text-wrap: balance;
-  margin: 0 0 12px;
+  margin: 0 0 14px;
 }
 h3 {
-  font-size: 19px;
+  font-size: 20px;
+  line-height: 1.3;
   margin: 0 0 8px;
 }
 p {
   max-width: var(--measure);
 }
+.small {
+  font-size: 15px;
+  color: var(--ink-soft);
+}
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
   gap: 20px;
   margin-top: 28px;
 }
@@ -252,67 +370,159 @@ p {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 22px;
+  padding: 24px;
 }
 .card p {
   color: var(--ink-soft);
   margin: 0 0 10px;
 }
-.card p:last-child {
+.card h3 {
+  color: var(--ink);
+}
+
+/* The three doors. Equal weight by construction: same card, same type scale, same call to action —
+ * a visitor is choosing which one is hers, not which one the practice would prefer. */
+.card--door {
+  display: flex;
+  flex-direction: column;
+}
+.card__lead {
+  color: var(--ink) !important;
+  font-size: 17px;
+}
+.card__go {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  margin-top: auto;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.card__go:hover {
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------ prose furniture */
+.split {
+  display: grid;
+  gap: 28px;
+  align-items: start;
+}
+@media (min-width: 861px) {
+  .split {
+    grid-template-columns: 1fr 0.7fr;
+    gap: 44px;
+  }
+}
+
+.steps {
+  counter-reset: step;
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 22px;
+}
+.steps > li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 52px;
+  max-width: var(--measure);
+}
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+}
+.steps h3 {
+  margin-bottom: 4px;
+}
+
+.ticks {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  max-width: var(--measure);
+}
+.ticks > li {
+  position: relative;
+  padding-left: 26px;
+}
+.ticks > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 12px;
+  height: 2px;
+  background: var(--clay);
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-top: 28px;
+}
+.panel > :first-child {
+  margin-top: 0;
+}
+.panel > :last-child {
   margin-bottom: 0;
+}
+
+/* The definition block that opens /climaterio: it is the page's most valuable two sentences, so it
+ * is typeset as content rather than as an aside. */
+.definition {
+  font-family: var(--font-display);
+  font-size: clamp(19px, 2.6vw, 23px);
+  line-height: 1.45;
+  max-width: 34em;
+}
+.definition strong {
+  color: var(--accent);
+}
+
+.crosslink {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+.contact-list {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+}
+.contact-list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
 }
 
 /* Wide content scrolls inside its own container; the page body never scrolls sideways. */
 .scroller {
   overflow-x: auto;
-}
-
-/* ------------------------------------------------------------------ form */
-.form {
-  display: grid;
-  gap: 16px;
-  max-width: 520px;
-}
-.field {
-  display: grid;
-  gap: 6px;
-}
-.field label {
-  font-weight: 600;
-  font-size: 15px;
-}
-.field input,
-.field textarea,
-.field select {
-  /* RENDER RULE 3 — 16px or larger. Below it, iOS zooms the page on focus and throws the visitor
-   * out of position in the middle of filling the form. */
-  font-size: 16px;
-  font-family: inherit;
-  min-height: var(--tap-min);
-  padding: 10px 12px;
-  color: var(--ink);
-  background: var(--ground);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-}
-.field textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-.hint {
-  font-size: 14px;
-  color: var(--ink-soft);
-}
-
-#form-status {
-  font-size: 15px;
-  min-height: 1.4em;
-}
-#form-status[data-kind="error"] {
-  color: var(--danger);
-}
-#form-status[data-kind="success"] {
-  color: var(--ok);
 }
 
 /* ------------------------------------------------------------------ sticky conversion bar */
@@ -332,7 +542,11 @@ p {
    * gesture bar the button sits underneath it without this. */
   padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom, 0px));
 }
-@media (min-width: 721px) {
+.sticky-cta span {
+  font-size: 15px;
+  font-weight: 600;
+}
+@media (min-width: 861px) {
   .sticky-cta {
     display: none;
   }
@@ -347,6 +561,7 @@ p {
   z-index: 40;
   display: grid;
   gap: 12px;
+  max-width: 520px;
   background: var(--ground);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -356,6 +571,9 @@ p {
 .consent p {
   margin: 0;
   font-size: 15px;
+}
+.consent .actions {
+  margin-top: 0;
 }
 .consent .actions .btn {
   /* Refusing costs exactly what accepting costs — same size, same prominence (§26). */
@@ -369,11 +587,51 @@ p {
   color: var(--ink-soft);
   font-size: 15px;
 }
-@media (min-width: 721px) {
+@media (min-width: 861px) {
   .footer {
     padding-bottom: 40px;
   }
 }
 .footer a {
   color: inherit;
+}
+.footer__grid {
+  display: grid;
+  gap: 24px;
+}
+@media (min-width: 700px) {
+  .footer__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.footer h2 {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+.footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+.footer li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+}
+.footer__legal {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+.footer__legal p {
+  max-width: none;
+  margin: 0 0 6px;
 }

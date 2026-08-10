@@ -3,24 +3,144 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Page not found</title>
-    <meta name="description" content="That page is not here. A retired URL should redirect rather than land on this page." />
+    <title>Página no encontrada — Dra. Guadalupe Cuevillas</title>
+    <meta
+      name="description"
+      content="Esa página no está acá. Una dirección retirada debería redirigir en lugar de llegar a esta pantalla."
+    />
     <meta name="robots" content="noindex, follow" />
+
+    <link rel="icon" href="/assets/favicon.svg?v=1" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1" />
+    <meta name="theme-color" content="#2f6b57" />
+
     <link rel="stylesheet" href="/styles.css?v=1" />
     <script src="/config.js?v=1"></script>
+    <script src="/analytics.js?v=1"></script>
   </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <main id="main" class="wrap">
+
+  <body data-puerta="404">
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+
+    <header class="nav">
+      <div class="wrap nav__inner">
+        <a class="nav__brand" href="/">
+          <img src="/assets/favicon.svg?v=1" alt="" width="28" height="28" />
+          Dra. Guadalupe Cuevillas
+        </a>
+
+        <button
+          id="nav-toggle"
+          class="nav__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+        >
+          Menú
+        </button>
+
+        <nav aria-label="Principal">
+          <!-- BEGIN GENERATED: nav -->
+          <ul id="nav-menu" class="nav__menu">
+            <li><a href="/fertilidad">Fertilidad</a></li>
+            <li><a href="/climaterio">Climaterio</a></li>
+            <li><a href="/endocrinologia">Endocrinología</a></li>
+            <li><a href="/sobre-mi">Sobre mí</a></li>
+            <li><a href="/como-es-la-consulta">La consulta</a></li>
+            <li><a href="/contacto">Contacto</a></li>
+          </ul>
+          <!-- END GENERATED: nav -->
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
       <section>
-        <h1>That page is not here</h1>
-        <p>
-          The link may be from an older version of this site. A retired URL should redirect rather
-          than land here — if you followed a link from somewhere else, we would like to know.
-        </p>
-        <p><a class="btn" href="/">Go to the home page</a></p>
+        <div class="wrap wrap--narrow">
+          <h1>Esa página no está acá</h1>
+          <p class="lede">
+            Puede que el enlace venga de una versión anterior del sitio. Una dirección retirada
+            debería redirigir sola; si llegaste hasta acá desde algún lado, avisame y lo arreglo.
+          </p>
+          <div class="actions">
+            <a class="btn" href="/">Ir a la página principal</a>
+            <a
+              class="btn btn--ghost"
+              data-messaging="contacto"
+              data-analytics-event="messaging"
+              data-analytics-label="404"
+              >Avisar por WhatsApp</a
+            >
+          </div>
+
+          <h2>Adónde querías ir</h2>
+          <ul class="ticks">
+            <li><a href="/fertilidad">Fertilidad y salud del ciclo</a></li>
+            <li><a href="/climaterio">Climaterio</a></li>
+            <li><a href="/endocrinologia">Endocrinología general</a></li>
+            <li><a href="/como-es-la-consulta">Cómo es la consulta</a></li>
+            <li><a href="/contacto">Contacto y consultorios</a></li>
+          </ul>
+        </div>
       </section>
     </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        <!-- BEGIN GENERATED: footer -->
+        <div class="footer__grid">
+          <div>
+            <h2>Consultas</h2>
+            <ul>
+              <li><a href="/fertilidad">Fertilidad y salud del ciclo</a></li>
+              <li><a href="/climaterio">Climaterio</a></li>
+              <li><a href="/endocrinologia">Endocrinología general</a></li>
+              <li><a href="/como-es-la-consulta">Cómo es la consulta</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Consultorios</h2>
+            <ul>
+              <li>Hospital Universitario Austral — Av. Juan Domingo Perón 1500, Pilar</li>
+              <li>Centro Médico Villanueva — Complejo Vila Terra, Tigre</li>
+              <li>Videoconsulta a todo el país y el exterior</li>
+            </ul>
+          </div>
+          <div>
+            <h2>Contacto</h2>
+            <ul>
+              <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
+              <li><a data-mailbox href="/contacto" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
+              <li><a data-profile="instagram" href="/contacto">Instagram @dracuevillas</a></li>
+              <li><a href="/contacto">Ubicaciones y mapas</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer__legal">
+          <p><strong>Dra. María Guadalupe Cuevillas</strong> — Médica endocrinóloga · M.N. 149275</p>
+          <p>
+            El contenido de este sitio es informativo y no reemplaza la consulta médica.
+            <a href="/privacidad">Política de privacidad y aviso legal</a>.
+          </p>
+        </div>
+        <!-- END GENERATED: footer -->
+      </div>
+    </footer>
+
+    <div id="consent-banner" class="consent" role="region" aria-label="Consentimiento de cookies" hidden>
+      <p>
+        Usamos cookies de medición para entender cómo se usa esta página. Podés rechazarlas y el
+        sitio funciona exactamente igual. Está explicado en la
+        <a href="/privacidad">política de privacidad</a>.
+      </p>
+      <div class="actions">
+        <button class="btn btn--ghost" type="button" data-consent-decline>Rechazar</button>
+        <button class="btn" type="button" data-consent-accept>Aceptar</button>
+      </div>
+    </div>
+
+    <script src="/facts.js?v=1"></script>
     <script src="/site.js?v=1"></script>
   </body>
 </html>

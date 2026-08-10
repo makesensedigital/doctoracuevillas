@@ -4,11 +4,11 @@
      Everything a visitor needs to find this site or convert on it is IN THIS FILE, served. Nothing
      load-bearing is generated in the browser: for search that would cost deferred and uncertain
      rendering, and for generative retrieval it costs everything, because those crawlers largely do
-     not execute script. `scripts/check-indexability.mjs` fails the gate when conversion text is
-     missing with scripting off.
+     not execute script.
 
-     The JSON-LD block below is GENERATED from facts.js by `scripts/build-derived.mjs`. Do not hand-
-     edit it — edit facts.js and re-run the build, or the gate fails on the drift.
+     The JSON-LD block and the three door cards below are GENERATED from facts.js by
+     `scripts/build-derived.mjs`. Do not hand-edit them — edit facts.js and re-run the build, or the
+     gate fails on the drift.
 
      `lang` and every absolute URL come from facts.js and config.js. Keep them in step. -->
 <html lang="es-AR">
@@ -16,41 +16,49 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Example Company — one sentence a stranger understands</title>
+    <!-- "Menopausia" appears in the metadata and nowhere a visitor reads it. That is the deliberate
+         split recorded in brief.md: patients search for the day, the practice treats the transition,
+         and the page teaches the difference in its own words. -->
+    <title>Dra. Guadalupe Cuevillas — Endocrinóloga · Fertilidad y climaterio</title>
     <meta
       name="description"
-      content="Two sentences describing what the business does and for whom. This is the text most likely to be quoted by a search result or an assistant, so write it to be quoted."
+      content="Médica endocrinóloga especializada en fertilidad, climaterio y menopausia. Estudiamos y tratamos la causa hormonal y metabólica. Consulta virtual a todo el país y presencial en Pilar y Tigre."
     />
 
     <!-- Absolute, always. A relative social image resolves to nothing in a scraper, and a relative
          canonical is not a canonical. The gate checks both. -->
-    <link rel="canonical" href="https://example.com/" />
+    <link rel="canonical" href="https://doctoracuevillas.com/" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Example Company" />
+    <meta property="og:site_name" content="Dra. María Guadalupe Cuevillas" />
     <meta property="og:locale" content="es_AR" />
-    <meta property="og:title" content="Example Company — one sentence a stranger understands" />
-    <meta property="og:description" content="Two sentences describing what the business does and for whom." />
-    <meta property="og:url" content="https://example.com/" />
-    <meta property="og:image" content="https://example.com/assets/social.png" />
+    <meta property="og:title" content="Dra. Guadalupe Cuevillas — Endocrinóloga · Fertilidad y climaterio" />
+    <meta
+      property="og:description"
+      content="Salud hormonal femenina en todas las etapas de la vida. Fertilidad, climaterio y endocrinología general."
+    />
+    <meta property="og:url" content="https://doctoracuevillas.com/" />
+    <meta property="og:image" content="https://doctoracuevillas.com/assets/social.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Example Company" />
+    <meta property="og:image:alt" content="Dra. María Guadalupe Cuevillas, médica endocrinóloga" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Example Company" />
-    <meta name="twitter:description" content="Two sentences describing what the business does and for whom." />
-    <meta name="twitter:image" content="https://example.com/assets/social.png" />
+    <meta name="twitter:title" content="Dra. Guadalupe Cuevillas — Endocrinóloga" />
+    <meta
+      name="twitter:description"
+      content="Salud hormonal femenina en todas las etapas de la vida."
+    />
+    <meta name="twitter:image" content="https://doctoracuevillas.com/assets/social.png" />
 
-    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-    <meta name="theme-color" content="#1f5f4b" />
+    <link rel="icon" href="/assets/favicon.svg?v=1" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1" />
+    <meta name="theme-color" content="#2f6b57" />
 
-    <!-- Typefaces are self-hosted. A remotely hosted typeface contacts a third party on first
-         render, before any consent choice, and with no server there is no way to proxy it (§26).
-         Self-hosting removes the question and is faster. Declare each face here with `font-display:
-         swap` when you add one. -->
+    <!-- Typefaces are self-hosted — in this case they are the system's own, so nothing is fetched at
+         all. A remotely hosted typeface contacts a third party on first render, before any consent
+         choice, and with no server there is no way to proxy it (§26). -->
 
     <!-- Versioned from config.assetVersion. No build means no content-addressed filenames, so this
          is the only cache invalidation there is; the gate checks the two agree. -->
@@ -65,40 +73,71 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "@id": "https://example.com/#organization",
-        "name": "Example Company",
-        "url": "https://example.com/",
-        "description": "Two or three sentences. What the business does, for whom, and what makes it the right choice. This text is what a generative assistant is most likely to quote, so write it to be quoted.",
-        "legalName": "Example Company S.A.",
-        "foundingDate": "2020",
+        "@type": "Physician",
+        "@id": "https://doctoracuevillas.com/#organization",
+        "name": "Dra. María Guadalupe Cuevillas",
+        "url": "https://doctoracuevillas.com/",
+        "description": "La Dra. María Guadalupe Cuevillas es médica endocrinóloga, médica de staff del Servicio de Endocrinología del Hospital Universitario Austral y Medical Consultant en NaProTecnología formada en el Pope Paul VI Institute (Omaha, Estados Unidos). Atiende fertilidad y salud del ciclo, climaterio y endocrinología general, con un enfoque que estudia y corrige la causa hormonal y metabólica en lugar de saltearla. Consulta por videollamada para todo el país y el exterior, y presencial en Pilar y en Tigre.",
+        "legalName": "María Guadalupe Cuevillas",
         "areaServed": {
           "@type": "Country",
           "name": "Argentina"
         },
-        "telephone": "+540000000000",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Example Street 123",
-          "addressLocality": "Buenos Aires",
-          "addressRegion": "CABA",
-          "addressCountry": "AR"
+        "sameAs": [
+          "https://www.instagram.com/dracuevillas/",
+          "https://www.hospitalaustral.edu.ar/servicios-medicos/endocrinologia/"
+        ],
+        "medicalSpecialty": [
+          "Endocrine"
+        ],
+        "telephone": "+5491159612588",
+        "address": [
+          {
+            "@type": "PostalAddress",
+            "streetAddress": "Av. Juan Domingo Perón 1500",
+            "addressLocality": "Pilar",
+            "addressRegion": "Provincia de Buenos Aires",
+            "addressCountry": "AR"
+          },
+          {
+            "@type": "PostalAddress",
+            "streetAddress": "Complejo Vila Terra",
+            "addressLocality": "Tigre",
+            "addressRegion": "Provincia de Buenos Aires",
+            "addressCountry": "AR"
+          }
+        ],
+        "identifier": {
+          "@type": "PropertyValue",
+          "name": "M.N.",
+          "value": "149275"
         },
         "makesOffer": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "The first thing you sell",
-              "description": "One sentence. What the buyer gets, not how it is built."
+              "name": "Fertilidad y salud del ciclo",
+              "description": "Buscás un embarazo y querés entender y tratar la causa.",
+              "url": "https://doctoracuevillas.com/fertilidad"
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "The second thing you sell",
-              "description": "One sentence."
+              "name": "Climaterio",
+              "description": "Síntomas, prevención y un plan a tu medida para esta etapa.",
+              "url": "https://doctoracuevillas.com/climaterio"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Endocrinología general",
+              "description": "Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral.",
+              "url": "https://doctoracuevillas.com/endocrinologia"
             }
           }
         ]
@@ -107,12 +146,15 @@
     <!-- END GENERATED: json-ld -->
   </head>
 
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body data-puerta="home">
+    <a class="skip-link" href="#main">Saltar al contenido</a>
 
     <header class="nav">
       <div class="wrap nav__inner">
-        <a href="#main" aria-label="Example Company">Example Company</a>
+        <a class="nav__brand" href="/">
+          <img src="/assets/favicon.svg?v=1" alt="" width="28" height="28" />
+          Dra. Guadalupe Cuevillas
+        </a>
 
         <button
           id="nav-toggle"
@@ -121,15 +163,20 @@
           aria-expanded="false"
           aria-controls="nav-menu"
         >
-          Menu
+          Menú
         </button>
 
-        <nav aria-label="Main">
+        <nav aria-label="Principal">
+          <!-- BEGIN GENERATED: nav -->
           <ul id="nav-menu" class="nav__menu">
-            <li><a href="#offerings">What we do</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="/fertilidad">Fertilidad</a></li>
+            <li><a href="/climaterio">Climaterio</a></li>
+            <li><a href="/endocrinologia">Endocrinología</a></li>
+            <li><a href="/sobre-mi">Sobre mí</a></li>
+            <li><a href="/como-es-la-consulta">La consulta</a></li>
+            <li><a href="/contacto">Contacto</a></li>
           </ul>
+          <!-- END GENERATED: nav -->
         </nav>
       </div>
     </header>
@@ -139,133 +186,237 @@
            screen reader announces and the one an extractor reads. -->
       <section class="hero">
         <div class="wrap">
-          <h1>One sentence a stranger understands, in the visitor's language</h1>
-          <p>
-            Two or three sentences. What the business does, for whom, and why it is the right
-            choice. Concrete, and free of internal vocabulary.
-          </p>
-          <div class="actions">
-            <!-- The destination is BUILT from config.js by site.js: the markup carries a key, never
-                 a URL with an identifier in it. `data-analytics-intent` is added by site.js because
-                 a messaging handoff is a departure this site cannot observe (§26). -->
-            <a
-              class="btn"
-              data-messaging="hero_primary"
-              data-analytics-event="messaging"
-              data-analytics-label="hero_primary"
-              >Talk to us</a
-            >
-            <a class="btn btn--ghost" href="#offerings" data-analytics-event="cta_click" data-analytics-label="hero_secondary"
-              >See what we do</a
-            >
+          <div class="hero__grid">
+            <div>
+              <span class="kicker">Fertilidad · Climaterio · Endocrinología</span>
+              <h1>Salud hormonal femenina en todas las etapas de la vida</h1>
+              <p class="manifesto">
+                “El ciclo menstrual y la fertilidad no son eventos aislados: son el reflejo directo
+                de la salud endócrina, metabólica y general.”
+              </p>
+              <p class="lede">
+                Soy médica endocrinóloga. Trabajo para entender qué está pasando en tu cuerpo y
+                corregir la causa, en lugar de silenciar el síntoma. Atiendo por videoconsulta a todo
+                el país y el exterior, y en consultorio en Pilar y Tigre.
+              </p>
+              <div class="actions">
+                <a class="btn" href="#puertas" data-analytics-event="cta_click" data-analytics-label="hero_puertas"
+                  >Elegí por dónde empezar</a
+                >
+                <!-- The destination is BUILT from config.js by site.js: the markup carries a key,
+                     never a URL with an identifier in it. `data-analytics-intent` is added by site.js
+                     because a messaging handoff is a departure this site cannot observe (§26). -->
+                <a
+                  class="btn btn--ghost"
+                  data-messaging="home"
+                  data-analytics-event="messaging"
+                  data-analytics-label="hero"
+                  >Escribime por WhatsApp</a
+                >
+              </div>
+            </div>
+            <figure class="figure">
+              <img
+                class="portrait"
+                src="/assets/guada-retrato.webp?v=1"
+                alt="La Dra. María Guadalupe Cuevillas en su consultorio"
+                width="760"
+                height="950"
+                fetchpriority="high"
+              />
+            </figure>
           </div>
         </div>
       </section>
 
-      <section id="offerings">
+      <div class="signature" role="presentation"></div>
+
+      <section id="puertas">
         <div class="wrap">
-          <h2>What we do</h2>
+          <h2>¿Con qué venís?</h2>
           <p>
-            One paragraph framing the offerings below. If one of these has to be findable on its own
-            terms, it needs its own URL — an architecture decision taken with the hosting decision,
-            because it implies redirects.
+            Tres motivos de consulta, tres caminos. Elegí el que se parezca a lo que te está pasando;
+            si dudás entre dos, no importa cuál abras primero: el abordaje es el mismo sistema
+            hormonal mirado entero.
           </p>
 
           <!-- BEGIN GENERATED: offerings -->
-          <div class="grid">
-            <article class="card" id="offering-one">
-              <h3>The first thing you sell</h3>
-              <p>One sentence. What the buyer gets, not how it is built.</p>
-              <p>A paragraph a prospect can act on. Concrete, in the visitor's language, and free of internal vocabulary.</p>
+          <div class="grid grid--doors">
+            <article class="card card--door" id="fertilidad">
+              <h3>Fertilidad y salud del ciclo</h3>
+              <p class="card__lead">Buscás un embarazo y querés entender y tratar la causa.</p>
+              <p>SOP y resistencia a la insulina, sospecha de endometriosis, tiroides y prolactina, abortos recurrentes, factor masculino y salida de anticonceptivos.</p>
+              <a class="card__go" href="/fertilidad" data-analytics-event="puerta" data-analytics-label="fertilidad"
+                >Entrar a fertilidad y salud del ciclo<span aria-hidden="true"> →</span></a
+              >
             </article>
-            <article class="card" id="offering-two">
-              <h3>The second thing you sell</h3>
-              <p>One sentence.</p>
-              <p>A paragraph.</p>
+            <article class="card card--door" id="climaterio">
+              <h3>Climaterio</h3>
+              <p class="card__lead">Síntomas, prevención y un plan a tu medida para esta etapa.</p>
+              <p>Sofocos y trastornos del sueño, salud ósea y cardiovascular, metabolismo, salud sexual, terapia hormonal o alternativas no hormonales.</p>
+              <a class="card__go" href="/climaterio" data-analytics-event="puerta" data-analytics-label="climaterio"
+                >Entrar a climaterio<span aria-hidden="true"> →</span></a
+              >
+            </article>
+            <article class="card card--door" id="endocrinologia">
+              <h3>Endocrinología general</h3>
+              <p class="card__lead">Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral.</p>
+              <p>Hipotiroidismo y Hashimoto, descenso de peso y resistencia a la insulina, osteoporosis y salud ósea, alteraciones del ciclo.</p>
+              <a class="card__go" href="/endocrinologia" data-analytics-event="puerta" data-analytics-label="endocrinologia"
+                >Entrar a endocrinología general<span aria-hidden="true"> →</span></a
+              >
             </article>
           </div>
           <!-- END GENERATED: offerings -->
         </div>
       </section>
 
-      <section id="about">
+      <section id="credenciales">
         <div class="wrap">
-          <h2>About</h2>
+          <h2>Quién te atiende</h2>
           <p>
-            Who the business is, in the terms a prospect cares about. Where the sector requires a
-            registration or licence number to be visible, it belongs here and in facts.js — a
-            regulatory obligation is an acceptance criterion, not a pre-launch review item.
+            Médica endocrinóloga formada en la Universidad de Buenos Aires, con residencia en el
+            Hospital Álvarez. Lo que sigue es la formación que sostiene cada una de las tres puertas.
+          </p>
+          <ul class="ticks">
+            <li>
+              Médica de staff del Servicio de Endocrinología del
+              <a data-profile="hospitalaustral" href="/sobre-mi">Hospital Universitario Austral</a>.
+            </li>
+            <li>
+              Medical Consultant en NaProTecnología, formada en el Pope Paul VI Institute (Omaha,
+              Estados Unidos) y en México. Conferencista internacional en la disciplina.
+            </li>
+            <li>Diplomada Internacional en Climaterio (CISAM, 2026).</li>
+            <li>Videoconsulta para pacientes de todo el país y del exterior.</li>
+          </ul>
+          <p class="crosslink">
+            <a href="/sobre-mi">Leer la formación completa y cómo trabajo →</a>
           </p>
         </div>
       </section>
 
-      <section id="contact">
+      <section id="novedades">
         <div class="wrap">
-          <h2>Contact</h2>
+          <h2>Lo que escribo, a tu correo</h2>
           <p>
-            Every field below has to justify its cost in conversions: it exists only because the
-            value cannot be inferred from context and has a planned use.
+            Sin algoritmo de por medio. Elegí el tema que te interesa y te llegan explicaciones
+            claras sobre cómo funciona tu cuerpo, con la misma lógica con la que trabajo en consulta.
+            Te suscribís confirmando por mail y te podés dar de baja cuando quieras.
           </p>
-
-          <!-- The form posts to the receiver in config.js, which PERSISTS the record. With no
-               receiver configured, site.js says so plainly and does not claim anything was sent —
-               a control that persists nothing is not a form (§26). -->
-          <form id="contact-form" class="form" novalidate>
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" required />
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required />
-              <span class="hint">So we can reply. We do not add you to any list.</span>
-            </div>
-            <div class="field">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" rows="5"></textarea>
-            </div>
-
-            <button class="btn" type="submit">Send</button>
-            <p id="form-status" role="status" aria-live="polite"></p>
-          </form>
-
-          <p>
-            Or email us at <a data-mailbox href="#"></a>. We describe what we collect and for how
-            long in our <a href="/privacy.html">privacy statement</a>.
+          <ul class="ticks">
+            <li>
+              <a
+                data-newsletter="fertilidad"
+                data-analytics-event="newsletter"
+                data-analytics-label="home_fertilidad"
+                data-analytics-audiencia="paciente"
+                >Entendé tu ciclo, entendé tu fertilidad</a
+              >
+            </li>
+            <li>
+              <a
+                data-newsletter="climaterio"
+                data-analytics-event="newsletter"
+                data-analytics-label="home_climaterio"
+                data-analytics-audiencia="paciente"
+                >Climaterio: información clara para esta etapa</a
+              >
+            </li>
+            <li>
+              <a
+                data-newsletter="endocrinologia"
+                data-analytics-event="newsletter"
+                data-analytics-label="home_endocrinologia"
+                data-analytics-audiencia="paciente"
+                >Tu salud hormonal, explicada</a
+              >
+            </li>
+          </ul>
+          <p class="small crosslink">
+            ¿Sos profesional de la salud?
+            <a
+              data-newsletter="profesionales"
+              data-analytics-event="newsletter"
+              data-analytics-label="home_profesionales"
+              data-analytics-audiencia="profesional"
+              >Suscribite acá</a
+            >.
           </p>
         </div>
       </section>
     </main>
 
+    <!-- The registration number, both consulting rooms and the medical disclaimer are FACTS, so this
+         whole block is generated from facts.js. Nine hand-written copies of an address is how a
+         published contradiction starts. -->
     <footer class="footer">
       <div class="wrap">
-        <p>© Example Company. <a href="/privacy.html">Privacy</a></p>
+        <!-- BEGIN GENERATED: footer -->
+        <div class="footer__grid">
+          <div>
+            <h2>Consultas</h2>
+            <ul>
+              <li><a href="/fertilidad">Fertilidad y salud del ciclo</a></li>
+              <li><a href="/climaterio">Climaterio</a></li>
+              <li><a href="/endocrinologia">Endocrinología general</a></li>
+              <li><a href="/como-es-la-consulta">Cómo es la consulta</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Consultorios</h2>
+            <ul>
+              <li>Hospital Universitario Austral — Av. Juan Domingo Perón 1500, Pilar</li>
+              <li>Centro Médico Villanueva — Complejo Vila Terra, Tigre</li>
+              <li>Videoconsulta a todo el país y el exterior</li>
+            </ul>
+          </div>
+          <div>
+            <h2>Contacto</h2>
+            <ul>
+              <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
+              <li><a data-mailbox href="/contacto" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
+              <li><a data-profile="instagram" href="/contacto">Instagram @dracuevillas</a></li>
+              <li><a href="/contacto">Ubicaciones y mapas</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer__legal">
+          <p><strong>Dra. María Guadalupe Cuevillas</strong> — Médica endocrinóloga · M.N. 149275</p>
+          <p>
+            El contenido de este sitio es informativo y no reemplaza la consulta médica.
+            <a href="/privacidad">Política de privacidad y aviso legal</a>.
+          </p>
+        </div>
+        <!-- END GENERATED: footer -->
       </div>
     </footer>
 
     <!-- The conversion control on a phone. Its safe-area padding is in styles.css — without it this
          button sits under the device's gesture bar (§26). -->
-    <div class="sticky-cta" role="region" aria-label="Quick contact">
-      <span>Ready to talk?</span>
+    <div class="sticky-cta" role="region" aria-label="Contacto rápido">
+      <span>¿Querés un turno?</span>
       <a
         class="btn"
-        data-messaging="footer_contact"
+        data-messaging="home"
         data-analytics-event="messaging"
-        data-analytics-label="sticky_cta"
-        >Message us</a
+        data-analytics-label="sticky"
+        >WhatsApp</a
       >
     </div>
 
     <!-- Rendered only when config.consent.mode is "explicit". Both choices are the same size and
          the same prominence, and nothing is pre-selected (§26). -->
-    <div id="consent-banner" class="consent" role="region" aria-label="Cookie consent" hidden>
+    <div id="consent-banner" class="consent" role="region" aria-label="Consentimiento de cookies" hidden>
       <p>
-        We use measurement cookies to understand how this page is used. You can decline and the site
-        works exactly the same. See our <a href="/privacy.html">privacy statement</a>.
+        Usamos cookies de medición para entender cómo se usa esta página. Podés rechazarlas y el
+        sitio funciona exactamente igual. Está explicado en la
+        <a href="/privacidad">política de privacidad</a>.
       </p>
       <div class="actions">
-        <button class="btn btn--ghost" type="button" data-consent-decline>Decline</button>
-        <button class="btn" type="button" data-consent-accept>Accept</button>
+        <button class="btn btn--ghost" type="button" data-consent-decline>Rechazar</button>
+        <button class="btn" type="button" data-consent-accept>Aceptar</button>
       </div>
     </div>
 
