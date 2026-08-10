@@ -24,12 +24,12 @@
     legalName: "María Guadalupe Cuevillas",
     tagline: "Salud hormonal femenina en todas las etapas de la vida.",
     description:
-      "La Dra. María Guadalupe Cuevillas es médica endocrinóloga, médica de staff del Servicio de " +
-      "Endocrinología del Hospital Universitario Austral y Medical Consultant en NaProTecnología " +
-      "formada en el Pope Paul VI Institute (Omaha, Estados Unidos). Atiende fertilidad y salud del " +
-      "ciclo, climaterio y endocrinología general, con un enfoque que estudia y corrige la causa " +
-      "hormonal y metabólica en lugar de saltearla. Consulta por videollamada para todo el país y el " +
-      "exterior, y presencial en Pilar y en Tigre.",
+      "La Dra. María Guadalupe Cuevillas es médica endocrinóloga especializada en fertilidad y en " +
+      "climaterio, y Medical Consultant en NaProTecnología formada en el Pope Paul VI Institute " +
+      "(Omaha, Estados Unidos). Atiende fertilidad y salud del ciclo, climaterio y endocrinología " +
+      "general, con un enfoque que estudia y corrige la causa hormonal y metabólica en lugar de " +
+      "saltearla. Consulta por videollamada desde cualquier país, y en consultorio en el Hospital " +
+      "Universitario Austral (Pilar) y en Centro Médico Villanueva (Tigre).",
     // A practitioner has no founding date, and inventing one to fill a field is how a fact nobody
     // checked ends up in the structured data.
     foundingYear: null,
