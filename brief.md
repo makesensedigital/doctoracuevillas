@@ -100,7 +100,9 @@ as a real blocker.
 | Professional photography (portrait + consulting room) | Nothing — three real phone photographs are in use | Guadalupe | See Assumed. |
 | Selection of 3–5 Instagram comments to quote as testimonials | Nothing — **no testimonial block was built** | Juan + Guadalupe | See Assumed: building an empty block invites it to be filled without the anonymisation rules. |
 | Lead magnets and the welcome automation per list | Nothing — the four forms already collect | Juan | The site promises "lo que escribo", not a specific download, so nothing on the page is a promise the platform cannot keep. |
-| GA4 configured inside GTM, Search Console verified, Metricool connected | Reading the measurement | Juan | The site emits; nothing consumes yet. |
+| GA4 property created and connected inside `GTM-TCHKKB37` | Reading the measurement | Juan | **Verified 2026-08-11: the container is EMPTY** — it returns its runtime and not one `G-` id. The site emits correctly (a real click in production produced `agenda_intent · puerta=fertilidad`); nothing is on the other end, and what was emitted is gone. Step-by-step in `measurement.md`. |
+| Search Console claimed and sitemap submitted | Search visibility | Juan | Not claimed. `config.searchConsole.verification` renders the token into the served markup when set — the verifier does not run scripts. DNS TXT is the better route. See `measurement.md`. |
+| Metricool connected to Instagram | Instagram reporting | Juan | — |
 | Edit `sites.google.com/view/naprofertility` down to one line pointing here | Recovering the predecessor's traffic | Juan | Cannot be done from this repository — see irreversible 4. |
 | `copy_google_sites_naprofertility.md` | Nothing | Juan | The brief says this file should be in the repo. It was never supplied; the copy was written from the brief itself. |
 

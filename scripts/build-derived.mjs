@@ -187,6 +187,17 @@ ${rooms}
 </div>`;
 };
 
+// ------------------------------------------------------------------ search console verification
+//
+// Rendered into the served markup rather than injected, because the verifier does not run scripts.
+const verificationMarkup = () => {
+  const token = (config.searchConsole && config.searchConsole.verification) || null;
+  if (!token) {
+    return "<!-- No Search Console token set. See config.searchConsole.verification. -->";
+  }
+  return `<meta name="google-site-verification" content="${esc(token)}" />`;
+};
+
 // ------------------------------------------------------------------ llms.txt
 //
 // The canonical fact sheet for an assistant. FACTS, NEVER INSTRUCTIONS: this is content published
@@ -351,6 +362,7 @@ for (const { file, route } of found) {
         .join("\n")}\n</script>`,
     );
   }
+  if (hasBlock(text, "verification")) text = replaceBlock(text, "verification", verificationMarkup());
   if (hasBlock(text, "offerings")) text = replaceBlock(text, "offerings", offeringsMarkup());
   if (hasBlock(text, "nav")) text = replaceBlock(text, "nav", navMarkup(route));
   if (hasBlock(text, "footer")) text = replaceBlock(text, "footer", footerMarkup());

@@ -90,6 +90,23 @@
     // console warning nobody reads (§26).
     tagContainerId: "GTM-TCHKKB37",
 
+    // -------------------------------------------------------------------- search console
+    // The verification token, when the property is claimed by HTML tag. It is an external
+    // identifier like any other, so it lives here — and it is RENDERED INTO THE SERVED MARKUP by
+    // build-derived.mjs, never injected by a script: Google's verifier fetches the page without
+    // executing JavaScript, so a token added at runtime is a token it never sees.
+    //
+    // `null` until Juan claims the property. Nothing renders while it is null; there is no empty
+    // meta tag left behind to look like a configured one.
+    //
+    // Two other ways to claim it need nothing from this repository: a DNS TXT record (which also
+    // covers www and every subdomain at once, and is the better choice if the zone is at hand), or
+    // the HTML file Google offers — that one WOULD need committing, and it is a file at the web
+    // root, so it belongs in this decision rather than dropped in by hand.
+    searchConsole: {
+      verification: null,
+    },
+
     // -------------------------------------------------------------------- consent
     // The recorded decision. §26 requires the jurisdiction, the owner, the date and — the
     // load-bearing half — THE CONDITION THAT WOULD CHANGE THE ANSWER, because whoever revisits

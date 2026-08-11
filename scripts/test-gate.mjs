@@ -242,6 +242,15 @@ const FIXTURES = [
     apply: (dir) => edit(dir, "llms.txt", "# Dra. María Guadalupe Cuevillas", "# Otra Persona"),
   },
   {
+    // A hand-edited verification token is a property that never verifies, and the failure is silent:
+    // Search Console simply says it could not confirm ownership, weeks after somebody "tidied" it.
+    name: "the Search Console block hand-edited away from config.js",
+    check: "build-derived.mjs",
+    args: ["--check"],
+    apply: (dir) =>
+      edit(dir, "index.html", "<!-- No Search Console token set.", "<!-- token va aca."),
+  },
+  {
     // The blocks generated into every page, not only into the home page. The registration number and
     // both consulting rooms live in that footer, and a hand-edit there is a published contradiction
     // about where a doctor sees patients.
