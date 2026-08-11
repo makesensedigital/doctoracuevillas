@@ -35,21 +35,21 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("/assets/fonts/fraunces.woff2?v=2") format("woff2");
+  src: url("/assets/fonts/fraunces.woff2?v=3") format("woff2");
 }
 @font-face {
   font-family: "Fraunces";
   font-style: italic;
   font-weight: 600;
   font-display: swap;
-  src: url("/assets/fonts/fraunces-italic.woff2?v=2") format("woff2");
+  src: url("/assets/fonts/fraunces-italic.woff2?v=3") format("woff2");
 }
 @font-face {
   font-family: "Figtree";
   font-style: normal;
   font-weight: 400 800;
   font-display: swap;
-  src: url("/assets/fonts/figtree.woff2?v=2") format("woff2");
+  src: url("/assets/fonts/figtree.woff2?v=3") format("woff2");
 }
 
 :root {
@@ -99,6 +99,19 @@
 
 * {
   box-sizing: border-box;
+}
+
+/* THE `hidden` ATTRIBUTE HAS TO WIN, AND WITHOUT THIS IT DOES NOT.
+ *
+ * `element.hidden = true` is how this site withdraws a control that has nothing behind it: the
+ * consent banner once it has been answered, a scheduling button whose agenda is not configured yet.
+ * The rule that acts on it — `[hidden] { display: none }` — lives in the BROWSER's stylesheet, and
+ * any author rule setting `display` on the same element beats it. `.consent` sets `display: grid`,
+ * so the banner reported `hidden === true` and stayed on screen.
+ *
+ * That shipped, and it shipped because the property was checked instead of the pixels. */
+[hidden] {
+  display: none !important;
 }
 
 html {

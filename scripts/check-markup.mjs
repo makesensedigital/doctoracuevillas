@@ -24,11 +24,15 @@ const files = await walk(ROOT);
 const html = files.filter((f) => f.endsWith(".html"));
 const css = files.filter((f) => f.endsWith(".css"));
 
+// Set while scanning the markup below; checked once the stylesheets are in hand.
+let usesHiddenAttribute = false;
+
 // ---------------------------------------------------------------- indexability
 for (const file of html) {
   const rel = relative(ROOT, file).replace(/\\/g, "/");
   const text = await read(file);
   const indexable = !/<meta\s+name="robots"[^>]*content="[^"]*noindex/i.test(text);
+  if (/<[a-z][^>]*\shidden(?=[\s>])/i.test(text)) usesHiddenAttribute = true;
 
   // One h1, and the outline never skips a level. It is what a screen reader announces and what an
   // extractor reads; a jump from h1 to h3 loses the relationship both depend on.
@@ -193,6 +197,27 @@ if (!/--tap-min|min-height:\s*44px/.test(styles)) {
   r.fail(
     `${styleNames} — no minimum interactive target size is declared`,
     "declare a 44px minimum for interactive elements and space adjacent targets apart",
+  );
+}
+
+// ---------------------------------------------------------------- the hidden attribute
+//
+// A fifth rule, added because it reached production. `element.hidden = true` is how a control with
+// nothing behind it is withdrawn — a consent banner that was answered, a scheduling button whose
+// agenda is not configured. The rule that acts on it lives in the BROWSER's stylesheet, so ANY
+// author rule setting `display` on that element beats it: the element reports `hidden === true` and
+// stays on screen. It is invisible to any test that checks the property instead of the pixels, and
+// that is exactly how it shipped.
+// Comments are stripped first, and that is not fussiness: the explanation of this very rule, in
+// the stylesheet, contains the text it looks for. Reading its own documentation, the check passed
+// on a stylesheet where the rule had been deleted — caught by running the fixture, not by writing it.
+const declarations = styles.replace(/\/\*[\s\S]*?\*\//g, "");
+if (usesHiddenAttribute && !/\[hidden\][^{]*\{[^}]*display:\s*none/.test(declarations)) {
+  r.fail(
+    `${styleNames} — markup uses the \`hidden\` attribute but no rule makes it win`,
+    "add `[hidden] { display: none !important; }`: the browser's own rule loses to any author rule " +
+      "that sets `display`, so a hidden consent banner or a withdrawn scheduling button stays on " +
+      "screen while reporting itself hidden",
   );
 }
 
