@@ -49,10 +49,10 @@ H1 and eleven explicit Markdown links, including identity, services, booking, lo
 
 ## Commits
 
-- `b615cdc` — agentic navigation (`llms.txt`).
-- `3059145` — parser-blocking first-party scripts.
-- `57f86a6` — third-party analytics loading.
-- `05b7d77` — text LCP font policy.
+- `Make llms navigation explicit` — agentic navigation (`llms.txt`).
+- `Defer first-party scripts` — parser-blocking first-party scripts.
+- `Load third-party tags after paint` — third-party analytics loading.
+- `Keep late fonts off the LCP path` — text LCP font policy.
 
 ## Validation
 
