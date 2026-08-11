@@ -53,7 +53,8 @@ python3 -m http.server 8080
 | `CNAME` | The custom domain, travelling with the published artifact. Without it the domain unbinds silently. |
 | `_headers` | The controls a static site has nowhere else to put. **Live on this host** — verify after the first deploy. |
 | `_redirects` | `www` to the apex. The predecessor lives on a domain we do not control, so its redirect cannot be served from here — see `brief.md`. |
-| `.gitignore` | Access control. The repository is the web root, so committing is publishing. |
+| `.gitignore` | Access control for anything site-shaped: markup, styles, scripts and **everything under `assets`** is published the moment it is committed. |
+| `scripts/stage-site.mjs` | What actually gets published. The repository holds the site *and* the documents describing it; this stages the artifact by rule so only site-shaped content reaches the domain, then verifies that every URL in the sitemap made it — a page that quietly did not ship looks exactly like one that did. |
 | `brief.md` | The decisions. Start here. |
 | `.github/workflows/gate.yml` | The delivery gate, and the publication origin. |
 
@@ -114,6 +115,11 @@ full list is in `brief.md` under *Absent controls*.
 **Page URLs are directory indexes** — `/fertilidad/`, not `/fertilidad`. An extensionless URL only
 resolves where the host maps it to a `.html` file, and every canonical on this site would have rested
 on that. A directory index is served by every static host there is.
+
+**The repository is public and is no longer identical to the web root.** It was made public so Pages
+could serve it on a free plan. `brief.md`, `AGENTS.md`, `README.md` and `scripts/` are readable on
+GitHub and are **not** served from `doctoracuevillas.com` — the difference between a colleague
+finding the project's internal notes and a patient finding them under her doctor's name.
 
 **Publication is off.** Three steps turn it on, in order: Settings → Pages → Source: GitHub Actions;
 DNS pointed at Pages with "Enforce HTTPS"; then set the repository variable `PUBLISH_ENABLED` to

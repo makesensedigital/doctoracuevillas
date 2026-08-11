@@ -32,7 +32,7 @@ const run = promisify(execFile);
 const HERE = dirname(fileURLToPath(import.meta.url));
 const TEMPLATE = resolve(HERE, "..");
 
-const CHECKS = ["check-config.mjs", "check-markup.mjs", "check-assets.mjs"];
+const CHECKS = ["check-config.mjs", "check-markup.mjs", "check-assets.mjs", "stage-site.mjs"];
 
 const edit = async (dir, file, from, to) => {
   const path = join(dir, file);
@@ -211,6 +211,22 @@ const FIXTURES = [
     name: "a self-hosted typeface referenced from CSS but not committed",
     check: "check-assets.mjs",
     apply: (dir) => rm(join(dir, "assets", "fonts", "figtree.woff2"), { force: true }),
+  },
+  {
+    // Everything under `assets` publishes wholesale, so a document dropped in there would be served
+    // from the practitioner's own domain and indexed under her name.
+    name: "project documentation dropped into a published directory",
+    check: "stage-site.mjs",
+    apply: (dir) => writeFile(join(dir, "assets", "notas-internas.md"), "# pendientes\n"),
+  },
+  {
+    // The expensive direction: a page that quietly did not ship looks exactly like one that did.
+    name: "a page the staging rules no longer recognise",
+    check: "stage-site.mjs",
+    apply: async (dir) => {
+      await writeFile(join(dir, "climaterio", "pagina.html"), await readFile(join(dir, "climaterio", "index.html"), "utf8"));
+      await rm(join(dir, "climaterio", "index.html"), { force: true });
+    },
   },
   {
     name: "a derived file hand-edited away from facts.js",

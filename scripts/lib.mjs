@@ -23,7 +23,7 @@ export const loadBrowserGlobal = async (path, name) => {
 };
 
 /** Every file under `root`, excluding version control and the gate's own machinery. */
-export const walk = async (root, skip = [".git", "node_modules", "scripts", ".github"]) => {
+export const walk = async (root, skip = [".git", "node_modules", "scripts", ".github", "_site"]) => {
   const out = [];
   const visit = async (dir) => {
     for (const entry of await readdir(dir, { withFileTypes: true })) {
