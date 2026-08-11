@@ -10,18 +10,25 @@ M.N. 149275 — Ministerio de Salud de la Nación, Argentina
 
 ## Motivos de consulta
 
-- **Fertilidad y salud del ciclo** — Buscás un embarazo y querés entender y tratar la causa. https://doctoracuevillas.com/fertilidad/
-- **Climaterio** — Síntomas, prevención y un plan a tu medida para esta etapa. https://doctoracuevillas.com/climaterio/
-- **Endocrinología general** — Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral. https://doctoracuevillas.com/endocrinologia/
+- [Fertilidad y salud del ciclo](https://doctoracuevillas.com/fertilidad/) — Buscás un embarazo y querés entender y tratar la causa.
+- [Climaterio](https://doctoracuevillas.com/climaterio/) — Síntomas, prevención y un plan a tu medida para esta etapa.
+- [Endocrinología general](https://doctoracuevillas.com/endocrinologia/) — Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral.
 
 ## Consultorios
 
 - Hospital Universitario Austral: Av. Juan Domingo Perón 1500, Pilar, Provincia de Buenos Aires (Turnos por los canales del hospital)
 - Centro Médico Villanueva: Complejo Vila Terra, Tigre, Provincia de Buenos Aires (Según agenda)
 
+## Secciones principales
+
+- [Quién es la doctora](https://doctoracuevillas.com/sobre-mi/) — Formación, experiencia y enfoque de atención.
+- [Cómo es la consulta y agenda](https://doctoracuevillas.com/como-es-la-consulta/) — Modalidades de atención y acceso a turnos.
+- [Contacto y ubicación](https://doctoracuevillas.com/contacto/) — Canales de contacto, consultorios y mapas.
+- [Aviso legal y política de privacidad](https://doctoracuevillas.com/privacidad/) — Tratamiento de datos, analítica y condiciones de uso.
+
 ## Contacto
 
-- Web: https://doctoracuevillas.com/
+- [Sitio oficial](https://doctoracuevillas.com/)
 - Email: guada@doctoracuevillas.com
-- https://www.instagram.com/dracuevillas/
-- https://www.hospitalaustral.edu.ar/servicios-medicos/endocrinologia/
+- [Perfil externo](https://www.instagram.com/dracuevillas/)
+- [Perfil externo](https://www.hospitalaustral.edu.ar/servicios-medicos/endocrinologia/)
