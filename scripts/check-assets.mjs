@@ -112,7 +112,10 @@ const localise = (raw) => {
   return raw.replace(/^\.?\//, "");
 };
 
-for (const file of files.filter((f) => /\.(js|json|webmanifest|xml|txt|html)$/.test(f))) {
+// CSS is in this list because a self-hosted typeface is referenced ONLY from `@font-face`, and
+// with the stylesheet unscanned every font file on the site reads as an orphan while every
+// missing one reads as present. Found by shipping three woff2 files the check could not see.
+for (const file of files.filter((f) => /\.(css|js|json|webmanifest|xml|txt|html)$/.test(f))) {
   const text = await read(file);
   for (const m of text.matchAll(REFERENCE)) {
     const target = localise(m[1]);

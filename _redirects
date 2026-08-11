@@ -1,3 +1,13 @@
+# ⚠ THIS FILE DOES NOTHING ON THE CURRENT HOST.
+#
+# GitHub Pages issues no redirects from a rules file. What it DOES do, without this file, is the one
+# redirect this site actually needs: with `doctoracuevillas.com` in CNAME, requests to
+# `www.doctoracuevillas.com` are redirected to the apex, provided the `www` DNS record points at the
+# Pages host. That is the canonical-identity rule satisfied by the host rather than by this file.
+#
+# Everything else here is kept as the specification for a future host, and as the record of what is
+# NOT being served today.
+
 # Redirects — Handbook §26.
 #
 # EVERY URL the predecessor site had that this one does not. The canonical-identity rule is not
@@ -12,7 +22,7 @@
 
 # ------------------------------------------------------------------ canonical host
 # The apex is canonical. `www` exists only to be redirected away from, so that one page is never
-# reachable at two addresses.
+# reachable at two addresses. On GitHub Pages this is done by the host, from the CNAME file.
 https://www.doctoracuevillas.com/*  https://doctoracuevillas.com/:splat  301
 
 # ------------------------------------------------------------------ what CANNOT be redirected here
@@ -28,7 +38,7 @@ https://www.doctoracuevillas.com/*  https://doctoracuevillas.com/:splat  301
 # worse: it is still indexed and still shows old prices. It is de-indexed at the provider. NEVER LINK
 # IT FROM HERE — a link would re-establish exactly the signal being removed.
 #
-# ------------------------------------------------------------------ extensionless paths
-# Not listed, deliberately: the host already resolves /fertilidad to fertilidad.html and redirects
-# the .html form to the clean one. Writing those rules by hand would duplicate behaviour that already
-# exists and would go stale the first time a page is added.
+# ------------------------------------------------------------------ page URLs
+# Not listed, deliberately, and not needed on any host: every page is a directory index, so
+# `/fertilidad/` resolves to `fertilidad/index.html` by the oldest rule static servers have. Nothing
+# here depends on a host mapping `/fertilidad` to `fertilidad.html`.

@@ -12,7 +12,7 @@
       content="Médica endocrinóloga, M.N. 149275. Especialista en climaterio y Medical Consultant en NaProTecnología (Pope Paul VI Institute, Omaha). Videoconsulta a todo el país y al exterior."
     />
 
-    <link rel="canonical" href="https://doctoracuevillas.com/sobre-mi" />
+    <link rel="canonical" href="https://doctoracuevillas.com/sobre-mi/" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
 
     <meta property="og:type" content="profile" />
@@ -23,8 +23,8 @@
       property="og:description"
       content="Médica endocrinóloga. Fertilidad, climaterio y endocrinología general."
     />
-    <meta property="og:url" content="https://doctoracuevillas.com/sobre-mi" />
-    <meta property="og:image" content="https://doctoracuevillas.com/assets/social.png" />
+    <meta property="og:url" content="https://doctoracuevillas.com/sobre-mi/" />
+    <meta property="og:image" content="https://doctoracuevillas.com/assets/social.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Dra. María Guadalupe Cuevillas, médica endocrinóloga" />
@@ -32,15 +32,27 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Sobre mí — Dra. María Guadalupe Cuevillas" />
     <meta name="twitter:description" content="Médica endocrinóloga. Fertilidad, climaterio y endocrinología general." />
-    <meta name="twitter:image" content="https://doctoracuevillas.com/assets/social.png" />
+    <meta name="twitter:image" content="https://doctoracuevillas.com/assets/social.jpg" />
 
-    <link rel="icon" href="/assets/favicon.svg?v=1" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1" />
-    <meta name="theme-color" content="#2f6b57" />
+    <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2" />
+    <meta name="theme-color" content="#fffbf9" />
+    <!-- The controls this host cannot serve as headers, expressed from inside the document instead.
+         `frame-ancestors` is NOT among them — it is ignored in a meta policy and can only arrive as
+         a response header, so on GitHub Pages this site has NO PROTECTION AGAINST FRAMING AT ALL.
+         That is recorded as an absent control in brief.md rather than left to look like an oversight. -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com" />
 
-    <link rel="stylesheet" href="/styles.css?v=1" />
-    <script src="/config.js?v=1"></script>
-    <script src="/analytics.js?v=1"></script>
+    <!-- The two faces the first screen is set in. Without this they are discovered only after the
+         stylesheet parses, and the headline's final paint waits on that — worth about a second of
+         largest-contentful-paint on a throttled phone, measured rather than assumed. -->
+    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/figtree.woff2?v=2" as="font" type="font/woff2" crossorigin />
+
+    <link rel="stylesheet" href="/styles.css?v=2" />
+    <script src="/config.js?v=2"></script>
+    <script src="/analytics.js?v=2"></script>
   </head>
 
   <body data-puerta="sobre-mi">
@@ -49,7 +61,7 @@
     <header class="nav">
       <div class="wrap nav__inner">
         <a class="nav__brand" href="/">
-          <img src="/assets/favicon.svg?v=1" alt="" width="28" height="28" />
+          <img src="/assets/favicon.svg?v=2" alt="" width="28" height="28" />
           Dra. Guadalupe Cuevillas
         </a>
 
@@ -66,12 +78,12 @@
         <nav aria-label="Principal">
           <!-- BEGIN GENERATED: nav -->
           <ul id="nav-menu" class="nav__menu">
-            <li><a href="/fertilidad">Fertilidad</a></li>
-            <li><a href="/climaterio">Climaterio</a></li>
-            <li><a href="/endocrinologia">Endocrinología</a></li>
-            <li><a href="/sobre-mi" aria-current="page">Sobre mí</a></li>
-            <li><a href="/como-es-la-consulta">La consulta</a></li>
-            <li><a href="/contacto">Contacto</a></li>
+            <li><a href="/fertilidad/">Fertilidad</a></li>
+            <li><a href="/climaterio/">Climaterio</a></li>
+            <li><a href="/endocrinologia/">Endocrinología</a></li>
+            <li><a href="/sobre-mi/" aria-current="page">Sobre mí</a></li>
+            <li><a href="/como-es-la-consulta/">La consulta</a></li>
+            <li><a href="/contacto/">Contacto</a></li>
           </ul>
           <!-- END GENERATED: nav -->
         </nav>
@@ -97,7 +109,7 @@
             <figure class="figure">
               <img
                 class="portrait"
-                src="/assets/guada-sobre-mi.webp?v=1"
+                src="/assets/guada-sobre-mi.webp?v=2"
                 alt="Retrato de la Dra. María Guadalupe Cuevillas"
                 width="760"
                 height="950"
@@ -139,7 +151,7 @@
           <h2>Dónde trabajo y dónde trabajé</h2>
           <p>
             Soy médica de staff del Servicio de Endocrinología del
-            <a data-profile="hospitalaustral" href="/contacto">Hospital Universitario Austral</a>, en
+            <a data-profile="hospitalaustral" href="/contacto/">Hospital Universitario Austral</a>, en
             Pilar, y atiendo en el Centro Médico Villanueva, en Tigre.
           </p>
           <p>
@@ -174,7 +186,7 @@
             no se puede resolver desde acá y derivarte.
           </p>
           <div class="actions">
-            <a class="btn" href="/como-es-la-consulta" data-analytics-event="cta_click" data-analytics-label="sobre_mi_consulta"
+            <a class="btn" href="/como-es-la-consulta/" data-analytics-event="cta_click" data-analytics-label="sobre_mi_consulta"
               >Cómo es la consulta</a
             >
             <a
@@ -196,10 +208,10 @@
           <div>
             <h2>Consultas</h2>
             <ul>
-              <li><a href="/fertilidad">Fertilidad y salud del ciclo</a></li>
-              <li><a href="/climaterio">Climaterio</a></li>
-              <li><a href="/endocrinologia">Endocrinología general</a></li>
-              <li><a href="/como-es-la-consulta">Cómo es la consulta</a></li>
+              <li><a href="/fertilidad/">Fertilidad y salud del ciclo</a></li>
+              <li><a href="/climaterio/">Climaterio</a></li>
+              <li><a href="/endocrinologia/">Endocrinología general</a></li>
+              <li><a href="/como-es-la-consulta/">Cómo es la consulta</a></li>
             </ul>
           </div>
           <div>
@@ -214,9 +226,9 @@
             <h2>Contacto</h2>
             <ul>
               <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
-              <li><a data-mailbox href="/contacto" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
-              <li><a data-profile="instagram" href="/contacto">Instagram @dracuevillas</a></li>
-              <li><a href="/contacto">Ubicaciones y mapas</a></li>
+              <li><a data-mailbox href="/contacto/" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
+              <li><a data-profile="instagram" href="/contacto/">Instagram @dracuevillas</a></li>
+              <li><a href="/contacto/">Ubicaciones y mapas</a></li>
             </ul>
           </div>
         </div>
@@ -225,7 +237,7 @@
           <p><strong>Dra. María Guadalupe Cuevillas</strong> — Médica endocrinóloga · M.N. 149275</p>
           <p>
             El contenido de este sitio es informativo y no reemplaza la consulta médica.
-            <a href="/privacidad">Política de privacidad y aviso legal</a>.
+            <a href="/privacidad/">Política de privacidad y aviso legal</a>.
           </p>
         </div>
         <!-- END GENERATED: footer -->
@@ -247,7 +259,7 @@
       <p>
         Usamos cookies de medición para entender cómo se usa esta página. Podés rechazarlas y el
         sitio funciona exactamente igual. Está explicado en la
-        <a href="/privacidad">política de privacidad</a>.
+        <a href="/privacidad/">política de privacidad</a>.
       </p>
       <div class="actions">
         <button class="btn btn--ghost" type="button" data-consent-decline>Rechazar</button>
@@ -255,7 +267,7 @@
       </div>
     </div>
 
-    <script src="/facts.js?v=1"></script>
-    <script src="/site.js?v=1"></script>
+    <script src="/facts.js?v=2"></script>
+    <script src="/site.js?v=2"></script>
   </body>
 </html>

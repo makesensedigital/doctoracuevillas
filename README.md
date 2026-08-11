@@ -48,7 +48,9 @@ python3 -m http.server 8080
 | `analytics.js` | Consent default before the container; `trackEvent` for outcomes, `trackIntent` for departures. |
 | `site.js` | Builds every external destination from `config.js`, so the markup carries a key and never a URL. |
 | `*.html` | The nine pages. Blocks marked `BEGIN GENERATED` — the structured data, the door cards, and the nav and footer of every page — are written by `build-derived.mjs`. Never hand-edit them. |
-| `scripts/serve.mjs` | The local server the gate runs against, mirroring the host's routing. A test fixture; nothing depends on it at runtime. |
+| `scripts/serve.mjs` | The local server the gate runs against. Mirrors the host: directory indexes, the trailing-slash redirect, the site's own 404 body, and gzip on text — without that last one the performance budget is measured against a payload no visitor receives. A test fixture; nothing depends on it at runtime. |
+| `assets/fonts/` | Fraunces and Figtree, self-hosted, variable axes pinned at the values used: 92 KB for three faces instead of 264 KB. Preloaded in every page — they are what the first screen is set in. |
+| `CNAME` | The custom domain, travelling with the published artifact. Without it the domain unbinds silently. |
 | `_headers` | The controls a static site has nowhere else to put. **Live on this host** — verify after the first deploy. |
 | `_redirects` | `www` to the apex. The predecessor lives on a domain we do not control, so its redirect cannot be served from here — see `brief.md`. |
 | `.gitignore` | Access control. The repository is the web root, so committing is publishing. |
@@ -96,20 +98,27 @@ If the document carries a fact that fits no field, that is a question rather tha
 it loose in the markup — and if it conflicts with a rule, see *Input from outside this repository*
 in [`AGENTS.md`](AGENTS.md).
 
-## The host — chosen before the markup, not after
+## The host
 
-**Cloudflare Pages**, by direct upload from the delivery pipeline. The reasoning is in `brief.md`;
-the short form is that it can serve custom response headers and issue real redirects, and GitHub
-Pages can do neither — which would have made `_headers` and `_redirects` inert files, leaving a
-medical site with no content policy and **no protection against framing at all**.
+**GitHub Pages**, published by the `publish` job in the gate. Cloudflare Pages was chosen first and
+reversed, because it required moving the DNS zone. Hosting is the client's call; what it costs is
+declared rather than absorbed.
 
-Deployment is by direct upload from the `publish` job rather than through Cloudflare's own Git
-integration, deliberately. The integration deploys on push, which makes the push the deploy and
-leaves no point at which anything can refuse.
+**What this host puts out of reach.** It serves no custom response headers, so `_headers` is inert —
+and it says so, in capitals, at the top of the file. The recoverable half moved into a
+`<meta http-equiv="Content-Security-Policy">` and a `<meta name="referrer">` in every page. The
+irrecoverable half is `frame-ancestors`, which a meta policy ignores: **this site has no protection
+against being framed**, and on a page giving medical information that is the one that matters. The
+full list is in `brief.md` under *Absent controls*.
 
-**Publication is off.** The `publish` job runs only when the repository variable `PUBLISH_ENABLED`
-is `true`, and then refuses to proceed without both Cloudflare secrets. Merging to `main` today
-publishes nothing.
+**Page URLs are directory indexes** — `/fertilidad/`, not `/fertilidad`. An extensionless URL only
+resolves where the host maps it to a `.html` file, and every canonical on this site would have rested
+on that. A directory index is served by every static host there is.
+
+**Publication is off.** Three steps turn it on, in order: Settings → Pages → Source: GitHub Actions;
+DNS pointed at Pages with "Enforce HTTPS"; then set the repository variable `PUBLISH_ENABLED` to
+`true`. Until the third, merging to `main` publishes nothing. The job refuses to deploy without the
+`CNAME` file, because publishing from a workflow without it unbinds the custom domain silently.
 
 ## Ownership and the exit path
 
@@ -123,7 +132,7 @@ exists — which is how a client's domain becomes claimable by a stranger.
 | DNS zone | Juan (to move to Cloudflare) | Moves with the domain |
 | Domain verification | Juan | Re-verified by whoever holds the hosting account |
 | Repository | `makesensedigital` organisation | Transfer, or fork to Guadalupe's account. The site is nine static files; it does not need the org |
-| Hosting account | Juan (Cloudflare, to create) | Cloudflare Pages project transfer, or redeploy from this repository into a new account — the artifact is the repository |
+| Hosting account | `makesensedigital` (GitHub Pages) | The artifact is the repository: transfer the repo and Pages follows |
 | Analytics property | Juan (not yet created) | Add Guadalupe as an administrator on the GA4 property at creation, not later |
 | Tag container | Juan — `GTM-TCHKKB37` | Add Guadalupe as a container administrator |
 | Form receiver | **None** — this site presents no form | n/a |

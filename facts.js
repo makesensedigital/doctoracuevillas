@@ -87,7 +87,7 @@
     offerings: [
       {
         id: "fertilidad",
-        url: "/fertilidad",
+        url: "/fertilidad/",
         navLabel: "Fertilidad",
         name: "Fertilidad y salud del ciclo",
         summary: "Buscás un embarazo y querés entender y tratar la causa.",
@@ -96,7 +96,7 @@
       },
       {
         id: "climaterio",
-        url: "/climaterio",
+        url: "/climaterio/",
         navLabel: "Climaterio",
         name: "Climaterio",
         summary: "Síntomas, prevención y un plan a tu medida para esta etapa.",
@@ -105,7 +105,7 @@
       },
       {
         id: "endocrinologia",
-        url: "/endocrinologia",
+        url: "/endocrinologia/",
         navLabel: "Endocrinología",
         name: "Endocrinología general",
         summary: "Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral.",

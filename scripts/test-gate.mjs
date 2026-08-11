@@ -76,7 +76,7 @@ const FIXTURES = [
   {
     name: "the asset version bumped in config but not in the markup",
     check: "check-config.mjs",
-    apply: (dir) => edit(dir, "config.js", "assetVersion: 1", "assetVersion: 2"),
+    apply: (dir) => edit(dir, "config.js", "assetVersion: 2", "assetVersion: 3"),
   },
   {
     // The defect this site is actually exposed to. It presents no form and declares no receiver,
@@ -87,7 +87,7 @@ const FIXTURES = [
     apply: (dir) =>
       edit(
         dir,
-        "contacto.html",
+        "contacto/index.html",
         "<h2>Canales</h2>",
         '<h2>Canales</h2>\n<form><label for="x">Nombre</label><input id="x" name="x" /></form>',
       ),
@@ -119,8 +119,8 @@ const FIXTURES = [
       edit(
         dir,
         "index.html",
-        'og:image" content="https://doctoracuevillas.com/assets/social.png"',
-        'og:image" content="assets/social.png"',
+        'og:image" content="https://doctoracuevillas.com/assets/social.jpg"',
+        'og:image" content="assets/social.jpg"',
       ),
   },
   {
@@ -154,7 +154,7 @@ const FIXTURES = [
         dir,
         "index.html",
         "<h2>Quién te atiende</h2>",
-        '<h2>Quién te atiende</h2>\n<img src="/assets/social.png" width="100" height="100">',
+        '<h2>Quién te atiende</h2>\n<img src="/assets/social.jpg" width="100" height="100">',
       ),
   },
   {
@@ -175,7 +175,7 @@ const FIXTURES = [
       edit(
         dir,
         "index.html",
-        '<link rel="stylesheet" href="/styles.css?v=1" />',
+        '<link rel="stylesheet" href="/styles.css?v=2" />',
         '<link rel="stylesheet" href="https://fonts.example-cdn.test/css?family=X" />\n    <link rel="stylesheet" href="/styles.css?v=1" />',
       ),
   },
@@ -205,6 +205,14 @@ const FIXTURES = [
     apply: (dir) => rm(join(dir, "assets", "guada-retrato.webp"), { force: true }),
   },
   {
+    // A typeface is referenced ONLY from the stylesheet, which the reference scan did not read
+    // until this site self-hosted one. Without this fixture that blind spot returns silently: every
+    // font reads as an orphan, and a missing one raises nothing at all.
+    name: "a self-hosted typeface referenced from CSS but not committed",
+    check: "check-assets.mjs",
+    apply: (dir) => rm(join(dir, "assets", "fonts", "figtree.woff2"), { force: true }),
+  },
+  {
     name: "a derived file hand-edited away from facts.js",
     check: "build-derived.mjs",
     args: ["--check"],
@@ -217,7 +225,7 @@ const FIXTURES = [
     name: "a generated footer hand-edited on one page only",
     check: "build-derived.mjs",
     args: ["--check"],
-    apply: (dir) => edit(dir, "contacto.html", "M.N. 149275", "M.N. 000000"),
+    apply: (dir) => edit(dir, "contacto/index.html", "M.N. 149275", "M.N. 000000"),
   },
 ];
 

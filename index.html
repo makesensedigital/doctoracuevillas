@@ -39,7 +39,7 @@
       content="Salud hormonal femenina en todas las etapas de la vida. Fertilidad, climaterio y endocrinología general."
     />
     <meta property="og:url" content="https://doctoracuevillas.com/" />
-    <meta property="og:image" content="https://doctoracuevillas.com/assets/social.png" />
+    <meta property="og:image" content="https://doctoracuevillas.com/assets/social.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Dra. María Guadalupe Cuevillas, médica endocrinóloga" />
@@ -50,24 +50,37 @@
       name="twitter:description"
       content="Salud hormonal femenina en todas las etapas de la vida."
     />
-    <meta name="twitter:image" content="https://doctoracuevillas.com/assets/social.png" />
+    <meta name="twitter:image" content="https://doctoracuevillas.com/assets/social.jpg" />
 
-    <link rel="icon" href="/assets/favicon.svg?v=1" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1" />
-    <meta name="theme-color" content="#2f6b57" />
+    <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2" />
+    <meta name="theme-color" content="#fffbf9" />
+    <!-- The controls this host cannot serve as headers, expressed from inside the document instead.
+         `frame-ancestors` is NOT among them — it is ignored in a meta policy and can only arrive as
+         a response header, so on GitHub Pages this site has NO PROTECTION AGAINST FRAMING AT ALL.
+         That is recorded as an absent control in brief.md rather than left to look like an oversight. -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com" />
 
-    <!-- Typefaces are self-hosted — in this case they are the system's own, so nothing is fetched at
-         all. A remotely hosted typeface contacts a third party on first render, before any consent
+    <!-- The typefaces are self-hosted in /assets/fonts, with their variable axes pinned at the
+         values actually used: 92 KB for three faces instead of 264 KB for design space nobody varies.
+         A remotely hosted typeface would contact a third party on first render, before any consent
          choice, and with no server there is no way to proxy it (§26). -->
 
     <!-- Versioned from config.assetVersion. No build means no content-addressed filenames, so this
          is the only cache invalidation there is; the gate checks the two agree. -->
-    <link rel="stylesheet" href="/styles.css?v=1" />
+    <!-- The two faces the first screen is set in. Without this they are discovered only after the
+         stylesheet parses, and the headline's final paint waits on that — worth about a second of
+         largest-contentful-paint on a throttled phone, measured rather than assumed. -->
+    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/figtree.woff2?v=2" as="font" type="font/woff2" crossorigin />
+
+    <link rel="stylesheet" href="/styles.css?v=2" />
 
     <!-- Order is the mechanism: config first, so the consent default executes before the tag
          container loads. Reversed, a banner is decoration — the tags have already fired. -->
-    <script src="/config.js?v=1"></script>
-    <script src="/analytics.js?v=1"></script>
+    <script src="/config.js?v=2"></script>
+    <script src="/analytics.js?v=2"></script>
 
     <!-- BEGIN GENERATED: json-ld -->
     <script type="application/ld+json">
@@ -119,7 +132,7 @@
               "@type": "Service",
               "name": "Fertilidad y salud del ciclo",
               "description": "Buscás un embarazo y querés entender y tratar la causa.",
-              "url": "https://doctoracuevillas.com/fertilidad"
+              "url": "https://doctoracuevillas.com/fertilidad/"
             }
           },
           {
@@ -128,7 +141,7 @@
               "@type": "Service",
               "name": "Climaterio",
               "description": "Síntomas, prevención y un plan a tu medida para esta etapa.",
-              "url": "https://doctoracuevillas.com/climaterio"
+              "url": "https://doctoracuevillas.com/climaterio/"
             }
           },
           {
@@ -137,7 +150,7 @@
               "@type": "Service",
               "name": "Endocrinología general",
               "description": "Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral.",
-              "url": "https://doctoracuevillas.com/endocrinologia"
+              "url": "https://doctoracuevillas.com/endocrinologia/"
             }
           }
         ]
@@ -152,7 +165,7 @@
     <header class="nav">
       <div class="wrap nav__inner">
         <a class="nav__brand" href="/">
-          <img src="/assets/favicon.svg?v=1" alt="" width="28" height="28" />
+          <img src="/assets/favicon.svg?v=2" alt="" width="28" height="28" />
           Dra. Guadalupe Cuevillas
         </a>
 
@@ -169,12 +182,12 @@
         <nav aria-label="Principal">
           <!-- BEGIN GENERATED: nav -->
           <ul id="nav-menu" class="nav__menu">
-            <li><a href="/fertilidad">Fertilidad</a></li>
-            <li><a href="/climaterio">Climaterio</a></li>
-            <li><a href="/endocrinologia">Endocrinología</a></li>
-            <li><a href="/sobre-mi">Sobre mí</a></li>
-            <li><a href="/como-es-la-consulta">La consulta</a></li>
-            <li><a href="/contacto">Contacto</a></li>
+            <li><a href="/fertilidad/">Fertilidad</a></li>
+            <li><a href="/climaterio/">Climaterio</a></li>
+            <li><a href="/endocrinologia/">Endocrinología</a></li>
+            <li><a href="/sobre-mi/">Sobre mí</a></li>
+            <li><a href="/como-es-la-consulta/">La consulta</a></li>
+            <li><a href="/contacto/">Contacto</a></li>
           </ul>
           <!-- END GENERATED: nav -->
         </nav>
@@ -189,16 +202,11 @@
           <div class="hero__grid">
             <div>
               <span class="kicker">Fertilidad · Climaterio · Endocrinología</span>
-              <h1>Salud hormonal femenina en todas las etapas de la vida</h1>
-              <p class="manifesto">
-                “El ciclo menstrual y la fertilidad no son eventos aislados: son el reflejo directo
-                de la salud endócrina, metabólica y general.”
-              </p>
+              <h1>Tu cuerpo no está fallando. Está <em>diciendo algo</em>.</h1>
               <p class="lede">
-                Soy médica endocrinóloga. Trabajo para entender qué está pasando en tu cuerpo y
-                corregir la causa, en lugar de silenciar el síntoma. Atiendo por videoconsulta
-                a pacientes de cualquier parte del país y del exterior, y en consultorio en Pilar y
-                Tigre.
+                Soy Guadalupe, médica endocrinóloga. Trabajo para entender qué está pasando adentro
+                tuyo y corregir la causa, en lugar de silenciar el síntoma. Te escucho sin apuro y te
+                vas con un plan que podés entender.
               </p>
               <div class="actions">
                 <a class="btn" href="#puertas" data-analytics-event="cta_click" data-analytics-label="hero_puertas"
@@ -215,11 +223,20 @@
                   >Escribime por WhatsApp</a
                 >
               </div>
+              <div class="cred">
+                <span>M.N. 149275</span>
+                <span>Especialista en climaterio</span>
+                <span>Videoconsulta a todo el país y al exterior</span>
+              </div>
+              <p class="quiet">
+                Atiendo en el Hospital Universitario Austral (Pilar), en Centro Médico Villanueva
+                (Tigre) y por videollamada.
+              </p>
             </div>
             <figure class="figure">
               <img
                 class="portrait"
-                src="/assets/guada-retrato.webp?v=1"
+                src="/assets/guada-retrato.webp?v=2"
                 alt="La Dra. María Guadalupe Cuevillas en su consultorio"
                 width="760"
                 height="950"
@@ -247,7 +264,7 @@
               <h3>Fertilidad y salud del ciclo</h3>
               <p class="card__lead">Buscás un embarazo y querés entender y tratar la causa.</p>
               <p>SOP y resistencia a la insulina, sospecha de endometriosis, tiroides y prolactina, abortos recurrentes, factor masculino y salida de anticonceptivos.</p>
-              <a class="card__go" href="/fertilidad" data-analytics-event="puerta" data-analytics-label="fertilidad"
+              <a class="card__go" href="/fertilidad/" data-analytics-event="puerta" data-analytics-label="fertilidad"
                 >Entrar a fertilidad y salud del ciclo<span aria-hidden="true"> →</span></a
               >
             </article>
@@ -255,7 +272,7 @@
               <h3>Climaterio</h3>
               <p class="card__lead">Síntomas, prevención y un plan a tu medida para esta etapa.</p>
               <p>Sofocos y trastornos del sueño, salud ósea y cardiovascular, metabolismo, salud sexual, terapia hormonal o alternativas no hormonales.</p>
-              <a class="card__go" href="/climaterio" data-analytics-event="puerta" data-analytics-label="climaterio"
+              <a class="card__go" href="/climaterio/" data-analytics-event="puerta" data-analytics-label="climaterio"
                 >Entrar a climaterio<span aria-hidden="true"> →</span></a
               >
             </article>
@@ -263,7 +280,7 @@
               <h3>Endocrinología general</h3>
               <p class="card__lead">Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral.</p>
               <p>Hipotiroidismo y Hashimoto, descenso de peso y resistencia a la insulina, osteoporosis y salud ósea, alteraciones del ciclo.</p>
-              <a class="card__go" href="/endocrinologia" data-analytics-event="puerta" data-analytics-label="endocrinologia"
+              <a class="card__go" href="/endocrinologia/" data-analytics-event="puerta" data-analytics-label="endocrinologia"
                 >Entrar a endocrinología general<span aria-hidden="true"> →</span></a
               >
             </article>
@@ -275,6 +292,10 @@
       <section id="credenciales">
         <div class="wrap">
           <h2>Quién te atiende</h2>
+          <p class="manifesto">
+            “El ciclo menstrual y la fertilidad no son eventos aislados: son el reflejo directo de la
+            salud endócrina, metabólica y general.”
+          </p>
           <p>
             Médica endocrinóloga formada en la Universidad de Buenos Aires, con residencia en el
             Hospital Álvarez. Lo que sigue es la formación que sostiene cada una de las tres puertas.
@@ -292,7 +313,7 @@
             </li>
           </ul>
           <p class="crosslink">
-            <a href="/sobre-mi">Leer la formación completa y cómo trabajo →</a>
+            <a href="/sobre-mi/">Leer la formación completa y cómo trabajo →</a>
           </p>
         </div>
       </section>
@@ -358,10 +379,10 @@
           <div>
             <h2>Consultas</h2>
             <ul>
-              <li><a href="/fertilidad">Fertilidad y salud del ciclo</a></li>
-              <li><a href="/climaterio">Climaterio</a></li>
-              <li><a href="/endocrinologia">Endocrinología general</a></li>
-              <li><a href="/como-es-la-consulta">Cómo es la consulta</a></li>
+              <li><a href="/fertilidad/">Fertilidad y salud del ciclo</a></li>
+              <li><a href="/climaterio/">Climaterio</a></li>
+              <li><a href="/endocrinologia/">Endocrinología general</a></li>
+              <li><a href="/como-es-la-consulta/">Cómo es la consulta</a></li>
             </ul>
           </div>
           <div>
@@ -376,9 +397,9 @@
             <h2>Contacto</h2>
             <ul>
               <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
-              <li><a data-mailbox href="/contacto" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
-              <li><a data-profile="instagram" href="/contacto">Instagram @dracuevillas</a></li>
-              <li><a href="/contacto">Ubicaciones y mapas</a></li>
+              <li><a data-mailbox href="/contacto/" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
+              <li><a data-profile="instagram" href="/contacto/">Instagram @dracuevillas</a></li>
+              <li><a href="/contacto/">Ubicaciones y mapas</a></li>
             </ul>
           </div>
         </div>
@@ -387,7 +408,7 @@
           <p><strong>Dra. María Guadalupe Cuevillas</strong> — Médica endocrinóloga · M.N. 149275</p>
           <p>
             El contenido de este sitio es informativo y no reemplaza la consulta médica.
-            <a href="/privacidad">Política de privacidad y aviso legal</a>.
+            <a href="/privacidad/">Política de privacidad y aviso legal</a>.
           </p>
         </div>
         <!-- END GENERATED: footer -->
@@ -413,7 +434,7 @@
       <p>
         Usamos cookies de medición para entender cómo se usa esta página. Podés rechazarlas y el
         sitio funciona exactamente igual. Está explicado en la
-        <a href="/privacidad">política de privacidad</a>.
+        <a href="/privacidad/">política de privacidad</a>.
       </p>
       <div class="actions">
         <button class="btn btn--ghost" type="button" data-consent-decline>Rechazar</button>
@@ -421,7 +442,7 @@
       </div>
     </div>
 
-    <script src="/facts.js?v=1"></script>
-    <script src="/site.js?v=1"></script>
+    <script src="/facts.js?v=2"></script>
+    <script src="/site.js?v=2"></script>
   </body>
 </html>

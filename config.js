@@ -21,9 +21,10 @@
     // The canonical origin, with protocol and no trailing slash. Absolute URLs in the head, the
     // sitemap and the structured data are all derived from this.
     //
-    // The apex is canonical; `www` redirects to it in `_redirects`. Extensionless paths are the
-    // canonical form because the host resolves `/fertilidad` to `fertilidad.html` and redirects the
-    // `.html` form away — see brief.md, the hosting decision.
+    // The apex is canonical. Every page except the home page is a DIRECTORY INDEX, so its URL ends
+    // in a slash — `/fertilidad/`, not `/fertilidad`. That is not cosmetic: an extensionless URL
+    // only resolves where the host maps it to a `.html` file, which some hosts do and some do not,
+    // and the canonical URL of every page here would have been resting on that. See brief.md.
     canonicalOrigin: "https://doctoracuevillas.com",
 
     // -------------------------------------------------------------------- contact
@@ -111,7 +112,7 @@
         "container. Argentine law does not require prior consent for analytics cookies; this site " +
         "asks anyway because its audience is patients and the subject matter is health, and the " +
         "decision was taken to hold the stricter line rather than the sufficient one",
-      privacyUrl: "/privacidad",
+      privacyUrl: "/privacidad/",
     },
 
     // -------------------------------------------------------------------- conversion receiver
@@ -145,7 +146,7 @@
     // -------------------------------------------------------------------- assets
     // No build means no content-addressed filenames, so cache invalidation is manual. Bump this on
     // any change to a style, script or image; `?v=` is appended from here and nowhere else.
-    assetVersion: 1,
+    assetVersion: 2,
   };
 
   root.SITE_CONFIG = CONFIG;

@@ -10,9 +10,9 @@ M.N. 149275 — Ministerio de Salud de la Nación, Argentina
 
 ## Motivos de consulta
 
-- **Fertilidad y salud del ciclo** — Buscás un embarazo y querés entender y tratar la causa. https://doctoracuevillas.com/fertilidad
-- **Climaterio** — Síntomas, prevención y un plan a tu medida para esta etapa. https://doctoracuevillas.com/climaterio
-- **Endocrinología general** — Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral. https://doctoracuevillas.com/endocrinologia
+- **Fertilidad y salud del ciclo** — Buscás un embarazo y querés entender y tratar la causa. https://doctoracuevillas.com/fertilidad/
+- **Climaterio** — Síntomas, prevención y un plan a tu medida para esta etapa. https://doctoracuevillas.com/climaterio/
+- **Endocrinología general** — Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral. https://doctoracuevillas.com/endocrinologia/
 
 ## Consultorios
 

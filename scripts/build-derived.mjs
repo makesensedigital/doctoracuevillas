@@ -121,9 +121,9 @@ const offeringsMarkup = () => {
 // The navigation is site structure rather than a business fact, so its editorial entries are
 // declared here — but the three doors come from facts.js, because their names are.
 const EDITORIAL = [
-  { href: "/sobre-mi", label: "Sobre mí" },
-  { href: "/como-es-la-consulta", label: "La consulta" },
-  { href: "/contacto", label: "Contacto" },
+  { href: "/sobre-mi/", label: "Sobre mí" },
+  { href: "/como-es-la-consulta/", label: "La consulta" },
+  { href: "/contacto/", label: "Contacto" },
 ];
 
 const navEntries = () => [
@@ -157,7 +157,7 @@ const footerMarkup = () => {
     <h2>Consultas</h2>
     <ul>
 ${doors}
-      <li><a href="/como-es-la-consulta">Cómo es la consulta</a></li>
+      <li><a href="/como-es-la-consulta/">Cómo es la consulta</a></li>
     </ul>
   </div>
   <div>
@@ -171,9 +171,9 @@ ${rooms}
     <h2>Contacto</h2>
     <ul>
       <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
-      <li><a data-mailbox href="/contacto" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
-      <li><a data-profile="instagram" href="/contacto">Instagram @dracuevillas</a></li>
-      <li><a href="/contacto">Ubicaciones y mapas</a></li>
+      <li><a data-mailbox href="/contacto/" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
+      <li><a data-profile="instagram" href="/contacto/">Instagram @dracuevillas</a></li>
+      <li><a href="/contacto/">Ubicaciones y mapas</a></li>
     </ul>
   </div>
 </div>
@@ -182,7 +182,7 @@ ${rooms}
   <p><strong>${esc(facts.name)}</strong> — Médica endocrinóloga${reg}</p>
   <p>
     El contenido de este sitio es informativo y no reemplaza la consulta médica.
-    <a href="/privacidad">Política de privacidad y aviso legal</a>.
+    <a href="/privacidad/">Política de privacidad y aviso legal</a>.
   </p>
 </div>`;
 };
@@ -307,27 +307,39 @@ const replaceBlock = (text, name, body) => {
 };
 
 // ------------------------------------------------------------------ run
+//
+// Every page except the home page and the 404 lives in its own directory as `index.html`, so its URL
+// is `/fertilidad/` and no host has to guess. That is not a cosmetic choice: an extensionless URL
+// like `/fertilidad` only works where the server maps it to `fertilidad.html`, which some hosts do
+// and others do not, and the canonical URL of every page on this site would have been resting on
+// that. A directory index is served by every static host there is.
 const { readdir } = await import("node:fs/promises");
-const entries = await readdir(ROOT, { withFileTypes: true });
-const pages = [];
-for (const e of entries) {
-  if (!e.isFile() || !e.name.endsWith(".html")) continue;
-  const text = await read(join(ROOT, e.name));
-  if (/<meta\s+name="robots"[^>]*content="[^"]*noindex/i.test(text)) continue;
-  // Extensionless, because that is the canonical form the host serves — it resolves `/fertilidad`
-  // to `fertilidad.html` and redirects the `.html` form away. A sitemap listing a URL that redirects
-  // is a sitemap pointing at the wrong page.
-  pages.push(e.name === "index.html" ? "/" : `/${e.name.replace(/\.html$/, "")}`);
-}
-pages.sort((a, b) => (a === "/" ? -1 : b === "/" ? 1 : a.localeCompare(b)));
 
-// Every document gets the blocks it declares, and only those. A page that carries no `nav` marker
-// simply does not have one — the generator never invents structure a page did not ask for.
+const documentsOnDisk = async () => {
+  const found = [];
+  for (const e of await readdir(ROOT, { withFileTypes: true })) {
+    if (e.isFile() && e.name.endsWith(".html")) {
+      found.push({ file: e.name, route: e.name === "index.html" ? "/" : `/${e.name}` });
+      continue;
+    }
+    if (!e.isDirectory() || e.name.startsWith(".") || ["assets", "scripts"].includes(e.name)) continue;
+    const inner = await readdir(join(ROOT, e.name), { withFileTypes: true });
+    if (inner.some((i) => i.isFile() && i.name === "index.html")) {
+      found.push({ file: `${e.name}/index.html`, route: `/${e.name}/` });
+    }
+  }
+  return found.sort((a, b) => (a.route === "/" ? -1 : b.route === "/" ? 1 : a.route.localeCompare(b.route)));
+};
+
+const found = await documentsOnDisk();
+
+// Only pages meant to be found. Anything carrying `noindex` stays out of the sitemap — a sitemap
+// that lists a noindex page sends a crawler two contradictory instructions about the same URL.
+const pages = [];
 const documents = [];
-for (const e of entries) {
-  if (!e.isFile() || !e.name.endsWith(".html")) continue;
-  let text = await read(join(ROOT, e.name));
-  const path = e.name === "index.html" ? "/" : `/${e.name.replace(/\.html$/, "")}`;
+for (const { file, route } of found) {
+  let text = await read(join(ROOT, file));
+  if (!/<meta\s+name="robots"[^>]*content="[^"]*noindex/i.test(text)) pages.push(route);
 
   if (hasBlock(text, "json-ld")) {
     text = replaceBlock(
@@ -340,10 +352,10 @@ for (const e of entries) {
     );
   }
   if (hasBlock(text, "offerings")) text = replaceBlock(text, "offerings", offeringsMarkup());
-  if (hasBlock(text, "nav")) text = replaceBlock(text, "nav", navMarkup(path));
+  if (hasBlock(text, "nav")) text = replaceBlock(text, "nav", navMarkup(route));
   if (hasBlock(text, "footer")) text = replaceBlock(text, "footer", footerMarkup());
 
-  documents.push([e.name, text]);
+  documents.push([file, text]);
 }
 
 const artifacts = [

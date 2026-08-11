@@ -1,6 +1,6 @@
 # Brief — doctoracuevillas.com
 
-**Version 1.0 · 2026-08-09 · Owner: María Guadalupe Cuevillas (site), Juan (infrastructure)**
+**Version 2.0 · 2026-08-10 · Owner: María Guadalupe Cuevillas (site), Juan (infrastructure)**
 
 The specification is source code, not documentation: when an agent does the building, this file is
 the literal input to the system that produces the software. It is versioned with the code that comes
@@ -18,11 +18,12 @@ section 5 below.
 | Decision | What was decided | Who | When |
 |---|---|---|---|
 | Canonical domain | `doctoracuevillas.com`, apex canonical, `www` redirects to it | Client brief 1.4 | 2026-08-09 |
-| Hosting, and what it puts out of reach | **Cloudflare Pages**, direct upload from the delivery pipeline. Chosen over GitHub Pages because GitHub Pages serves no custom response headers and issues no real redirects, which would make `_headers` and `_redirects` inert — no content policy and **no protection against framing at all** on a site that gives medical information. What it puts out of reach: nothing this site needs. What it costs: one more account to own and two repository secrets. | Juan | 2026-08-09 |
+| Hosting, and what it puts out of reach | **GitHub Pages**, published by the delivery workflow. Cloudflare Pages was chosen first and reversed: it required moving the DNS zone, which is not acceptable. **What it puts out of reach is real and is listed below under "Absent controls" — it is not nothing.** What it costs: no new account, no new secret. | Juan | 2026-08-10 |
+| Page URLs | Every page except the home page and the 404 is a **directory index**, so its URL ends in a slash: `/fertilidad/`. An extensionless `/fertilidad` only resolves where the host maps it to a `.html` file — some do, some do not — and the canonical URL of every page would have rested on that. A directory index is served by every static host there is, so this survives a change of host untouched. | Claude | 2026-08-10 |
+| Visual identity | **Warm first, serious second.** Sage-on-white with hairline rules and monospaced captions was built and rejected: it read as a newspaper, which is wrong for a practice whose patients arrive frightened. Warmth is carried by ground temperature, generous radii, soft panels and Fraunces with its SOFT/WONK axes open; seriousness by restraint and by credentials placed where they answer a question. | Juan | 2026-08-10 |
 | Primary conversion | **There is no verified primary conversion, and that is a finding rather than an omission.** All three conversion paths — the scheduler, the messaging inbox, the mailing list — complete in systems the practice controls but which this site cannot observe. Every one is therefore measured as an INTENT. See the measurement contract. | §26 | 2026-08-09 |
 | Copy language and register | Rioplatense Spanish, voseo, second person. Warm, professional, never promissory. Code, comments and this file in English. | Client brief 1.4 | 2026-08-09 |
 | Terminology | Visible copy always says **climaterio**. "Menopausia" appears only in `<title>` and `meta description`, because that is what patients search for. `/climaterio` opens by teaching the difference, which converts the mismatch into authority instead of confusion. | Client brief 1.4 §2.7 | 2026-08-09 |
-| Identity | Designed from zero: sage green on warm paper, clay accent, serif display over a humanist sans, all from the system stack so nothing is fetched from a third party. One signature element — `.signature`, a continuous hairline cycle curve — used four times in the whole site. | Claude, approved by Juan | 2026-08-09 |
 | Photography | Five phone photographs of the practitioner, supplied 2026-08-09. Three are used. **These are not a professional session** — see Pending. | Juan | 2026-08-09 |
 
 ### The six irreversibles
@@ -32,9 +33,27 @@ section 5 below.
 | 1 | Measurement contract and container | `GTM-TCHKKB37`, already created. Container injected by `analytics.js` after the consent default, never by a tag in the markup. Contract below. | Juan |
 | 2 | Consent — jurisdiction, decision, **and what would change it** | `explicit`. Argentina, Ley 25.326. Decided by María Guadalupe Cuevillas, 2026-08-09. Argentine law does **not** require prior consent for analytics cookies; the stricter line was taken anyway because the audience is patients and the subject is health. Recorded in `config.js` with the condition that would reopen it. **This architecture cannot produce auditable proof of consent** — the record lives in the visitor's browser. | Guadalupe |
 | 3 | Canonical identity: domain, mailbox, brand | `doctoracuevillas.com` · `guada@doctoracuevillas.com` · "Dra. Guadalupe Cuevillas". One domain, one mailbox, one brand — replacing five scattered identities. | Juan |
-| 4 | Retired URLs and the redirect plan | The predecessor is `sites.google.com/view/naprofertility`, on a domain this project does not control. **No redirect can be served from here.** The equity is recovered by editing that page down to one line pointing at the new domain. Owner and status in Pending. The retired scheduler `naprofertilitydracuevillas.youcanbook.me` is de-indexed at the provider and must never be linked. | Juan |
+| 4 | Retired URLs and the redirect plan | The predecessor is `sites.google.com/view/naprofertility`, on a domain this project does not control. **No redirect can be served from here**, and GitHub Pages cannot serve rule-based redirects at all — `_redirects` is inert and says so at the top. The one redirect this site needs, `www` to the apex, is done by the host from the `CNAME` file. The equity on the old URLs is recovered by editing that page down to one line pointing here. The retired scheduler `naprofertilitydracuevillas.youcanbook.me` is de-indexed at the provider and must never be linked. | Juan |
 | 5 | Sender authentication | Not yet in place. `guada@doctoracuevillas.com` does not exist yet; the four mailing-list confirmation emails still send from a Gmail address. MX, SPF and DKIM must exist **before** the first campaign — burnt sending reputation takes months to recover. | Juan |
 | 6 | Conversion receiver, with a tested reply | **Deliberately none, and no form exists.** `config.receiver.endpoint` is `null`, which §26 permits only on a site that presents no form — and this one does not. Every conversion path terminates in a system the practice already controls and which writes its own record: YouCanBookMe, WhatsApp, EnvíaloSimple. | Guadalupe |
+
+### Absent controls, declared
+
+§26: every control moves to the edge, moves to the delivery gate, or is **declared absent** — never
+left implied, because an absent control looks exactly like a site that did not need one. GitHub
+Pages serves no custom response headers, so:
+
+| Control | Status | Consequence |
+|---|---|---|
+| `Content-Security-Policy` | **Partly recovered** as a `<meta http-equiv>` in every page | base-uri, object-src, form-action, img-src, script-src and connect-src are enforced |
+| `Referrer-Policy` | **Recovered** as `<meta name="referrer">` | Full URLs stop leaking to third parties |
+| `frame-ancestors` | **ABSENT. Not recoverable.** Ignored inside a meta policy | Any site can frame this one. On a page giving medical advice, a third party can present this doctor's words as its own, and nothing here can stop it |
+| `X-Content-Type-Options` | **ABSENT. Not recoverable** from markup | MIME sniffing is not disabled |
+| `Permissions-Policy` | **ABSENT. Not recoverable** from markup | Camera, microphone and geolocation are not denied by policy; nothing on the site requests them |
+| `Strict-Transport-Security` | Served by the host once "Enforce HTTPS" is on | — |
+
+**What would reverse this:** a host that serves headers. `_headers` is kept, complete and correct,
+so the move costs nothing but the DNS change that was declined.
 
 ### The measurement contract
 
@@ -72,8 +91,8 @@ as a real blocker.
 
 | Item | What it blocks | Owner | Notes |
 |---|---|---|---|
-| **Cloudflare Pages project + `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets, then set repository variable `PUBLISH_ENABLED=true`** | **Publication.** Until then the `publish` job does not run at all — merging to `main` publishes nothing. | Juan | Deliberate: the site was prepared, not published. |
-| DNS for `doctoracuevillas.com` and `www` pointed at the Pages project, HTTPS forced | Publication | Juan | Irreversible-ish; prepared, not executed. |
+| **Three steps, in order: (1) Settings → Pages → Source: GitHub Actions. (2) DNS for the apex and `www` pointed at GitHub Pages, then "Enforce HTTPS". (3) Repository variable `PUBLISH_ENABLED=true`.** | **Publication.** Until step 3 the `publish` job does not run at all — merging to `main` publishes nothing. | Juan | The site is prepared, not published. `CNAME` already travels with the artifact and the job refuses to deploy without it. |
+| A scheduled check against the public URL | Nothing yet — but nothing in this architecture announces a failure | Juan | No logs, no alerts, no health endpoint. A dead scheduling link looks exactly like a working site. |
 | Mailbox `guada@doctoracuevillas.com` with MX/SPF/DKIM, plus forwarding from the historical Gmail accounts | The contact path, and every mailing-list send | Juan | The four EnvíaloSimple forms still confirm from `endodracuevillas@gmail.com`; they must be reinstalled once the domain sends. |
 | **Legal review of `/privacidad`** | Publication | Juan | A complete first draft is written from what the site actually does — controller, each collection, each processor, retention, Ley 25.326 rights, medical disclaimer. It is a draft, not a reviewed document. |
 | Scheduling link for climaterio | Nothing — the door converts through WhatsApp today and says so | Juan | `config.agendas.climaterio` is `null`. When it holds a URL, change the control **and its visible label together**. |
@@ -102,7 +121,10 @@ The most dangerous section, because an assumption reads exactly like a decision 
 | The three YouCanBookMe links in the brief are live and point at the right agendas. They were not opened. | Juan | Every booking button on the site goes to a dead or wrong page — the most expensive silent failure available here. |
 | The four EnvíaloSimple form IDs (1–4) map to the lists as the brief's table says, and the hosted-form URLs render standalone. They were not opened. | Juan | Subscribers land in the wrong list, or on a broken page. |
 | The Austral service page URL is stable and her entry will appear there. It is used as a `sameAs` in the structured data. | Guadalupe | A weakened identity signal; harmless if wrong, not free to leave wrong. |
-| Cloudflare Pages resolves `/fertilidad` to `fertilidad.html` and redirects the `.html` form away. Every canonical URL, the sitemap and every internal link are written extensionless on this assumption. `scripts/serve.mjs` reproduces that routing so the gate tests it, but **the real host was never asked**. | Juan | Every canonical on the site points at a URL that 404s. **Verify this with the very first deploy, before announcing anything.** |
+| ~~The host resolves `/fertilidad` to `fertilidad.html`~~ **RETIRED.** Every page is now a directory index, so the URL is `/fertilidad/` and no host has to map anything. This assumption was removed by construction rather than verified. | — | — |
+| The visual direction was applied without an explicit pick between the two warm options that were shown. **D1, the serif-led one, was built** — it is the warmer of the two and the stated priority was warmth first. Switching to D2 is a contained change: both share the whole token system, so it is the hero block and the credential chips, not a rebuild. | Juan | An afternoon, not a rewrite. |
+| The headline register changed with the design, from describing a territory ("Salud hormonal femenina en todas las etapas de la vida") to speaking to a person ("Tu cuerpo no está fallando. Está diciendo algo"). It was shown and liked, never formally approved. **Half the warmth on the page comes from this, not from the colour.** The old line survives as `facts.tagline` and in the social metadata. | Guadalupe | Reverting is one line per page; reverting and keeping the warmth is not. |
+| "Especialista en climaterio" is used where a patient is deciding. In Argentina *especialista* denotes a titled specialty with its own registration, and hers is Endocrinology; for climaterio she holds international training. The wording was requested explicitly and the concern was raised once. **"Especializada en climaterio" says the same thing without invoking the title.** | Guadalupe | An advertising-compliance question in a regulated profession. |
 | `guada@doctoracuevillas.com` is the address that will exist. It is already in `llms.txt`, in the footer of every page and in the privacy statement. | Juan | Published mail to nowhere. |
 | Nobody has walked a conversion path end to end on a real phone, on mobile data, opened from an Instagram link. The gate cannot do this and neither can any tool. | Juan | See the checklist at the end of this file. |
 
@@ -190,7 +212,8 @@ inventory is the only record.
 | EnvíaloSimple | Administrator | `203816` | Owns the four lists and forms | n/a |
 | EnvíaloSimple | Forms 1–4 | fertilidad / climaterio / endocrinología / profesionales | Double opt-in capture per audience | n/a |
 | WhatsApp | Line | `+54 9 11 5961-2588` | The messaging inbox | n/a |
-| Cloudflare | Pages project | `doctoracuevillas` (to create) | Hosting, headers, redirects | API token must be scoped to this project only |
+| GitHub | Pages site | repo `makesensedigital/doctoracuevillas` | Hosting. No custom headers, no rule-based redirects — see *Absent controls* | n/a; published only by the gate workflow |
+| Google Fonts | Faces | Fraunces, Figtree (SIL OFL) | **Downloaded once and committed** to `/assets/fonts`. Nothing is fetched from Google at runtime | n/a |
 | Registrar | Domain | `doctoracuevillas.com` | Canonical identity | — |
 | Instagram | Profile | `@dracuevillas` | `sameAs`, and the source of traffic | n/a |
 

@@ -11,13 +11,13 @@
     "collect": {
       "url": [
         "http://127.0.0.1:8080/",
-        "http://127.0.0.1:8080/fertilidad",
-        "http://127.0.0.1:8080/climaterio",
-        "http://127.0.0.1:8080/endocrinologia",
-        "http://127.0.0.1:8080/sobre-mi",
-        "http://127.0.0.1:8080/como-es-la-consulta",
-        "http://127.0.0.1:8080/contacto",
-        "http://127.0.0.1:8080/privacidad"
+        "http://127.0.0.1:8080/fertilidad/",
+        "http://127.0.0.1:8080/climaterio/",
+        "http://127.0.0.1:8080/endocrinologia/",
+        "http://127.0.0.1:8080/sobre-mi/",
+        "http://127.0.0.1:8080/como-es-la-consulta/",
+        "http://127.0.0.1:8080/contacto/",
+        "http://127.0.0.1:8080/privacidad/"
       ],
       "numberOfRuns": 3,
       "settings": {

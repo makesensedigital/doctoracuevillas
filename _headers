@@ -1,3 +1,29 @@
+# ⚠ THIS FILE DOES NOTHING ON THE CURRENT HOST.
+#
+# The site is published on GitHub Pages, which serves no custom response headers. Every rule below
+# is therefore INERT. It is kept, rather than deleted, because it is the specification of what this
+# site needs the day it moves to a host that can serve headers — and because §26 is explicit that an
+# absent control must be DECLARED, never left implied: an absent control looks exactly like a site
+# that never needed one.
+#
+# WHAT IS ACTUALLY MISSING, AND WHAT WAS RECOVERED
+#
+# Recovered from inside the document, in the <head> of every page:
+#   Content-Security-Policy   — as a <meta http-equiv>, minus the directives meta cannot carry
+#   Referrer-Policy           — as <meta name="referrer">
+#
+# NOT recoverable, and live on the site right now as gaps:
+#   frame-ancestors           — ignored in a meta policy. THE SITE HAS NO PROTECTION AGAINST BEING
+#                               FRAMED. On a page giving medical information that is the one that
+#                               matters: a third party can present this doctor's advice as its own.
+#   X-Content-Type-Options    — cannot be expressed in markup at all.
+#   Permissions-Policy        — cannot be expressed in markup at all.
+#
+# Strict-Transport-Security is served by GitHub Pages itself once "Enforce HTTPS" is enabled on the
+# custom domain, so that one is covered by the host rather than by this file.
+#
+# All of this is recorded in brief.md under the hosting decision, with what would reverse it.
+
 # Response headers — Handbook §26.
 #
 # These are the controls a static site has NOWHERE ELSE to put. On a host that cannot serve custom
@@ -6,10 +32,8 @@
 # expressed from inside the document. That is a reason to choose a different host, not a reason to
 # proceed quietly.
 #
-# THIS FILE IS LIVE ON THE HOST CHOSEN FOR THIS SITE. Cloudflare Pages reads `_headers` in this
-# syntax. It was chosen partly for that — see brief.md, the hosting decision. Verify it after the
-# first deploy by requesting the site and reading the response headers; a header file that is being
-# ignored looks exactly like one that is working.
+# Syntax below is the edge-host format used by Cloudflare Pages and Netlify. See the banner above
+# for what happens to it on the host actually in use.
 
 /*
   X-Content-Type-Options: nosniff
