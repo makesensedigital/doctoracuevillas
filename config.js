@@ -90,6 +90,20 @@
     // console warning nobody reads (§26).
     tagContainerId: "GTM-TCHKKB37",
 
+    // Microsoft Clarity — SESSION RECORDING, which is a different kind of thing from GA4 and is
+    // treated differently here. GA4 counts; Clarity RECORDS: cursor movement, clicks, scrolling,
+    // rage-clicks, heatmaps, and a replay of the visit. On a site whose visitors arrive about
+    // fertility and about a body that is changing, that is a material change to what is collected,
+    // so it is disclosed by name in /privacidad and it does not load until the visitor accepts.
+    //
+    // The supplied snippet would have gone inline in the markup, with the id as a literal and the
+    // script fetched before any consent choice. It is here instead, and analytics.js loads it from
+    // the same place it loads everything else — one module decides what measurement happens.
+    //
+    // Set to null to switch it off. That is a deploy, which is the honest cost of not putting it in
+    // the tag container; a tag inside GTM-TCHKKB37 would be togglable from the console instead.
+    clarityProjectId: "y0hmjqn23l",
+
     // -------------------------------------------------------------------- search console
     // The verification token, when the property is claimed by HTML tag. It is an external
     // identifier like any other, so it lives here — and it is RENDERED INTO THE SERVED MARKUP by
@@ -128,7 +142,11 @@
         "on the site itself rather than in a messaging channel, or remarketing tags are added to the " +
         "container. Argentine law does not require prior consent for analytics cookies; this site " +
         "asks anyway because its audience is patients and the subject matter is health, and the " +
-        "decision was taken to hold the stricter line rather than the sufficient one",
+        "decision was taken to hold the stricter line rather than the sufficient one. " +
+        "WHAT THE ANSWER NOW COVERS HAS GROWN: since 2026-08-11 accepting also starts a session " +
+        "recording, which registers cursor, clicks and scrolling and replays the visit. That is a " +
+        "different kind of collection from counting, it is named in /privacidad, and it is the " +
+        "reason recording is not loaded at all until the visitor accepts",
       privacyUrl: "/privacidad/",
     },
 
@@ -163,7 +181,7 @@
     // -------------------------------------------------------------------- assets
     // No build means no content-addressed filenames, so cache invalidation is manual. Bump this on
     // any change to a style, script or image; `?v=` is appended from here and nowhere else.
-    assetVersion: 4,
+    assetVersion: 5,
   };
 
   root.SITE_CONFIG = CONFIG;

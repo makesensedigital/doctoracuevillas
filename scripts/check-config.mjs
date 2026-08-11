@@ -41,6 +41,9 @@ const PATTERNS = [
   { name: "measurement id", re: /\bG-[A-Z0-9]{8,}\b/g },
   { name: "mailto address", re: /mailto:[^\s"'<>)]+/g },
   { name: "scheduling link", re: /https?:\/\/(?:calendly|cal)\.com\/[^\s"'<>)]+/g },
+  // Session recording arrives as a snippet people paste straight into the markup, which is how
+  // it ends up loading before any consent choice on a site that decided otherwise.
+  { name: "session recording tag", re: /clarity\.ms\/tag\/[a-z0-9]+/g },
 ];
 
 const files = await walk(ROOT);

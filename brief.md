@@ -31,7 +31,7 @@ section 5 below.
 | # | Decision | Answer | Owner |
 |---|---|---|---|
 | 1 | Measurement contract and container | `GTM-TCHKKB37`, already created. Container injected by `analytics.js` after the consent default, never by a tag in the markup. Contract below. | Juan |
-| 2 | Consent — jurisdiction, decision, **and what would change it** | `explicit`. Argentina, Ley 25.326. Decided by María Guadalupe Cuevillas, 2026-08-09. Argentine law does **not** require prior consent for analytics cookies; the stricter line was taken anyway because the audience is patients and the subject is health. Recorded in `config.js` with the condition that would reopen it. **This architecture cannot produce auditable proof of consent** — the record lives in the visitor's browser. | Guadalupe |
+| 2 | Consent — jurisdiction, decision, **and what would change it** | `explicit`. Argentina, Ley 25.326. Decided by María Guadalupe Cuevillas, 2026-08-09. **Widened 2026-08-11:** accepting now also starts a Microsoft Clarity session recording. That is a change to what personal data is collected, which §26 puts on the ask-before-acting list — it was requested by Juan, and the person who signed the consent decision is Guadalupe, so she should know that her yes now covers replay as well as counting. Argentine law does **not** require prior consent for analytics cookies; the stricter line was taken anyway because the audience is patients and the subject is health. Recorded in `config.js` with the condition that would reopen it. **This architecture cannot produce auditable proof of consent** — the record lives in the visitor's browser. | Guadalupe |
 | 3 | Canonical identity: domain, mailbox, brand | `doctoracuevillas.com` · `guada@doctoracuevillas.com` · "Dra. Guadalupe Cuevillas". One domain, one mailbox, one brand — replacing five scattered identities. | Juan |
 | 4 | Retired URLs and the redirect plan | The predecessor is `sites.google.com/view/naprofertility`, on a domain this project does not control. **No redirect can be served from here**, and GitHub Pages cannot serve rule-based redirects at all — `_redirects` is inert and says so at the top. The one redirect this site needs, `www` to the apex, is done by the host from the `CNAME` file. The equity on the old URLs is recovered by editing that page down to one line pointing here. The retired scheduler `naprofertilitydracuevillas.youcanbook.me` is de-indexed at the provider and must never be linked. | Juan |
 | 5 | Sender authentication | Not yet in place. `guada@doctoracuevillas.com` does not exist yet; the four mailing-list confirmation emails still send from a Gmail address. MX, SPF and DKIM must exist **before** the first campaign — burnt sending reputation takes months to recover. | Juan |
@@ -157,6 +157,11 @@ destination; these close the known wrong turns.
 - **Do not add a form** without also adding a receiver that persists the record, and without
   restoring `form-action 'self'` in `_headers`.
 - **Do not put the biography on the home page.** The home sells the three doors.
+- **Do not paste a tracking snippet into the markup**, however the provider's dashboard hands it to
+  you. The id belongs in `config.js` and the loading belongs in `analytics.js`, which is the one
+  place that decides what measurement happens and when — a snippet in the markup runs before the
+  visitor has chosen anything, on a site that decided to ask first. `check-config` now fails on the
+  session-recording form of this, which is the one that actually arrived.
 - **Do not put WhatsApp back as a primary or secondary button on a door.** It was on 24 controls
   across nine pages and is now on 15, nine of which are the single footer entry. The practice does
   not want to be reached mainly by message: the default path is the scheduler, and messaging is for
@@ -221,6 +226,7 @@ inventory is the only record.
 |---|---|---|---|---|
 | Google Tag Manager | Container | `GTM-TCHKKB37` | Loads GA4 and any future tag | **No — restrict it.** A container id is public; the protection is the domain allowlist in the container's own settings |
 | Google Analytics 4 | Property | not yet created | Consumes the events above | n/a until it exists |
+| Microsoft Clarity | Project | `y0hmjqn23l` | **Session recording and heatmaps** — cursor, clicks, scrolling, replay of the visit. Added 2026-08-11 at the client's request. Loaded by `analytics.js` ONLY after the visitor accepts, never before; `clarityProjectId: null` switches it off, at the cost of a deploy | Restrict the project to `doctoracuevillas.com` in Clarity's own settings — the id is public and that allowlist is the only protection |
 | YouCanBookMe | Agenda | `primerconsultanapro` | First fertility consultation, 60 min | n/a (outbound link) |
 | YouCanBookMe | Agenda | `seguimientonapro` | Fertility follow-up, 45 min, existing patients only | n/a |
 | YouCanBookMe | Agenda | `endodracuevillas` | Endocrinology, 30 min | n/a |

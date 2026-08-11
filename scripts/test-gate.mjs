@@ -74,9 +74,22 @@ const FIXTURES = [
       edit(dir, "index.html", 'data-messaging="home"', 'href="https://wa.me/5491159612588"'),
   },
   {
+    // The shape this arrives in: a snippet copied from the provider's dashboard straight into the
+    // markup, id and all, loading before the visitor has chosen anything.
+    name: "a session recording snippet pasted into the markup",
+    check: "check-config.mjs",
+    apply: (dir) =>
+      edit(
+        dir,
+        "index.html",
+        "<body data-puerta=\"home\">",
+        '<body data-puerta="home"><script>t.src="https://www.clarity.ms/tag/y0hmjqn23l"</script>',
+      ),
+  },
+  {
     name: "the asset version bumped in config but not in the markup",
     check: "check-config.mjs",
-    apply: (dir) => edit(dir, "config.js", "assetVersion: 4", "assetVersion: 5"),
+    apply: (dir) => edit(dir, "config.js", "assetVersion: 5", "assetVersion: 6"),
   },
   {
     // The defect this site is actually exposed to. It presents no form and declares no receiver,
@@ -182,7 +195,7 @@ const FIXTURES = [
       edit(
         dir,
         "index.html",
-        '<link rel="stylesheet" href="/styles.css?v=4" />',
+        '<link rel="stylesheet" href="/styles.css?v=5" />',
         '<link rel="stylesheet" href="https://fonts.example-cdn.test/css?family=X" />\n    <link rel="stylesheet" href="/styles.css?v=1" />',
       ),
   },
