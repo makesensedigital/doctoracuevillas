@@ -34,21 +34,21 @@
   font-family: "Fraunces";
   font-style: normal;
   font-weight: 600;
-  font-display: swap;
+  font-display: optional;
   src: url("/assets/fonts/fraunces.woff2?v=6") format("woff2");
 }
 @font-face {
   font-family: "Fraunces";
   font-style: italic;
   font-weight: 600;
-  font-display: swap;
+  font-display: optional;
   src: url("/assets/fonts/fraunces-italic.woff2?v=6") format("woff2");
 }
 @font-face {
   font-family: "Figtree";
   font-style: normal;
   font-weight: 400 800;
-  font-display: swap;
+  font-display: optional;
   src: url("/assets/fonts/figtree.woff2?v=6") format("woff2");
 }
 
