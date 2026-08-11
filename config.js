@@ -146,7 +146,7 @@
     // -------------------------------------------------------------------- assets
     // No build means no content-addressed filenames, so cache invalidation is manual. Bump this on
     // any change to a style, script or image; `?v=` is appended from here and nowhere else.
-    assetVersion: 2,
+    assetVersion: 3,
   };
 
   root.SITE_CONFIG = CONFIG;

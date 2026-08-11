@@ -76,7 +76,7 @@ const FIXTURES = [
   {
     name: "the asset version bumped in config but not in the markup",
     check: "check-config.mjs",
-    apply: (dir) => edit(dir, "config.js", "assetVersion: 2", "assetVersion: 3"),
+    apply: (dir) => edit(dir, "config.js", "assetVersion: 3", "assetVersion: 4"),
   },
   {
     // The defect this site is actually exposed to. It presents no form and declares no receiver,
@@ -140,6 +140,13 @@ const FIXTURES = [
       ),
   },
   {
+    // Shipped to production: the consent banner reported `hidden === true` and stayed visible,
+    // because `.consent` sets `display: grid` and that beats the browser's own `[hidden]` rule.
+    name: "the hidden attribute left unable to win against the stylesheet",
+    check: "check-markup.mjs",
+    apply: (dir) => edit(dir, "styles.css", "[hidden] {\n  display: none !important;\n}", ""),
+  },
+  {
     // This site has no form, so there is no form-control rule to break — the defect is a rule being
     // ADDED below the threshold, which is exactly how it would arrive the day a form is introduced.
     name: "form controls below the size that triggers zoom on iOS",
@@ -175,7 +182,7 @@ const FIXTURES = [
       edit(
         dir,
         "index.html",
-        '<link rel="stylesheet" href="/styles.css?v=2" />',
+        '<link rel="stylesheet" href="/styles.css?v=3" />',
         '<link rel="stylesheet" href="https://fonts.example-cdn.test/css?family=X" />\n    <link rel="stylesheet" href="/styles.css?v=1" />',
       ),
   },
