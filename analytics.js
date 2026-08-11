@@ -17,6 +17,8 @@
 
 (function () {
   const config = window.SITE_CONFIG;
+  const AGENDA_ORIGIN_KEY = "agenda-origin";
+  const AGENDA_ORIGIN_MAX_AGE_MS = 30 * 60 * 1000;
   // The sentinel the guard below compares against, not a configured value. Naming it is the only
   // way to detect an unconfigured container, and the scan cannot tell a sentinel from the thing it
   // detects without being told — which is what the marker is for.
@@ -178,6 +180,63 @@
       .slice(0, 80);
   };
 
+  const pointsToTurno = function (el) {
+    const href = el.getAttribute("href");
+    if (!href) return false;
+    try {
+      const destination = new URL(href, window.location.href);
+      return (
+        destination.origin === window.location.origin &&
+        destination.pathname === "/como-es-la-consulta/" &&
+        destination.hash === "#turno"
+      );
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const rememberAgendaOrigin = function (eventLabel) {
+    try {
+      sessionStorage.setItem(
+        AGENDA_ORIGIN_KEY,
+        JSON.stringify({
+          puerta: base().puerta,
+          label: clean(eventLabel),
+          ts: Date.now(),
+        }),
+      );
+    } catch (e) {
+      /* storage can be unavailable; attribution then stays explicitly empty */
+    }
+  };
+
+  const consumeAgendaOrigin = function () {
+    const empty = { origen_puerta: "", origen_control: "" };
+    if (window.location.pathname !== "/como-es-la-consulta/") return empty;
+
+    try {
+      const raw = sessionStorage.getItem(AGENDA_ORIGIN_KEY);
+      if (!raw) return empty;
+
+      const stored = JSON.parse(raw);
+      const age = Date.now() - Number(stored.ts);
+      sessionStorage.removeItem(AGENDA_ORIGIN_KEY);
+      if (!Number.isFinite(age) || age < 0 || age >= AGENDA_ORIGIN_MAX_AGE_MS) return empty;
+
+      return {
+        origen_puerta: clean(stored.puerta),
+        origen_control: clean(stored.label),
+      };
+    } catch (e) {
+      try {
+        sessionStorage.removeItem(AGENDA_ORIGIN_KEY);
+      } catch (storageError) {
+        /* storage remains unavailable */
+      }
+      return empty;
+    }
+  };
+
   document.addEventListener("click", function (event) {
     const el = event.target.closest("[data-analytics-event]");
     if (!el) return;
@@ -196,6 +255,9 @@
     // is instrumented — a property with no question behind it is noise that survives forever.
     if (el.dataset.analyticsAgenda) params.agenda = el.dataset.analyticsAgenda;
     if (el.dataset.analyticsAudiencia) params.audiencia = el.dataset.analyticsAudiencia;
+
+    if (pointsToTurno(el)) rememberAgendaOrigin(params.event_label);
+    if (name === "agenda") Object.assign(params, consumeAgendaOrigin());
 
     // `data-analytics-intent` marks a control that hands the visitor somewhere this site cannot
     // observe. The markup declares it because the markup is where the destination is.

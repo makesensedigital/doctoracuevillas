@@ -66,11 +66,21 @@ converts* and an event that arrives without it cannot be assigned to one afterwa
 |---|---|---|---|
 | `puerta` | outcome | `puerta`, `event_label` | Which of the three doors does the home page actually send people to? |
 | `cta_click` | outcome | `puerta`, `event_label` | Which in-page call to action moves people down a landing? |
-| `agenda_intent` | **intent** | `puerta`, `agenda`, `event_label` | Which door produces scheduler departures, and to which of the three agendas? |
+| `agenda_intent` | **intent** | `puerta`, `agenda`, `event_label`, `origen_puerta`, `origen_control` | Which door produces scheduler departures, to which agenda, and which cross-page control brought the visitor there? |
 | `messaging_intent` | **intent** | `puerta`, `event_label` | Which control sends people to WhatsApp, and from which door? |
 | `cta_click` (labels ending `_turno`) | outcome | `puerta`, `event_label` | Does pushing people towards the scheduler instead of the messaging channel actually move them there? |
 | `newsletter_intent` | **intent** | `puerta`, `audiencia`, `event_label` | Which door produces list signups, and patient or professional? |
 | `mail_intent` | **intent** | `puerta`, `event_label` | Does anybody still use email rather than messaging? |
+
+`origen_puerta` and `origen_control` attribute an `agenda_intent` on
+`/como-es-la-consulta/` to the control that brought the visitor to `#turno`. The origin is held in
+session storage for at most 30 minutes, consumed by the first scheduler departure, and never added
+to the URL. Both properties are always strings: without a valid origin they are `""`, never absent.
+`origen_control` can be `hero_turno`, `cierre_turno`, `footer_turno` or `sticky_turno`.
+
+The two scheduler controls in the closing section of `/como-es-la-consulta/` are intentionally
+distinct: `event_label=cierre_fertilidad_primera_consulta` opens the first fertility consultation
+calendar, while `event_label=cierre_endocrinologia` opens the endocrinology calendar.
 
 **Outcome or intent is not a naming preference.** Anything completing outside this site — a messaging
 app, a scheduler, a mailing platform — can be observed leaving and never arriving. Recording one of
