@@ -322,7 +322,7 @@ const documentsOnDisk = async () => {
       found.push({ file: e.name, route: e.name === "index.html" ? "/" : `/${e.name}` });
       continue;
     }
-    if (!e.isDirectory() || e.name.startsWith(".") || ["assets", "scripts"].includes(e.name)) continue;
+    if (!e.isDirectory() || e.name.startsWith(".") || ["assets", "scripts", "_site"].includes(e.name)) continue;
     const inner = await readdir(join(ROOT, e.name), { withFileTypes: true });
     if (inner.some((i) => i.isFile() && i.name === "index.html")) {
       found.push({ file: `${e.name}/index.html`, route: `/${e.name}/` });

@@ -82,6 +82,13 @@ jobs:
         if: ${{ !cancelled() }}
         run: node scripts/check-assets.mjs
 
+      - name: Only the site reaches the domain
+        # Runs on every pull request, not only at publish. A publication step that has never
+        # executed is not known to work, and the failure it prevents — a page silently not shipped,
+        # or an internal document served under the practitioner's domain — is invisible once live.
+        if: ${{ !cancelled() }}
+        run: node scripts/stage-site.mjs
+
       - name: No tracked secret or internal material (§4c)
         # The repository is the web root: a committed file is a published file. This is the last
         # line, not the mechanism — `.gitignore` is where the decision lives.
@@ -211,9 +218,15 @@ jobs:
           fi
           echo "OK — CNAME travels with the artifact: $(cat CNAME)"
 
+      # The artifact is STAGED, not the working tree. The repository holds the site and also the
+      # things that describe it — brief.md, AGENTS.md, the gate's own scripts — and uploading it
+      # whole would serve those from doctoracuevillas.com. See scripts/stage-site.mjs for the rule.
+      - name: Stage only what is site content
+        run: node scripts/stage-site.mjs
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deploy
         uses: actions/deploy-pages@v4

@@ -1,7 +1,14 @@
-# Handbook §26 — THE REPOSITORY IS THE WEB ROOT.
+# Handbook §26 — access control, not housekeeping.
 #
-# This file is doing ACCESS CONTROL, not housekeeping. Every path below would otherwise be served
-# at a URL the moment it is committed, because the deploy step is copying files.
+# CORRECTION, 2026-08-11. §26's model is that the repository IS the web root: committing is
+# publishing. That stopped being literally true here when the repository was made public so that
+# GitHub Pages could serve it. `scripts/stage-site.mjs` now builds the artifact by rule, and only
+# site-shaped content reaches the domain — so `brief.md` is readable on GitHub but is NOT served
+# from the practitioner's own domain, which is the difference between a colleague finding it and a
+# patient finding it.
+#
+# What has not changed: anything site-shaped — markup, styles, scripts, ANYTHING under `assets` —
+# is published the moment it is committed. For those, every path below is still access control.
 #
 # Deleting a file later does not unpublish it: it stays in edge caches and in search indexes, and
 # where the repository is readable it stays in history. The remediation for an accidental commit is
@@ -20,8 +27,10 @@ client/
 *.docx
 *.xlsx
 
-# Tool output. `.lighthouseci` holds full HTML reports of every page, and in this architecture a
-# committed file is a published file at its own URL.
+# Build output. `_site` is the staged artifact that actually gets published; committing it would
+# publish the whole site a second time, under /_site/. `.lighthouseci` holds full HTML reports of
+# every page.
+_site/
 .lighthouseci/
 
 # Local
