@@ -68,6 +68,7 @@ converts* and an event that arrives without it cannot be assigned to one afterwa
 | `cta_click` | outcome | `puerta`, `event_label` | Which in-page call to action moves people down a landing? |
 | `agenda_intent` | **intent** | `puerta`, `agenda`, `event_label` | Which door produces scheduler departures, and to which of the three agendas? |
 | `messaging_intent` | **intent** | `puerta`, `event_label` | Which control sends people to WhatsApp, and from which door? |
+| `cta_click` (labels ending `_turno`) | outcome | `puerta`, `event_label` | Does pushing people towards the scheduler instead of the messaging channel actually move them there? |
 | `newsletter_intent` | **intent** | `puerta`, `audiencia`, `event_label` | Which door produces list signups, and patient or professional? |
 | `mail_intent` | **intent** | `puerta`, `event_label` | Does anybody still use email rather than messaging? |
 
@@ -95,7 +96,7 @@ as a real blocker.
 | A scheduled check against the public URL | Nothing yet — but nothing in this architecture announces a failure | Juan | No logs, no alerts, no health endpoint. A dead scheduling link looks exactly like a working site. |
 | Mailbox `guada@doctoracuevillas.com` with MX/SPF/DKIM, plus forwarding from the historical Gmail accounts | The contact path, and every mailing-list send | Juan | The four EnvíaloSimple forms still confirm from `endodracuevillas@gmail.com`; they must be reinstalled once the domain sends. |
 | **Legal review of `/privacidad`** | Publication | Juan | A complete first draft is written from what the site actually does — controller, each collection, each processor, retention, Ley 25.326 rights, medical disclaimer. It is a draft, not a reviewed document. |
-| Scheduling link for climaterio | Nothing — the door converts through WhatsApp today and says so | Juan | `config.agendas.climaterio` is `null`. When it holds a URL, change the control **and its visible label together**. |
+| **Scheduling link for climaterio** | **Now the one door that cannot send anyone to a scheduler.** Every other conversion control on the site moved from messaging to booking; this one could not, so `/climaterio` is the exception on a site whose conversion story is now the agenda. Cosmetic this morning, expensive now | Juan | `config.agendas.climaterio` is `null`. When it holds a URL, change the control **and its visible label together**. |
 | Guadalupe's decision on publishing the private presencial consultation at Villanueva | Nothing — `/endocrinologia` currently says only that she sees patients there "por los canales de cada institución" | Guadalupe | The page does not claim what has not been decided. |
 | Professional photography (portrait + consulting room) | Nothing — three real phone photographs are in use | Guadalupe | See Assumed. |
 | Selection of 3–5 Instagram comments to quote as testimonials | Nothing — **no testimonial block was built** | Juan + Guadalupe | See Assumed: building an empty block invites it to be filled without the anonymisation rules. |
@@ -156,6 +157,14 @@ destination; these close the known wrong turns.
 - **Do not add a form** without also adding a receiver that persists the record, and without
   restoring `form-action 'self'` in `_headers`.
 - **Do not put the biography on the home page.** The home sells the three doors.
+- **Do not put WhatsApp back as a primary or secondary button on a door.** It was on 24 controls
+  across nine pages and is now on 15, nine of which are the single footer entry. The practice does
+  not want to be reached mainly by message: the default path is the scheduler, and messaging is for
+  somebody who needs to ask something before booking. `/climaterio` is the deliberate exception,
+  and only until its agenda exists.
+- **Do not give the footer one shared prepared message.** It is generated once for nine pages, so a
+  single message would throw away the per-door origin on eight of them. The key comes from the
+  page's own route.
 - **Do not build a booking system.** v1 uses YouCanBookMe.
 - **Do not hand-edit anything between `BEGIN GENERATED` and `END GENERATED`,** in any page. Edit
   `facts.js` and run `node scripts/build-derived.mjs`.

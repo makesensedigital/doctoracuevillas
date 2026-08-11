@@ -18,25 +18,25 @@
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://doctoracuevillas.com/privacidad/" />
 
-    <link rel="icon" href="/assets/favicon.svg?v=3" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=3" />
+    <link rel="icon" href="/assets/favicon.svg?v=4" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=4" />
     <meta name="theme-color" content="#fffbf9" />
     <!-- The controls this host cannot serve as headers, expressed from inside the document instead.
          `frame-ancestors` is NOT among them — it is ignored in a meta policy and can only arrive as
          a response header, so on GitHub Pages this site has NO PROTECTION AGAINST FRAMING AT ALL.
          That is recorded as an absent control in brief.md rather than left to look like an oversight. -->
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src https://v3.envialosimple.com; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com" />
 
     <!-- The two faces the first screen is set in. Without this they are discovered only after the
          stylesheet parses, and the headline's final paint waits on that — worth about a second of
          largest-contentful-paint on a throttled phone, measured rather than assumed. -->
-    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=3" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/figtree.woff2?v=3" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=4" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/figtree.woff2?v=4" as="font" type="font/woff2" crossorigin />
 
-    <link rel="stylesheet" href="/styles.css?v=3" />
-    <script src="/config.js?v=3"></script>
-    <script src="/analytics.js?v=3"></script>
+    <link rel="stylesheet" href="/styles.css?v=4" />
+    <script src="/config.js?v=4"></script>
+    <script src="/analytics.js?v=4"></script>
   </head>
 
   <body data-puerta="privacidad">
@@ -45,7 +45,7 @@
     <header class="nav">
       <div class="wrap nav__inner">
         <a class="nav__brand" href="/">
-          <img src="/assets/favicon.svg?v=3" alt="" width="28" height="28" />
+          <img src="/assets/favicon.svg?v=4" alt="" width="28" height="28" />
           Dra. Guadalupe Cuevillas
         </a>
 
@@ -223,8 +223,9 @@
           <div>
             <h2>Contacto</h2>
             <ul>
-              <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
+              <li><a href="/como-es-la-consulta/#turno" data-analytics-event="cta_click" data-analytics-label="footer_turno">Reservar un turno</a></li>
               <li><a data-mailbox href="/contacto/" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
+              <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
               <li><a data-profile="instagram" href="/contacto/">Instagram @dracuevillas</a></li>
               <li><a href="/contacto/">Ubicaciones y mapas</a></li>
             </ul>
@@ -253,7 +254,7 @@
       </div>
     </div>
 
-    <script src="/facts.js?v=3"></script>
-    <script src="/site.js?v=3"></script>
+    <script src="/facts.js?v=4"></script>
+    <script src="/site.js?v=4"></script>
   </body>
 </html>

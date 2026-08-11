@@ -76,7 +76,7 @@ const FIXTURES = [
   {
     name: "the asset version bumped in config but not in the markup",
     check: "check-config.mjs",
-    apply: (dir) => edit(dir, "config.js", "assetVersion: 3", "assetVersion: 4"),
+    apply: (dir) => edit(dir, "config.js", "assetVersion: 4", "assetVersion: 5"),
   },
   {
     // The defect this site is actually exposed to. It presents no form and declares no receiver,
@@ -182,8 +182,22 @@ const FIXTURES = [
       edit(
         dir,
         "index.html",
-        '<link rel="stylesheet" href="/styles.css?v=3" />',
+        '<link rel="stylesheet" href="/styles.css?v=4" />',
         '<link rel="stylesheet" href="https://fonts.example-cdn.test/css?family=X" />\n    <link rel="stylesheet" href="/styles.css?v=1" />',
+      ),
+  },
+  {
+    // The subscription form is loaded on click, never with the page. This is the check that keeps it
+    // that way — put the frame in the markup and it reaches the provider before the visitor has
+    // chosen anything, which is the failure the consent decision exists to prevent.
+    name: "the subscription frame embedded at first render instead of on request",
+    check: "check-assets.mjs",
+    apply: (dir) =>
+      edit(
+        dir,
+        "fertilidad/index.html",
+        '<div class="subscribe__frame" id="suscripcion-fertilidad" hidden>',
+        '<div class="subscribe__frame" id="suscripcion-fertilidad" hidden><iframe src="https://v3.envialosimple.com/form/x" title="x"></iframe>',
       ),
   },
   {

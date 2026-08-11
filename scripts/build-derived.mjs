@@ -141,7 +141,15 @@ const navMarkup = (path) => {
   return `<ul id="nav-menu" class="nav__menu">\n${items}\n</ul>`;
 };
 
-const footerMarkup = () => {
+// The footer's messaging control carries THE PAGE'S OWN prepared text, not a generic one. That is
+// the whole reason the messages are keyed by door: the practice can tell which page a conversation
+// started on, and a single shared message would throw that away on eight pages out of nine.
+const messageKeyFor = (route) => {
+  const key = route === "/" ? "home" : route.replace(/^\/|\/$/g, "");
+  return config.messages && config.messages[key] ? key : "contacto";
+};
+
+const footerMarkup = (route) => {
   const doors = (facts.offerings || [])
     .map((o) => `      <li><a href="${esc(o.url)}">${esc(o.name)}</a></li>`)
     .join("\n");
@@ -170,8 +178,9 @@ ${rooms}
   <div>
     <h2>Contacto</h2>
     <ul>
-      <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
+      <li><a href="/como-es-la-consulta/#turno" data-analytics-event="cta_click" data-analytics-label="footer_turno">Reservar un turno</a></li>
       <li><a data-mailbox href="/contacto/" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
+      <li><a data-messaging="${messageKeyFor(route)}" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
       <li><a data-profile="instagram" href="/contacto/">Instagram @dracuevillas</a></li>
       <li><a href="/contacto/">Ubicaciones y mapas</a></li>
     </ul>
@@ -365,7 +374,7 @@ for (const { file, route } of found) {
   if (hasBlock(text, "verification")) text = replaceBlock(text, "verification", verificationMarkup());
   if (hasBlock(text, "offerings")) text = replaceBlock(text, "offerings", offeringsMarkup());
   if (hasBlock(text, "nav")) text = replaceBlock(text, "nav", navMarkup(route));
-  if (hasBlock(text, "footer")) text = replaceBlock(text, "footer", footerMarkup());
+  if (hasBlock(text, "footer")) text = replaceBlock(text, "footer", footerMarkup(route));
 
   documents.push([file, text]);
 }

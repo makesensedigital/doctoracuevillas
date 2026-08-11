@@ -35,21 +35,21 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("/assets/fonts/fraunces.woff2?v=3") format("woff2");
+  src: url("/assets/fonts/fraunces.woff2?v=4") format("woff2");
 }
 @font-face {
   font-family: "Fraunces";
   font-style: italic;
   font-weight: 600;
   font-display: swap;
-  src: url("/assets/fonts/fraunces-italic.woff2?v=3") format("woff2");
+  src: url("/assets/fonts/fraunces-italic.woff2?v=4") format("woff2");
 }
 @font-face {
   font-family: "Figtree";
   font-style: normal;
   font-weight: 400 800;
   font-display: swap;
-  src: url("/assets/fonts/figtree.woff2?v=3") format("woff2");
+  src: url("/assets/fonts/figtree.woff2?v=4") format("woff2");
 }
 
 :root {
@@ -523,6 +523,42 @@ p {
 }
 .card__go:hover {
   text-decoration: underline;
+}
+
+/* The subscription form, revealed on request. The provider's page carries its own styling and
+ * cannot be restyled across origins, so it is given a quiet white card to sit in rather than being
+ * dressed up to look like something it is not. Height is fixed because a cross-origin frame cannot
+ * report its own. */
+.subscribe__frame {
+  margin-top: 24px;
+  max-width: 620px;
+  background: var(--ground);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+.subscribe__frame iframe {
+  display: block;
+  width: 100%;
+  height: 470px;
+  border: 0;
+  border-radius: 18px;
+}
+@media (max-width: 560px) {
+  .subscribe__frame iframe {
+    height: 580px;
+  }
+}
+/* Focus moves here when the form opens, so a keyboard or screen-reader user lands on it instead of
+ * being left where the button used to be. The ring is suppressed only for that programmatic move —
+ * she just clicked, she knows where she is — and every control inside the frame keeps its own. */
+.subscribe__frame:focus {
+  outline: none;
+}
+/* The way out. The provider's captcha keeps its own session, and a cross-origin frame is
+ * third-party storage — which Safari blocks by default, on the devices most of this traffic comes
+ * from. If the code will not take, this is the door that always works. */
+.subscribe__escape {
+  margin: 12px 6px 2px;
 }
 
 /* ------------------------------------------------------------------ prose furniture */
