@@ -39,6 +39,18 @@
     window.dataLayer.push(arguments);
   };
 
+  // Third-party runtimes do not participate in first paint. Calls made before they arrive remain
+  // in dataLayer (or Clarity's queue) and are consumed in order once the runtime loads.
+  const afterLoadAndIdle = function (callback) {
+    const whenIdle = function () {
+      if ("requestIdleCallback" in window) window.requestIdleCallback(callback, { timeout: 2000 });
+      else window.setTimeout(callback, 0);
+    };
+
+    if (document.readyState === "complete") whenIdle();
+    else window.addEventListener("load", whenIdle, { once: true });
+  };
+
   // ---------------------------------------------------------------- session recording
   //
   // Loaded ONLY after an affirmative choice, and never on page load. This is deliberately stricter
@@ -58,10 +70,12 @@
         (window.clarity.q = window.clarity.q || []).push(arguments);
       };
 
-    const s = document.createElement("script");
-    s.async = true;
-    s.src = "https://www.clarity.ms/tag/" + encodeURIComponent(project);
-    document.head.appendChild(s);
+    afterLoadAndIdle(function () {
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.clarity.ms/tag/" + encodeURIComponent(project);
+      document.head.appendChild(s);
+    });
   };
 
   // ---------------------------------------------------------------- consent, before anything
@@ -131,15 +145,17 @@
     return;
   }
 
-  window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
+  afterLoadAndIdle(function () {
+    window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
 
-  if (!document.querySelector('script[data-tag-container="' + containerId + '"]')) {
-    const s = document.createElement("script");
-    s.async = true;
-    s.dataset.tagContainer = containerId;
-    s.src = "https://www.googletagmanager.com/gtm.js?id=" + encodeURIComponent(containerId);
-    document.head.appendChild(s);
-  }
+    if (!document.querySelector('script[data-tag-container="' + containerId + '"]')) {
+      const s = document.createElement("script");
+      s.async = true;
+      s.dataset.tagContainer = containerId;
+      s.src = "https://www.googletagmanager.com/gtm.js?id=" + encodeURIComponent(containerId);
+      document.head.appendChild(s);
+    }
+  });
 
   // ---------------------------------------------------------------- the API
   // `puerta` — which of the site's doors the visitor was standing in when the event fired. It is on

@@ -229,7 +229,11 @@ const llmsTxt = () => {
   if (facts.offerings && facts.offerings.length) {
     lines.push("## Motivos de consulta", "");
     for (const o of facts.offerings) {
-      lines.push(`- **${o.name}** — ${o.summary}${o.url ? ` ${origin}${o.url}` : ""}`);
+      lines.push(
+        o.url
+          ? `- [${o.name}](${origin}${o.url}) — ${o.summary}`
+          : `- **${o.name}** — ${o.summary}`,
+      );
     }
     lines.push("");
   }
@@ -243,8 +247,22 @@ const llmsTxt = () => {
     lines.push("");
   }
 
-  lines.push("## Contacto", "", `- Web: ${origin}/`, `- Email: ${config.contactMailbox}`);
-  if (facts.profiles && facts.profiles.length) for (const p of facts.profiles) lines.push(`- ${p}`);
+  lines.push(
+    "## Secciones principales",
+    "",
+    `- [Quién es la doctora](${origin}/sobre-mi/) — Formación, experiencia y enfoque de atención.`,
+    `- [Cómo es la consulta y agenda](${origin}/como-es-la-consulta/) — Modalidades de atención y acceso a turnos.`,
+    `- [Contacto y ubicación](${origin}/contacto/) — Canales de contacto, consultorios y mapas.`,
+    `- [Aviso legal y política de privacidad](${origin}/privacidad/) — Tratamiento de datos, analítica y condiciones de uso.`,
+    "",
+    "## Contacto",
+    "",
+    `- [Sitio oficial](${origin}/)`,
+    `- Email: ${config.contactMailbox}`,
+  );
+  if (facts.profiles && facts.profiles.length) {
+    for (const p of facts.profiles) lines.push(`- [Perfil externo](${p})`);
+  }
   lines.push("");
   return lines.join("\n");
 };

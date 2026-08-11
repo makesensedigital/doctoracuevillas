@@ -38,8 +38,8 @@
     />
     <meta name="twitter:image" content="https://doctoracuevillas.com/assets/social-fertilidad.jpg" />
 
-    <link rel="icon" href="/assets/favicon.svg?v=6" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=6" />
+    <link rel="icon" href="/assets/favicon.svg?v=7" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=7" />
     <meta name="theme-color" content="#fffbf9" />
     <!-- The controls this host cannot serve as headers, expressed from inside the document instead.
          `frame-ancestors` is NOT among them — it is ignored in a meta policy and can only arrive as
@@ -51,12 +51,12 @@
     <!-- The two faces the first screen is set in. Without this they are discovered only after the
          stylesheet parses, and the headline's final paint waits on that — worth about a second of
          largest-contentful-paint on a throttled phone, measured rather than assumed. -->
-    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=6" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/figtree.woff2?v=6" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=7" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/figtree.woff2?v=7" as="font" type="font/woff2" crossorigin />
 
-    <link rel="stylesheet" href="/styles.css?v=6" />
-    <script src="/config.js?v=6"></script>
-    <script src="/analytics.js?v=6"></script>
+    <link rel="stylesheet" href="/styles.css?v=7" />
+    <script src="/config.js?v=7" defer></script>
+    <script src="/analytics.js?v=7" defer></script>
   </head>
 
   <body data-puerta="fertilidad">
@@ -65,7 +65,7 @@
     <header class="nav">
       <div class="wrap nav__inner">
         <a class="nav__brand" href="/">
-          <img src="/assets/favicon.svg?v=6" alt="" width="28" height="28" />
+          <img src="/assets/favicon.svg?v=7" alt="" width="28" height="28" />
           Dra. Guadalupe Cuevillas
         </a>
 
@@ -141,7 +141,7 @@
             <figure class="figure">
               <img
                 class="portrait"
-                src="/assets/guada-fertilidad.webp?v=6"
+                src="/assets/guada-fertilidad.webp?v=7"
                 alt="La Dra. María Guadalupe Cuevillas, de brazos cruzados, en su consultorio"
                 width="760"
                 height="950"
@@ -154,215 +154,256 @@
 
       <div class="signature" role="presentation"></div>
 
-      <section id="enfoque">
-        <div class="wrap">
-          <h2>Qué significa restaurar la fertilidad</h2>
-          <p>
-            El ciclo menstrual es información. Cada cosa que hace —cuándo ovulás, cómo cambia el
-            moco, cuánto dura la segunda fase, qué pasa con tu energía y tu ánimo— es un dato sobre
-            cómo está funcionando tu sistema endócrino y metabólico.
-          </p>
-          <p>
-            La medicina restaurativa parte de ahí: primero leer ese ciclo con precisión, después
-            estudiar dirigidamente lo que el ciclo señala, y recién entonces tratar. El objetivo es
-            que el cuerpo recupere su función, no reemplazarla.
-          </p>
-          <div class="panel">
-            <h3>Sobre los otros caminos</h3>
-            <p>
-              Existen tratamientos de reproducción asistida y son una herramienta válida para muchas
-              parejas. Lo que ofrezco es un enfoque distinto y complementario: estudiar y corregir la
-              causa. Muchas pacientes llegan antes de intentar otros caminos, y muchas otras llegan
-              después, con estudios ya hechos que vale la pena volver a mirar desde el eje hormonal.
-              Ninguna de las dos situaciones es tarde ni temprano.
-            </p>
-          </div>
-        </div>
-      </section>
+      <!-- The sections below, and the booking card beside them. At 1200px and wider the card sits in
+           the empty right third of the grid and travels with the scroll for exactly this range —
+           after the hero, before the footer — because that is the extent of this wrapper, so nothing
+           has to compute where to stop. Below that width nothing here renders differently: the card
+           is not painted and reserves no space, and each section wraps itself as it always did.
 
-      <section id="diferencial">
-        <div class="wrap">
-          <h2>Endocrinóloga <em>y</em> especialista en fertilidad</h2>
-          <p>
-            La mayoría de los referentes del área vienen de la ginecología. Yo vengo de la
-            endocrinología, y eso cambia la pregunta inicial: no es sólo qué pasa en el útero y en
-            los ovarios, sino qué está haciendo el sistema hormonal y metabólico completo —tiroides,
-            insulina, prolactina, andrógenos, cortisol, peso, inflamación— con tu capacidad de
-            concebir y de sostener un embarazo.
-          </p>
-          <p>
-            Por eso el estudio incluye a los dos miembros de la pareja desde el día uno. El factor
-            masculino no es un descarte que se hace al final: es la mitad del problema y se estudia
-            en paralelo.
-          </p>
-        </div>
-      </section>
-
-      <section id="motivos">
-        <div class="wrap">
-          <h2>En qué te puedo ayudar</h2>
-
-          <div class="grid">
-            <article class="card">
-              <h3>Salud hormonal y ginecológica integral</h3>
+           The card holds no destination of its own. It repeats the page's primary control BY KEY, so
+           site.js builds the same URL for both and there is no second copy to fall out of step
+           (§26). Its analytics label is `tarjeta`, distinct from the `sticky` of the bar that serves
+           narrow viewports, so the two placements stay separable in the report. -->
+      <div class="with-aside">
+        <div class="with-aside__flow">
+          <section id="enfoque">
+            <div class="wrap">
+              <h2>Qué significa restaurar la fertilidad</h2>
               <p>
-                Síndrome de ovario poliquístico y resistencia a la insulina. Dolor pélvico crónico y
-                sospecha de endometriosis. Tiroides y prolactina. Transición después de años de
-                anticonceptivos hormonales, cuando el ciclo no vuelve a ordenarse.
+                El ciclo menstrual es información. Cada cosa que hace —cuándo ovulás, cómo cambia el
+                moco, cuánto dura la segunda fase, qué pasa con tu energía y tu ánimo— es un dato sobre
+                cómo está funcionando tu sistema endócrino y metabólico.
               </p>
-            </article>
-            <article class="card">
-              <h3>Fertilidad restaurativa y tratamiento de pareja</h3>
               <p>
-                Estudio endocrinológico simultáneo de los dos desde el inicio. Abortos recurrentes
-                con enfoque inmunológico y metabólico. Soporte de fase lútea con progesterona
-                bioidéntica sincronizada al ciclo. Corrección de disfunciones ovulatorias y del moco
-                cervical.
+                La medicina restaurativa parte de ahí: primero leer ese ciclo con precisión, después
+                estudiar dirigidamente lo que el ciclo señala, y recién entonces tratar. El objetivo es
+                que el cuerpo recupere su función, no reemplazarla.
               </p>
-            </article>
-            <article class="card">
-              <h3>Andrología y factor masculino</h3>
-              <p>
-                Testosterona y metabolismo. Calidad seminal abordada por sus causas: inflamación,
-                estrés oxidativo y nutrición.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
+              <div class="panel">
+                <h3>Sobre los otros caminos</h3>
+                <p>
+                  Existen tratamientos de reproducción asistida y son una herramienta válida para muchas
+                  parejas. Lo que ofrezco es un enfoque distinto y complementario: estudiar y corregir la
+                  causa. Muchas pacientes llegan antes de intentar otros caminos, y muchas otras llegan
+                  después, con estudios ya hechos que vale la pena volver a mirar desde el eje hormonal.
+                  Ninguna de las dos situaciones es tarde ni temprano.
+                </p>
+              </div>
+            </div>
+          </section>
 
-      <section id="metodo">
-        <div class="wrap">
-          <h2>Cómo funciona</h2>
-          <ol class="steps">
-            <li>
-              <h3>Monitoreo del ciclo</h3>
+          <section id="diferencial">
+            <div class="wrap">
+              <h2>Endocrinóloga <em>y</em> especialista en fertilidad</h2>
               <p>
-                Registrás biomarcadores todos los días con el Modelo Creighton, acompañada por
-                instructoras certificadas. Eso convierte tu ciclo en un gráfico legible: dejamos de
-                estimar y empezamos a ver.
+                La mayoría de los referentes del área vienen de la ginecología. Yo vengo de la
+                endocrinología, y eso cambia la pregunta inicial: no es sólo qué pasa en el útero y en
+                los ovarios, sino qué está haciendo el sistema hormonal y metabólico completo —tiroides,
+                insulina, prolactina, andrógenos, cortisol, peso, inflamación— con tu capacidad de
+                concebir y de sostener un embarazo.
               </p>
-            </li>
-            <li>
-              <h3>Evaluación endócrina dirigida</h3>
               <p>
-                Laboratorio e imágenes en los días exactos del ciclo en que cada valor significa algo
-                —no en un día genérico. Un mismo análisis pedido el día equivocado no dice nada, y esa
-                es la razón por la que muchos estudios previos “dieron bien” sin explicar nada.
+                Por eso el estudio incluye a los dos miembros de la pareja desde el día uno. El factor
+                masculino no es un descarte que se hace al final: es la mitad del problema y se estudia
+                en paralelo.
               </p>
-            </li>
-            <li>
-              <h3>Tratamiento cooperativo con tu fisiología</h3>
+            </div>
+          </section>
+
+          <section id="motivos">
+            <div class="wrap">
+              <h2>En qué te puedo ayudar</h2>
+
+              <div class="grid">
+                <article class="card">
+                  <h3>Salud hormonal y ginecológica integral</h3>
+                  <p>
+                    Síndrome de ovario poliquístico y resistencia a la insulina. Dolor pélvico crónico y
+                    sospecha de endometriosis. Tiroides y prolactina. Transición después de años de
+                    anticonceptivos hormonales, cuando el ciclo no vuelve a ordenarse.
+                  </p>
+                </article>
+                <article class="card">
+                  <h3>Fertilidad restaurativa y tratamiento de pareja</h3>
+                  <p>
+                    Estudio endocrinológico simultáneo de los dos desde el inicio. Abortos recurrentes
+                    con enfoque inmunológico y metabólico. Soporte de fase lútea con progesterona
+                    bioidéntica sincronizada al ciclo. Corrección de disfunciones ovulatorias y del moco
+                    cervical.
+                  </p>
+                </article>
+                <article class="card">
+                  <h3>Andrología y factor masculino</h3>
+                  <p>
+                    Testosterona y metabolismo. Calidad seminal abordada por sus causas: inflamación,
+                    estrés oxidativo y nutrición.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="metodo">
+            <div class="wrap">
+              <h2>Cómo funciona</h2>
+              <ol class="steps">
+                <li>
+                  <h3>Monitoreo del ciclo</h3>
+                  <p>
+                    Registrás biomarcadores todos los días con el Modelo Creighton, acompañada por
+                    instructoras certificadas. Eso convierte tu ciclo en un gráfico legible: dejamos de
+                    estimar y empezamos a ver.
+                  </p>
+                </li>
+                <li>
+                  <h3>Evaluación endócrina dirigida</h3>
+                  <p>
+                    Laboratorio e imágenes en los días exactos del ciclo en que cada valor significa algo
+                    —no en un día genérico. Un mismo análisis pedido el día equivocado no dice nada, y esa
+                    es la razón por la que muchos estudios previos “dieron bien” sin explicar nada.
+                  </p>
+                </li>
+                <li>
+                  <h3>Tratamiento cooperativo con tu fisiología</h3>
+                  <p>
+                    Corregimos lo que aparece, con timing hormonal preciso y en el momento del ciclo en
+                    que corresponde. El plan se ajusta con cada ciclo nuevo que registrás.
+                  </p>
+                </li>
+              </ol>
+            </div>
+          </section>
+
+          <section id="credencial">
+            <div class="wrap">
+              <h2>La formación que respalda este enfoque</h2>
               <p>
-                Corregimos lo que aparece, con timing hormonal preciso y en el momento del ciclo en
-                que corresponde. El plan se ajusta con cada ciclo nuevo que registrás.
+                Soy Medical Consultant en NaProTecnología, formada en el Pope Paul VI Institute de Omaha,
+                Nebraska (Estados Unidos) y en México. Soy conferencista internacional en la disciplina y
+                referente en Latinoamérica. Y por debajo de todo eso está mi formación de base, que es la
+                que cambia las preguntas: la endocrinología.
               </p>
-            </li>
-          </ol>
-        </div>
-      </section>
+              <p>
+                También trabajo con equipos de acompañamiento emocional para parejas que están
+                transitando esta búsqueda, porque el desgaste de este proceso es real y no se resuelve
+                solo con estudios.
+              </p>
+              <p class="crosslink"><a href="/sobre-mi/">Ver la formación completa →</a></p>
+            </div>
+          </section>
 
-      <section id="credencial">
-        <div class="wrap">
-          <h2>La formación que respalda este enfoque</h2>
-          <p>
-            Soy Medical Consultant en NaProTecnología, formada en el Pope Paul VI Institute de Omaha,
-            Nebraska (Estados Unidos) y en México. Soy conferencista internacional en la disciplina y
-            referente en Latinoamérica. Y por debajo de todo eso está mi formación de base, que es la
-            que cambia las preguntas: la endocrinología.
-          </p>
-          <p>
-            También trabajo con equipos de acompañamiento emocional para parejas que están
-            transitando esta búsqueda, porque el desgaste de este proceso es real y no se resuelve
-            solo con estudios.
-          </p>
-          <p class="crosslink"><a href="/sobre-mi/">Ver la formación completa →</a></p>
-        </div>
-      </section>
+          <section id="turno">
+            <div class="wrap">
+              <h2>Pedir un turno</h2>
+              <p>
+                La primera consulta dura 60 minutos y puede ser por videollamada desde cualquier lugar
+                del país o del exterior. Si ya trabajás con una instructora de Creighton, contámelo al
+                reservar: coordinamos con ella. Si todavía no tenés, te derivo.
+              </p>
+              <div class="actions">
+                <a
+                  class="btn"
+                  data-agenda="fertilidad_primera"
+                  data-analytics-event="agenda"
+                  data-analytics-label="cierre"
+                  data-analytics-agenda="primera_consulta"
+                  >Reservar primera consulta</a
+                >
+                <a
+                  class="btn btn--ghost"
+                  data-agenda="fertilidad_seguimiento"
+                  data-analytics-event="agenda"
+                  data-analytics-label="cierre"
+                  data-analytics-agenda="seguimiento"
+                  >Reservar seguimiento</a
+                >
+              </div>
+              <p class="small">
+                La agenda de seguimiento es sólo para pacientes que ya tuvieron su primera consulta. El
+                valor de la consulta se informa al reservar el turno.
+                <a href="/como-es-la-consulta/">Mirá cómo es la consulta y cómo prepararte</a>.
+              </p>
+              <!-- The profile is a business fact (facts.js → profiles) and the structured data's
+                   `sameAs` derives from the same entry, so the markup carries the key and site.js
+                   builds the destination — including target and rel. A URL written here as a literal
+                   is how a footer and a structured-data block end up naming different accounts (§26).
+                   The `href` is the destination for a visitor with no scripting: the contact page,
+                   which lists the profile. It is deliberately not the profile URL itself.
 
-      <section id="turno">
-        <div class="wrap">
-          <h2>Pedir un turno</h2>
-          <p>
-            La primera consulta dura 60 minutos y puede ser por videollamada desde cualquier lugar
-            del país o del exterior. Si ya trabajás con una instructora de Creighton, contámelo al
-            reservar: coordinamos con ella. Si todavía no tenés, te derivo.
-          </p>
-          <div class="actions">
-            <a
-              class="btn"
-              data-agenda="fertilidad_primera"
-              data-analytics-event="agenda"
-              data-analytics-label="cierre"
-              data-analytics-agenda="primera_consulta"
-              >Reservar primera consulta</a
-            >
-            <a
-              class="btn btn--ghost"
-              data-agenda="fertilidad_seguimiento"
-              data-analytics-event="agenda"
-              data-analytics-label="cierre"
-              data-analytics-agenda="seguimiento"
-              >Reservar seguimiento</a
-            >
-          </div>
-          <p class="small">
-            La agenda de seguimiento es sólo para pacientes que ya tuvieron su primera consulta. El
-            valor de la consulta se informa al reservar el turno.
-            <a href="/como-es-la-consulta/">Mirá cómo es la consulta y cómo prepararte</a>.
-          </p>
-        </div>
-      </section>
+                   It points at the comments, not at a claim about them. Nothing here says what those
+                   comments contain, and nothing is transcribed onto this site — a testimonial about a
+                   medical result is an advertising rule in Argentina before it is a design choice. -->
+              <p class="small">
+                Podés leer experiencias de pacientes en los
+                <a data-profile="instagram" href="/contacto/">comentarios de Instagram</a>.
+              </p>
+            </div>
+          </section>
 
-      <section id="novedades">
-        <div class="wrap">
-          <h2>Lo que escribo sobre ciclo y fertilidad</h2>
-          <p>
-            Si querés recibir lo que escribo sobre ciclo, hormonas y fertilidad, dejame tu correo.
-            Confirmás por mail y te podés dar de baja cuando quieras.
-          </p>
-          <p class="actions">
-            <a
-              class="btn btn--ghost"
-              data-newsletter="fertilidad"
-              data-newsletter-embed
-              aria-controls="suscripcion-fertilidad"
-              data-analytics-event="newsletter"
-              data-analytics-label="cierre"
-              data-analytics-audiencia="paciente"
-              >Suscribirme</a
-            >
-          </p>
-          <div class="subscribe__frame" id="suscripcion-fertilidad" hidden>
-            <p class="subscribe__escape small">
-              ¿No te carga o no te toma el código?
-              <a
-                data-newsletter="fertilidad"
-                data-analytics-event="newsletter"
-                data-analytics-label="escape"
-                data-analytics-audiencia="paciente"
-                >Abrilo en una pestaña aparte</a
-              >.
-            </p>
-          </div>
-          <p class="small crosslink">
-            ¿Sos profesional de la salud?
-            <a
-              data-newsletter="profesionales"
-              data-analytics-event="newsletter"
-              data-analytics-label="profesionales"
-              data-analytics-audiencia="profesional"
-              >Suscribite acá</a
-            >.
-          </p>
-          <p class="crosslink">
-            ¿Tu consulta es por otro motivo? Muchos cuadros se superponen: el síndrome de ovario
-            poliquístico y la tiroides también viven en
-            <a href="/endocrinologia/">endocrinología</a>, y si estás entrando en otra etapa,
-            <a href="/climaterio/">climaterio</a>.
-          </p>
+          <section id="novedades">
+            <div class="wrap">
+              <h2>Lo que escribo sobre ciclo y fertilidad</h2>
+              <p>
+                Si querés recibir lo que escribo sobre ciclo, hormonas y fertilidad, dejame tu correo.
+                Confirmás por mail y te podés dar de baja cuando quieras.
+              </p>
+              <p class="actions">
+                <a
+                  class="btn btn--ghost"
+                  data-newsletter="fertilidad"
+                  data-newsletter-embed
+                  aria-controls="suscripcion-fertilidad"
+                  data-analytics-event="newsletter"
+                  data-analytics-label="cierre"
+                  data-analytics-audiencia="paciente"
+                  >Suscribirme</a
+                >
+              </p>
+              <div class="subscribe__frame" id="suscripcion-fertilidad" hidden>
+                <p class="subscribe__escape small">
+                  ¿No te carga o no te toma el código?
+                  <a
+                    data-newsletter="fertilidad"
+                    data-analytics-event="newsletter"
+                    data-analytics-label="escape"
+                    data-analytics-audiencia="paciente"
+                    >Abrilo en una pestaña aparte</a
+                  >.
+                </p>
+              </div>
+              <p class="small crosslink">
+                ¿Sos profesional de la salud?
+                <a
+                  data-newsletter="profesionales"
+                  data-analytics-event="newsletter"
+                  data-analytics-label="profesionales"
+                  data-analytics-audiencia="profesional"
+                  >Suscribite acá</a
+                >.
+              </p>
+              <p class="crosslink">
+                ¿Tu consulta es por otro motivo? Muchos cuadros se superponen: el síndrome de ovario
+                poliquístico y la tiroides también viven en
+                <a href="/endocrinologia/">endocrinología</a>, y si estás entrando en otra etapa,
+                <a href="/climaterio/">climaterio</a>.
+              </p>
+            </div>
+          </section>
         </div>
-      </section>
+
+        <aside class="booking" aria-labelledby="tarjeta-turno">
+          <h2 id="tarjeta-turno">Reservar un turno</h2>
+          <p>La primera consulta dura 60 minutos y puede ser por videollamada.</p>
+          <a
+            class="btn"
+            data-agenda="fertilidad_primera"
+            data-analytics-event="agenda"
+            data-analytics-label="tarjeta"
+            data-analytics-agenda="primera_consulta"
+            >Reservar primera consulta</a
+          >
+        </aside>
+      </div>
     </main>
 
     <footer class="footer">
@@ -433,7 +474,7 @@
       </div>
     </div>
 
-    <script src="/facts.js?v=6"></script>
-    <script src="/site.js?v=6"></script>
+    <script src="/facts.js?v=7" defer></script>
+    <script src="/site.js?v=7" defer></script>
   </body>
 </html>
