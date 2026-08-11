@@ -18,6 +18,12 @@ So the plumbing works and nothing is on the other end. **Everything emitted so f
 be reconstructed** — measurement is not recoverable backwards, which is why this is a launch
 condition rather than a nice-to-have.
 
+**Loading policy, changed 2026-08-11:** the first-party analytics collector is deferred, while GTM
+and Clarity are requested only after the window `load` event, during idle time. Events produced
+before GTM arrives remain ordered in `dataLayer` and are consumed when the container starts. Validate
+this after deployment in GTM Preview by clicking a measured control immediately after first paint,
+then confirming that the event appears once the container has loaded.
+
 ---
 
 ## 1. GA4 property
