@@ -1,14 +1,41 @@
 <!doctype html>
+<!-- Handbook §26.
+     NO EMBEDDED MAP. An embedded map contacts a third party with the visitor's address on first
+     render, before any consent choice, and with no server there is nowhere to proxy it. The links
+     below are built by site.js from the addresses in facts.js, so they open the map on a click the
+     visitor chose to make — and there is no second copy of an address anywhere. -->
 <html lang="es-AR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Página no encontrada — Dra. Guadalupe Cuevillas</title>
+
+    <title>Contacto y consultorios — Dra. Guadalupe Cuevillas</title>
     <meta
       name="description"
-      content="Esa página no está acá. Una dirección retirada debería redirigir en lugar de llegar a esta pantalla."
+      content="WhatsApp, correo y consultorios de la Dra. Guadalupe Cuevillas: Hospital Universitario Austral (Pilar) y Centro Médico Villanueva (Tigre). Videoconsulta a todo el país y al exterior."
     />
-    <meta name="robots" content="noindex, follow" />
+
+    <link rel="canonical" href="https://doctoracuevillas.com/contacto/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dra. María Guadalupe Cuevillas" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content="Contacto y consultorios — Dra. Guadalupe Cuevillas" />
+    <meta
+      property="og:description"
+      content="WhatsApp, correo y consultorios en Pilar y Tigre. Videoconsulta a todo el país y al exterior."
+    />
+    <meta property="og:url" content="https://doctoracuevillas.com/contacto/" />
+    <meta property="og:image" content="https://doctoracuevillas.com/assets/social.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Dra. María Guadalupe Cuevillas, médica endocrinóloga" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Contacto y consultorios" />
+    <meta name="twitter:description" content="WhatsApp, correo y consultorios en Pilar y Tigre." />
+    <meta name="twitter:image" content="https://doctoracuevillas.com/assets/social.jpg" />
 
     <link rel="icon" href="/assets/favicon.svg?v=2" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=2" />
@@ -31,7 +58,7 @@
     <script src="/analytics.js?v=2"></script>
   </head>
 
-  <body data-puerta="404">
+  <body data-puerta="contacto">
     <a class="skip-link" href="#main">Saltar al contenido</a>
 
     <header class="nav">
@@ -59,7 +86,7 @@
             <li><a href="/endocrinologia/">Endocrinología</a></li>
             <li><a href="/sobre-mi/">Sobre mí</a></li>
             <li><a href="/como-es-la-consulta/">La consulta</a></li>
-            <li><a href="/contacto/">Contacto</a></li>
+            <li><a href="/contacto/" aria-current="page">Contacto</a></li>
           </ul>
           <!-- END GENERATED: nav -->
         </nav>
@@ -67,32 +94,93 @@
     </header>
 
     <main id="main">
-      <section>
+      <section class="hero">
         <div class="wrap wrap--narrow">
-          <h1>Esa página no está acá</h1>
+          <span class="kicker">Contacto</span>
+          <h1>Cómo escribirme y dónde atiendo</h1>
           <p class="lede">
-            Puede que el enlace venga de una versión anterior del sitio. Una dirección retirada
-            debería redirigir sola; si llegaste hasta acá desde algún lado, avisame y lo arreglo.
+            Para pedir un turno, lo más rápido es WhatsApp. Si preferís el correo, también funciona:
+            leo todo, aunque la respuesta puede demorar más.
           </p>
           <div class="actions">
-            <a class="btn" href="/">Ir a la página principal</a>
             <a
-              class="btn btn--ghost"
+              class="btn"
               data-messaging="contacto"
               data-analytics-event="messaging"
-              data-analytics-label="404"
-              >Avisar por WhatsApp</a
+              data-analytics-label="hero"
+              >Escribirme por WhatsApp</a
+            >
+            <a
+              class="btn btn--ghost"
+              data-mailbox
+              href="#canales"
+              data-analytics-event="mail"
+              data-analytics-label="hero"
+              >Escribirme por mail</a
             >
           </div>
+          <div class="panel">
+            <h2>Esto no es un canal de urgencias</h2>
+            <p>
+              Ni WhatsApp ni el correo se leen en tiempo real. Si tenés una urgencia médica, llamá al
+              107 o acercate a una guardia.
+            </p>
+          </div>
+        </div>
+      </section>
 
-          <h2>Adónde querías ir</h2>
-          <ul class="ticks">
-            <li><a href="/fertilidad/">Fertilidad y salud del ciclo</a></li>
-            <li><a href="/climaterio/">Climaterio</a></li>
-            <li><a href="/endocrinologia/">Endocrinología general</a></li>
-            <li><a href="/como-es-la-consulta/">Cómo es la consulta</a></li>
-            <li><a href="/contacto/">Contacto y consultorios</a></li>
+      <div class="signature" role="presentation"></div>
+
+      <section id="canales">
+        <div class="wrap wrap--narrow">
+          <h2>Canales</h2>
+          <ul class="contact-list">
+            <li>
+              <strong>WhatsApp</strong> — para turnos y consultas administrativas.<br />
+              <a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="canales"
+                >Abrir la conversación</a
+              >
+            </li>
+            <li>
+              <strong>Correo</strong> — para mandar estudios antes de la consulta.<br />
+              <a data-mailbox href="#canales" data-analytics-event="mail" data-analytics-label="canales">Escribirme por mail</a>
+            </li>
+            <li>
+              <strong>Instagram</strong> — divulgación y experiencias de pacientes en los
+              comentarios.<br />
+              <a data-profile="instagram" href="#canales">@dracuevillas</a>
+            </li>
           </ul>
+        </div>
+      </section>
+
+      <section id="consultorios">
+        <div class="wrap">
+          <h2>Consultorios</h2>
+          <div class="grid">
+            <article class="card">
+              <h3>Hospital Universitario Austral</h3>
+              <p>Av. Juan Domingo Perón 1500, Pilar, Provincia de Buenos Aires.</p>
+              <p>Los turnos se piden por los canales del hospital.</p>
+              <p>
+                <a data-map="Hospital Universitario Austral" href="#consultorios">Ver cómo llegar</a>
+              </p>
+            </article>
+            <article class="card">
+              <h3>Centro Médico Villanueva</h3>
+              <p>Complejo Vila Terra, Tigre, Provincia de Buenos Aires.</p>
+              <p>Atención según agenda.</p>
+              <p><a data-map="Centro Médico Villanueva" href="#consultorios">Ver cómo llegar</a></p>
+            </article>
+            <article class="card">
+              <h3>Videoconsulta</h3>
+              <p>
+                A todo el país y al exterior, por Google Meet. Las órdenes y recetas salen en PDF con
+                firma electrónica homologada.
+              </p>
+              <p><a href="/como-es-la-consulta/">Cómo funciona la videoconsulta</a></p>
+            </article>
+          </div>
         </div>
       </section>
     </main>
@@ -139,6 +227,17 @@
         <!-- END GENERATED: footer -->
       </div>
     </footer>
+
+    <div class="sticky-cta" role="region" aria-label="Contacto rápido">
+      <span>¿Querés un turno?</span>
+      <a
+        class="btn"
+        data-messaging="contacto"
+        data-analytics-event="messaging"
+        data-analytics-label="sticky"
+        >WhatsApp</a
+      >
+    </div>
 
     <div id="consent-banner" class="consent" role="region" aria-label="Consentimiento de cookies" hidden>
       <p>

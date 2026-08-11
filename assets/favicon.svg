@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1f5f4b"/><text x="16" y="22" font-family="system-ui" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">E</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Dra. Guadalupe Cuevillas">
+  <circle cx="16" cy="16" r="16" fill="#a64a6d"/>
+  <path d="M4.8 20.6c3.6 0 4.6-9.2 8-9.2s4.4 9.2 8 9.2 3.4-4.6 6.8-4.6"
+        fill="none" stroke="#fffbf9" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

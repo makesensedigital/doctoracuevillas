@@ -20,6 +20,10 @@ client/
 *.docx
 *.xlsx
 
+# Tool output. `.lighthouseci` holds full HTML reports of every page, and in this architecture a
+# committed file is a published file at its own URL.
+.lighthouseci/
+
 # Local
 node_modules/
 .DS_Store

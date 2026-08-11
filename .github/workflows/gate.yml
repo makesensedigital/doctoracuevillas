@@ -106,9 +106,12 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Serve the site
+      - name: Serve the site the way the host serves it
+        # NOT a plain file server. It mirrors the host: directory indexes, the redirect that adds a
+        # trailing slash, and the site's own 404 body with a 404 status. A file server would pass or
+        # fail the link check for reasons that have nothing to do with the published site.
         run: |
-          python3 -m http.server 8080 --directory . &
+          node scripts/serve.mjs --port 8080 &
           for i in $(seq 1 20); do
             curl -fsS http://127.0.0.1:8080/ >/dev/null && break
             sleep 0.5
@@ -163,10 +166,27 @@ jobs:
           echo "Gate passed. Publication happens only from this workflow, never from a branch (§26)."
 
   # ------------------------------------------------------------------ publication
+  # THE HOST IS GITHUB PAGES. That is a reversal, recorded in brief.md with the reason: moving the
+  # DNS zone to another provider was not acceptable, and hosting is the client's call. What it costs
+  # is written down rather than absorbed — GitHub Pages serves no custom response headers, so
+  # `_headers` is inert and the site has NO PROTECTION AGAINST FRAMING; the recoverable half moved
+  # into a <meta http-equiv> policy in every page. See `_headers`, which says so at the top.
+  #
+  # Publication is still by workflow, never by pushing to a branch: the push has to reach something
+  # that can refuse, and that is this gate.
+  #
+  # PUBLICATION IS OFF UNTIL SOMEBODY TURNS IT ON. Three steps, in order:
+  #   1. Settings → Pages → Source: GitHub Actions.
+  #   2. Point the DNS at GitHub Pages and enable "Enforce HTTPS" for doctoracuevillas.com.
+  #   3. Set the repository variable PUBLISH_ENABLED to `true`.
+  # Until step 3, merging to main publishes nothing.
   publish:
     name: Publish
     needs: gate
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push' &&
+      vars.PUBLISH_ENABLED == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -180,15 +200,16 @@ jobs:
 
       # The domain file must travel with the artifact. Moving the publication origin from a branch
       # to a workflow and omitting it unbinds the custom domain SILENTLY — the site keeps working on
-      # the default host and the client's domain stops resolving (§26).
-      - name: Assert the domain file is present
+      # the default host and the client's domain stops resolving (§26). This is an error rather than
+      # a warning because this site HAS a custom domain: a warning would scroll past.
+      - name: Assert the domain file travels with the artifact
         run: |
           set -euo pipefail
-          if [ -f CNAME ]; then
-            echo "OK — CNAME travels with the artifact: $(cat CNAME)"
-          else
-            echo "::warning::No CNAME file. If this site has a custom domain, publishing from a workflow without it unbinds the domain silently."
+          if [ ! -f CNAME ]; then
+            echo "::error::No CNAME file. Publishing from a workflow without it unbinds doctoracuevillas.com silently — the site keeps working on the github.io address and the custom domain stops resolving."
+            exit 1
           fi
+          echo "OK — CNAME travels with the artifact: $(cat CNAME)"
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

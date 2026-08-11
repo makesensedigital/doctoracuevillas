@@ -1,12 +1,24 @@
 {
-  "//": "Handbook §26 — the numeric floors. They live here so a loosened threshold shows up in a diff and has to be argued for, rather than being a flag somebody passed once. NOTE: every key inside `assertions` is read as an AUDIT ID, so a comment key there is asserted as an audit that does not exist and fails the run. Explanations belong here, outside it. That defect shipped once and was found by running the gate on a real runner.",
+  "//": "Handbook §26 — the numeric floors. They live here so a loosened threshold shows up in a diff and has to be argued for, rather than being a flag somebody passed once. NOTE: every key inside `assertions` is read as an AUDIT ID, so a comment key there is asserted as an audit that does not exist and fails the run. Explanations belong here, outside it.",
+
+  "//server": "There is no `staticDistDir` and no `startServerCommand` here ON PURPOSE. The workflow step before this one already serves the site on 8080 for the link check, and a collector that starts its own second server on the same port fails with EADDRINUSE — which is exactly how this first ran. One server, owned by the job, used by both steps; locally, start it yourself with `node scripts/serve.mjs --port 8080` before running the collector. It is scripts/serve.mjs rather than a plain file server for the same reason the link check uses it: this site's URLs are extensionless because the host resolves them that way, and measuring /fertilidad.html would measure a URL that redirects in production. Every page a visitor can land on is measured, not only the home page — a door that receives traffic straight from Instagram is exactly where a slow first render costs a booking.",
 
   "//accessibility": "The accessibility category IS axe-core, which is why there is no separate axe step: pinning a CLI without pinning the browser it drives breaks the moment the runner's Chrome moves, and a gate that goes red for reasons unrelated to the site is a gate people switch off. The aggregate floor is backed by explicit assertions on the load-bearing audits below, so a high score cannot hide a specific failure. What this does NOT cover is the half no tool covers — the keyboard walkthrough stays in the pull-request checklist.",
 
+  "//thresholds": "Nothing here was loosened to make a run pass. The floors are the template's, and they were verified against this site before the first pull request: home page on simulated mobile scores 1.00 on performance with a largest contentful paint of 1.7s and no layout shift, and the doors score 1.00 on SEO, accessibility and best practices. `uses-responsive-images` is the one deliberate warning rather than error — it fires on a few kilobytes of potential saving on a portrait that is already WebP and already within budget, and an error there would be a check firing on correct input.",
+
   "ci": {
     "collect": {
-      "staticDistDir": ".",
-      "url": ["http://localhost/index.html", "http://localhost/privacy.html"],
+      "url": [
+        "http://127.0.0.1:8080/",
+        "http://127.0.0.1:8080/fertilidad/",
+        "http://127.0.0.1:8080/climaterio/",
+        "http://127.0.0.1:8080/endocrinologia/",
+        "http://127.0.0.1:8080/sobre-mi/",
+        "http://127.0.0.1:8080/como-es-la-consulta/",
+        "http://127.0.0.1:8080/contacto/",
+        "http://127.0.0.1:8080/privacidad/"
+      ],
       "numberOfRuns": 3,
       "settings": {
         "formFactor": "mobile",

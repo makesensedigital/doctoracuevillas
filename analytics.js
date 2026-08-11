@@ -109,10 +109,15 @@
   }
 
   // ---------------------------------------------------------------- the API
+  // `puerta` — which of the site's doors the visitor was standing in when the event fired. It is on
+  // EVERY event rather than on the ones that seemed to need it, because the question the measurement
+  // exists to answer is "which door converts", and an event that arrives without it cannot be
+  // assigned to one afterwards. The page declares it once on <body>; no control repeats it.
   const base = function () {
     return {
       page_location: window.location.href,
       page_title: document.title,
+      puerta: (document.body && document.body.dataset.puerta) || "",
     };
   };
 
@@ -154,6 +159,12 @@
     };
     const href = el.getAttribute("href");
     if (href) params.link_url = href;
+
+    // Two dimensions that cannot be inferred from the control or the page, and that a stated
+    // question depends on: WHICH scheduler was opened, and WHICH audience subscribed. Nothing else
+    // is instrumented — a property with no question behind it is noise that survives forever.
+    if (el.dataset.analyticsAgenda) params.agenda = el.dataset.analyticsAgenda;
+    if (el.dataset.analyticsAudiencia) params.audiencia = el.dataset.analyticsAudiencia;
 
     // `data-analytics-intent` marks a control that hands the visitor somewhere this site cannot
     // observe. The markup declares it because the markup is where the destination is.

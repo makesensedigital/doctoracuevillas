@@ -1,11 +1,11 @@
-# Example Company
-# https://example.com
+# Dra. María Guadalupe Cuevillas
+# https://doctoracuevillas.com
 
 User-agent: *
 Allow: /
 
 # Assistant and model crawlers.
-# DECISION: allowed. REASON: We want assistants to be able to answer questions about this business accurately, from a source we control.
+# DECISION: allowed. REASON: Patients ask assistants about symptoms and specialists before they search. We would rather those answers came from the practitioner's own published, accurate description than from a directory listing nobody maintains.
 # The reason is written here on purpose. A policy file copied from somewhere else is not a
 # decision, and the next person to read this cannot tell the difference without it.
 
@@ -45,4 +45,4 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://doctoracuevillas.com/sitemap.xml
