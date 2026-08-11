@@ -57,15 +57,24 @@
     // the key; site.js builds the destination and marks the click as an INTENT, because a visitor who
     // leaves for the scheduler can be observed departing and never arriving.
     //
-    // `climaterio: null` is the pending slot from brief.md item 2. Until it holds a URL, the
-    // /climaterio page converts through messaging instead, and its button says so in the served
-    // markup. When the URL arrives, change the control AND its visible label together — a button
-    // labelled "por WhatsApp" that opens a scheduler is a lie the gate cannot catch.
+    // A slot with no URL HIDES its control rather than leaving a button that goes nowhere (site.js),
+    // and the rule when one is filled is: change the control AND its visible label together — a
+    // button labelled "por WhatsApp" that opens a scheduler is a lie the gate cannot catch.
+    //
+    // `climaterio` WAS that slot, the pending item from brief.md, and /climaterio converted through
+    // WhatsApp for exactly as long as it was null. FILLED 2026-08-11; the four controls on that page
+    // and their labels moved to the scheduler in the same commit.
+    //
+    // It arrived carrying the tracking query string it is shared under on Instagram (`utm_source`,
+    // `utm_medium`, `utm_content`, `fbclid`) and is STORED BARE, like the other three. Those
+    // parameters are read by the DESTINATION's analytics and YouCanBookMe reports nothing back here,
+    // so carrying them would decorate the link without producing a number. Attribution comes from
+    // the Instagram→site UTMs, which do work, plus `puerta` on every event.
     agendas: {
       fertilidad_primera: "https://primerconsultanapro.youcanbook.me",
       fertilidad_seguimiento: "https://seguimientonapro.youcanbook.me",
       endocrinologia: "https://endodracuevillas.youcanbook.me",
-      climaterio: null,
+      climaterio: "https://climaterio.youcanbook.me",
     },
 
     // -------------------------------------------------------------------- mailing list
