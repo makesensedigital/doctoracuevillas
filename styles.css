@@ -35,21 +35,21 @@
   font-style: normal;
   font-weight: 600;
   font-display: optional;
-  src: url("/assets/fonts/fraunces.woff2?v=6") format("woff2");
+  src: url("/assets/fonts/fraunces.woff2?v=7") format("woff2");
 }
 @font-face {
   font-family: "Fraunces";
   font-style: italic;
   font-weight: 600;
   font-display: optional;
-  src: url("/assets/fonts/fraunces-italic.woff2?v=6") format("woff2");
+  src: url("/assets/fonts/fraunces-italic.woff2?v=7") format("woff2");
 }
 @font-face {
   font-family: "Figtree";
   font-style: normal;
   font-weight: 400 800;
   font-display: optional;
-  src: url("/assets/fonts/figtree.woff2?v=6") format("woff2");
+  src: url("/assets/fonts/figtree.woff2?v=7") format("woff2");
 }
 
 :root {
@@ -707,6 +707,85 @@ p {
 @media (min-width: 901px) {
   .sticky-cta {
     display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ the desktop booking card
+ *
+ * The mirror of the bar above, at the other end of the range. On a wide viewport the prose is set to
+ * `--measure` and the right third of the grid is empty for the whole length of a long page, while
+ * the conversion control exists only at the top of it and at the bottom. This card sits in that
+ * space and travels with the scroll — from the end of the hero to the start of the footer, which is
+ * exactly the extent of the wrapper it lives in, so it needs no script to know where to stop.
+ *
+ * IT IS NOT RENDERED AT ALL BELOW THE BREAKPOINT, rather than hidden or collapsed to nothing. A
+ * narrow viewport already carries the fixed bar above; a second call to action in the flow would be
+ * a duplicate control in the tab order and in the accessibility tree for no gain. `display: none`
+ * also reserves no space, so the one-column layout below the breakpoint is what it always was.
+ *
+ * 1200px, not the site's usual 901px. The card needs a column of its own, and between 901 and 1199
+ * taking one would narrow the prose rather than fill emptiness — which is the opposite of the
+ * problem it exists to solve. */
+.booking {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .with-aside {
+    /* The same container as `.wrap`, so the card's column lines up with the hero above it and the
+     * footer below it, rather than starting a second grid whose edges nothing else shares. */
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 48px;
+    /* The card is sized by its content while its grid AREA still spans the whole row — and the area
+     * is what `position: sticky` travels inside. Without this the card stretches to the height of
+     * the prose beside it and has nowhere left to move. */
+    align-items: start;
+  }
+  /* Inside the grid the column is the container, so the per-section wrappers stop centring within
+   * it. Below the breakpoint this rule does not apply and every section wraps as it always did. */
+  .with-aside .wrap {
+    max-width: none;
+    padding: 0;
+  }
+  /* This and the `minmax(0, …)` above are one pair: a grid item's automatic minimum is its content,
+   * so a long word or a wide block would push this column out and take the page sideways with it. */
+  .with-aside__flow {
+    min-width: 0;
+  }
+
+  .booking {
+    display: block;
+    position: sticky;
+    /* Clear of the navigation, which is sticky at the top edge and 72px tall. */
+    top: 96px;
+    /* Level with the first heading beside it, which begins one section's padding down. */
+    margin-top: 58px;
+    background: var(--blush);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+  }
+  .booking h2 {
+    font-size: 21px;
+    line-height: 1.2;
+    margin: 0 0 8px;
+  }
+  .booking p {
+    margin: 0 0 20px;
+    max-width: none;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  /* Full width of the card, with the horizontal padding trimmed: the button keeps the hero's shape
+   * and colour, and the longest label on any of the three pages still sets on one line. */
+  .booking .btn {
+    width: 100%;
+    padding: 0 16px;
   }
 }
 

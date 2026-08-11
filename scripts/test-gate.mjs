@@ -89,7 +89,7 @@ const FIXTURES = [
   {
     name: "the asset version bumped in config but not in the markup",
     check: "check-config.mjs",
-    apply: (dir) => edit(dir, "config.js", "assetVersion: 6", "assetVersion: 7"),
+    apply: (dir) => edit(dir, "config.js", "assetVersion: 7", "assetVersion: 8"),
   },
   {
     // The defect this site is actually exposed to. It presents no form and declares no receiver,
@@ -195,7 +195,7 @@ const FIXTURES = [
       edit(
         dir,
         "index.html",
-        '<link rel="stylesheet" href="/styles.css?v=6" />',
+        '<link rel="stylesheet" href="/styles.css?v=7" />',
         '<link rel="stylesheet" href="https://fonts.example-cdn.test/css?family=X" />\n    <link rel="stylesheet" href="/styles.css?v=1" />',
       ),
   },

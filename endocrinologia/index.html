@@ -36,8 +36,8 @@
     />
     <meta name="twitter:image" content="https://doctoracuevillas.com/assets/social-endocrinologia.jpg" />
 
-    <link rel="icon" href="/assets/favicon.svg?v=6" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=6" />
+    <link rel="icon" href="/assets/favicon.svg?v=7" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=7" />
     <meta name="theme-color" content="#fffbf9" />
     <!-- The controls this host cannot serve as headers, expressed from inside the document instead.
          `frame-ancestors` is NOT among them — it is ignored in a meta policy and can only arrive as
@@ -49,12 +49,12 @@
     <!-- The two faces the first screen is set in. Without this they are discovered only after the
          stylesheet parses, and the headline's final paint waits on that — worth about a second of
          largest-contentful-paint on a throttled phone, measured rather than assumed. -->
-    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=6" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/figtree.woff2?v=6" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=7" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/figtree.woff2?v=7" as="font" type="font/woff2" crossorigin />
 
-    <link rel="stylesheet" href="/styles.css?v=6" />
-    <script src="/config.js?v=6" defer></script>
-    <script src="/analytics.js?v=6" defer></script>
+    <link rel="stylesheet" href="/styles.css?v=7" />
+    <script src="/config.js?v=7" defer></script>
+    <script src="/analytics.js?v=7" defer></script>
   </head>
 
   <body data-puerta="endocrinologia">
@@ -63,7 +63,7 @@
     <header class="nav">
       <div class="wrap nav__inner">
         <a class="nav__brand" href="/">
-          <img src="/assets/favicon.svg?v=6" alt="" width="28" height="28" />
+          <img src="/assets/favicon.svg?v=7" alt="" width="28" height="28" />
           Dra. Guadalupe Cuevillas
         </a>
 
@@ -134,7 +134,7 @@
             <figure class="figure">
               <img
                 class="portrait"
-                src="/assets/guada-endocrinologia.webp?v=6"
+                src="/assets/guada-endocrinologia.webp?v=7"
                 alt="La Dra. María Guadalupe Cuevillas en su escritorio de consultorio"
                 width="760"
                 height="950"
@@ -147,138 +147,171 @@
 
       <div class="signature" role="presentation"></div>
 
-      <section id="motivos">
-        <div class="wrap">
-          <h2>Motivos de consulta más frecuentes</h2>
+      <!-- The sections below, and the booking card beside them. At 1200px and wider the card sits in
+           the empty right third of the grid and travels with the scroll for exactly this range —
+           after the hero, before the footer — because that is the extent of this wrapper, so nothing
+           has to compute where to stop. Below that width nothing here renders differently: the card
+           is not painted and reserves no space, and each section wraps itself as it always did.
 
-          <div class="grid">
-            <article class="card">
-              <h3>Descenso de peso y resistencia a la insulina</h3>
+           The card holds no destination of its own. It repeats the page's primary control BY KEY, so
+           site.js builds the same URL for both and there is no second copy to fall out of step
+           (§26). Its analytics label is `tarjeta`, distinct from the `sticky` of the bar that serves
+           narrow viewports, so the two placements stay separable in the report. -->
+      <div class="with-aside">
+        <div class="with-aside__flow">
+          <section id="motivos">
+            <div class="wrap">
+              <h2>Motivos de consulta más frecuentes</h2>
+
+              <div class="grid">
+                <article class="card">
+                  <h3>Descenso de peso y resistencia a la insulina</h3>
+                  <p>
+                    Cuando el peso no responde a lo que antes funcionaba, casi siempre hay un mecanismo
+                    metabólico detrás. Lo estudiamos y lo tratamos, en lugar de repetir indicaciones
+                    genéricas.
+                  </p>
+                </article>
+                <article class="card">
+                  <h3>Hipotiroidismo y tiroiditis de Hashimoto</h3>
+                  <p>
+                    Diagnóstico, ajuste de tratamiento y seguimiento. También los casos en los que el
+                    análisis “da bien” pero los síntomas siguen.
+                  </p>
+                </article>
+                <article class="card">
+                  <h3>Osteoporosis y salud ósea</h3>
+                  <p>
+                    Densitometría, cálculo de riesgo de fractura y tratamiento. Prevención en la
+                    transición hormonal, que es cuando más hueso se pierde.
+                  </p>
+                </article>
+                <article class="card">
+                  <h3>Alteraciones del ciclo</h3>
+                  <p>
+                    Ciclos irregulares, ausentes o dolorosos. Síndrome de ovario poliquístico, exceso de
+                    andrógenos, prolactina alta.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section id="modalidades">
+            <div class="wrap">
+              <h2>Cómo atiendo</h2>
               <p>
-                Cuando el peso no responde a lo que antes funcionaba, casi siempre hay un mecanismo
-                metabólico detrás. Lo estudiamos y lo tratamos, en lugar de repetir indicaciones
-                genéricas.
+                <strong>Por videollamada</strong>, a pacientes de todo el país y del exterior. Las órdenes
+                de estudios y las recetas salen en PDF con firma electrónica homologada, válidas en todo
+                el territorio argentino.
               </p>
-            </article>
-            <article class="card">
-              <h3>Hipotiroidismo y tiroiditis de Hashimoto</h3>
               <p>
-                Diagnóstico, ajuste de tratamiento y seguimiento. También los casos en los que el
-                análisis “da bien” pero los síntomas siguen.
+                <strong>Presencial</strong>, en el Hospital Universitario Austral (Pilar) y en el Centro
+                Médico Villanueva (Tigre), por los canales de cada institución.
               </p>
-            </article>
-            <article class="card">
-              <h3>Osteoporosis y salud ósea</h3>
+              <!-- What the online agenda actually books. The scheduler on this page opens a private
+                   consultation and nothing else, so the box says which one it is BEFORE the visitor
+                   spends her intent on it — a booking that turns out not to be the one she has cover
+                   for is a failure this site cannot see and she cannot undo. Cover is named as a
+                   route, not as an offer: the institutions run those agendas, not this page. -->
+              <div class="panel">
+                <h3>Cobertura</h3>
+                <p>
+                  La agenda online es para consultas particulares; el valor se informa al reservar el
+                  turno. Si tenés OSDE, los turnos presenciales se coordinan por los canales de cada
+                  institución.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="turno">
+            <div class="wrap">
+              <h2>Pedir un turno</h2>
               <p>
-                Densitometría, cálculo de riesgo de fractura y tratamiento. Prevención en la
-                transición hormonal, que es cuando más hueso se pierde.
+                La consulta de endocrinología dura 30 minutos. Si tenés estudios previos, los mandás
+                antes por WhatsApp o por mail y llegamos a la consulta con todo leído.
               </p>
-            </article>
-            <article class="card">
-              <h3>Alteraciones del ciclo</h3>
+              <div class="actions">
+                <a
+                  class="btn"
+                  data-agenda="endocrinologia"
+                  data-analytics-event="agenda"
+                  data-analytics-label="cierre"
+                  data-analytics-agenda="endocrinologia"
+                  >Reservar turno</a
+                >
+
+              </div>
+              <p class="small">
+                <a href="/como-es-la-consulta/">Cómo es la consulta y cómo prepararte</a>.
+              </p>
+            </div>
+          </section>
+
+          <section id="novedades">
+            <div class="wrap">
+              <h2>Lo que escribo sobre tu salud hormonal</h2>
               <p>
-                Ciclos irregulares, ausentes o dolorosos. Síndrome de ovario poliquístico, exceso de
-                andrógenos, prolactina alta.
+                Dejame tu correo y te llega lo que escribo sobre tiroides, metabolismo y hueso, en
+                castellano y sin jerga. Confirmás por mail y te podés dar de baja cuando quieras.
               </p>
-            </article>
-          </div>
+              <p class="actions">
+                <a
+                  class="btn btn--ghost"
+                  data-newsletter="endocrinologia"
+                  data-newsletter-embed
+                  aria-controls="suscripcion-endocrinologia"
+                  data-analytics-event="newsletter"
+                  data-analytics-label="cierre"
+                  data-analytics-audiencia="paciente"
+                  >Suscribirme</a
+                >
+              </p>
+              <div class="subscribe__frame" id="suscripcion-endocrinologia" hidden>
+                <p class="subscribe__escape small">
+                  ¿No te carga o no te toma el código?
+                  <a
+                    data-newsletter="endocrinologia"
+                    data-analytics-event="newsletter"
+                    data-analytics-label="escape"
+                    data-analytics-audiencia="paciente"
+                    >Abrilo en una pestaña aparte</a
+                  >.
+                </p>
+              </div>
+              <p class="small crosslink">
+                ¿Sos profesional de la salud?
+                <a
+                  data-newsletter="profesionales"
+                  data-analytics-event="newsletter"
+                  data-analytics-label="profesionales"
+                  data-analytics-audiencia="profesional"
+                  >Suscribite acá</a
+                >.
+              </p>
+              <p class="crosslink">
+                ¿Tu consulta es por otro motivo? Si estás buscando un embarazo,
+                <a href="/fertilidad/">fertilidad</a>; si estás entrando en la transición,
+                <a href="/climaterio/">climaterio</a>.
+              </p>
+            </div>
+          </section>
         </div>
-      </section>
 
-      <section id="modalidades">
-        <div class="wrap">
-          <h2>Cómo atiendo</h2>
-          <p>
-            <strong>Por videollamada</strong>, a pacientes de todo el país y del exterior. Las órdenes
-            de estudios y las recetas salen en PDF con firma electrónica homologada, válidas en todo
-            el territorio argentino.
-          </p>
-          <p>
-            <strong>Presencial</strong>, en el Hospital Universitario Austral (Pilar) y en el Centro
-            Médico Villanueva (Tigre), por los canales de cada institución.
-          </p>
-          <div class="panel">
-            <h3>Cobertura</h3>
-            <p>
-              Atiendo por OSDE en las modalidades habilitadas y también de forma particular. El valor
-              de la consulta particular se informa al reservar el turno.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="turno">
-        <div class="wrap">
-          <h2>Pedir un turno</h2>
-          <p>
-            La consulta de endocrinología dura 30 minutos. Si tenés estudios previos, los mandás
-            antes por WhatsApp o por mail y llegamos a la consulta con todo leído.
-          </p>
-          <div class="actions">
-            <a
-              class="btn"
-              data-agenda="endocrinologia"
-              data-analytics-event="agenda"
-              data-analytics-label="cierre"
-              data-analytics-agenda="endocrinologia"
-              >Reservar turno</a
-            >
-
-          </div>
-          <p class="small">
-            <a href="/como-es-la-consulta/">Cómo es la consulta y cómo prepararte</a>.
-          </p>
-        </div>
-      </section>
-
-      <section id="novedades">
-        <div class="wrap">
-          <h2>Lo que escribo sobre tu salud hormonal</h2>
-          <p>
-            Dejame tu correo y te llega lo que escribo sobre tiroides, metabolismo y hueso, en
-            castellano y sin jerga. Confirmás por mail y te podés dar de baja cuando quieras.
-          </p>
-          <p class="actions">
-            <a
-              class="btn btn--ghost"
-              data-newsletter="endocrinologia"
-              data-newsletter-embed
-              aria-controls="suscripcion-endocrinologia"
-              data-analytics-event="newsletter"
-              data-analytics-label="cierre"
-              data-analytics-audiencia="paciente"
-              >Suscribirme</a
-            >
-          </p>
-          <div class="subscribe__frame" id="suscripcion-endocrinologia" hidden>
-            <p class="subscribe__escape small">
-              ¿No te carga o no te toma el código?
-              <a
-                data-newsletter="endocrinologia"
-                data-analytics-event="newsletter"
-                data-analytics-label="escape"
-                data-analytics-audiencia="paciente"
-                >Abrilo en una pestaña aparte</a
-              >.
-            </p>
-          </div>
-          <p class="small crosslink">
-            ¿Sos profesional de la salud?
-            <a
-              data-newsletter="profesionales"
-              data-analytics-event="newsletter"
-              data-analytics-label="profesionales"
-              data-analytics-audiencia="profesional"
-              >Suscribite acá</a
-            >.
-          </p>
-          <p class="crosslink">
-            ¿Tu consulta es por otro motivo? Si estás buscando un embarazo,
-            <a href="/fertilidad/">fertilidad</a>; si estás entrando en la transición,
-            <a href="/climaterio/">climaterio</a>.
-          </p>
-        </div>
-      </section>
+        <aside class="booking" aria-labelledby="tarjeta-turno">
+          <h2 id="tarjeta-turno">Reservar un turno</h2>
+          <p>La consulta de endocrinología dura 30 minutos.</p>
+          <a
+            class="btn"
+            data-agenda="endocrinologia"
+            data-analytics-event="agenda"
+            data-analytics-label="tarjeta"
+            data-analytics-agenda="endocrinologia"
+            >Reservar turno</a
+          >
+        </aside>
+      </div>
     </main>
 
     <footer class="footer">
@@ -349,7 +382,7 @@
       </div>
     </div>
 
-    <script src="/facts.js?v=6" defer></script>
-    <script src="/site.js?v=6" defer></script>
+    <script src="/facts.js?v=7" defer></script>
+    <script src="/site.js?v=7" defer></script>
   </body>
 </html>

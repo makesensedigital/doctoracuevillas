@@ -40,8 +40,8 @@
     />
     <meta name="twitter:image" content="https://doctoracuevillas.com/assets/social-climaterio.jpg" />
 
-    <link rel="icon" href="/assets/favicon.svg?v=6" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=6" />
+    <link rel="icon" href="/assets/favicon.svg?v=7" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=7" />
     <meta name="theme-color" content="#fffbf9" />
     <!-- The controls this host cannot serve as headers, expressed from inside the document instead.
          `frame-ancestors` is NOT among them — it is ignored in a meta policy and can only arrive as
@@ -53,12 +53,12 @@
     <!-- The two faces the first screen is set in. Without this they are discovered only after the
          stylesheet parses, and the headline's final paint waits on that — worth about a second of
          largest-contentful-paint on a throttled phone, measured rather than assumed. -->
-    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=6" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/figtree.woff2?v=6" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=7" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/figtree.woff2?v=7" as="font" type="font/woff2" crossorigin />
 
-    <link rel="stylesheet" href="/styles.css?v=6" />
-    <script src="/config.js?v=6" defer></script>
-    <script src="/analytics.js?v=6" defer></script>
+    <link rel="stylesheet" href="/styles.css?v=7" />
+    <script src="/config.js?v=7" defer></script>
+    <script src="/analytics.js?v=7" defer></script>
   </head>
 
   <body data-puerta="climaterio">
@@ -67,7 +67,7 @@
     <header class="nav">
       <div class="wrap nav__inner">
         <a class="nav__brand" href="/">
-          <img src="/assets/favicon.svg?v=6" alt="" width="28" height="28" />
+          <img src="/assets/favicon.svg?v=7" alt="" width="28" height="28" />
           Dra. Guadalupe Cuevillas
         </a>
 
@@ -138,7 +138,7 @@
             <figure class="figure">
               <img
                 class="portrait"
-                src="/assets/guada-climaterio.webp?v=6"
+                src="/assets/guada-climaterio.webp?v=7"
                 alt="La Dra. María Guadalupe Cuevillas junto a la ventana de su consultorio"
                 width="760"
                 height="950"
@@ -151,147 +151,184 @@
 
       <div class="signature" role="presentation"></div>
 
-      <section id="encuadre">
-        <div class="wrap">
-          <h2>El objetivo no es solamente atravesar los síntomas</h2>
-          <p>
-            Los sofocos, el insomnio, los cambios de ánimo y la sequedad son motivo de consulta
-            legítimo y se tratan. Pero en esta etapa se define algo más grande: cómo va a estar tu
-            corazón, tus huesos, tu metabolismo y tu cabeza durante las décadas que siguen.
-          </p>
-          <p>
-            Por eso el marco de trabajo es la longevidad saludable: preservar funcionalidad,
-            autonomía y calidad de vida. Lo que se decide ahora tiene efecto mucho después.
-          </p>
-        </div>
-      </section>
+      <!-- The sections below, and the booking card beside them. At 1200px and wider the card sits in
+           the empty right third of the grid and travels with the scroll for exactly this range —
+           after the hero, before the footer — because that is the extent of this wrapper, so nothing
+           has to compute where to stop. Below that width nothing here renders differently: the card
+           is not painted and reserves no space, and each section wraps itself as it always did.
 
-      <section id="problema">
-        <div class="wrap">
-          <h2>Por qué la atención fragmentada no alcanza</h2>
-          <p>
-            Lo habitual es recorrer especialistas por separado: uno mira el hueso, otro el corazón,
-            otro los síntomas. El resultado son demoras, estudios duplicados y decisiones tomadas sin
-            ver el conjunto.
-          </p>
-          <p>
-            Eso empuja hacia dos errores opuestos y igual de caros. Por un lado, miedos ya
-            desactualizados a la terapia hormonal que dejan a mujeres sin un tratamiento que les
-            correspondía. Por el otro, riesgos reales —óseos, cardiovasculares, metabólicos— que
-            nadie llegó a medir porque no era “el tema de la consulta”.
-          </p>
-        </div>
-      </section>
+           The card holds no destination of its own. It repeats the page's primary control BY KEY, so
+           site.js builds the same URL for both and there is no second copy to fall out of step
+           (§26). Its analytics label is `tarjeta`, distinct from the `sticky` of the bar that serves
+           narrow viewports, so the two placements stay separable in the report. -->
+      <div class="with-aside">
+        <div class="with-aside__flow">
+          <section id="encuadre">
+            <div class="wrap">
+              <h2>El objetivo no es solamente atravesar los síntomas</h2>
+              <p>
+                Los sofocos, el insomnio, los cambios de ánimo y la sequedad son motivo de consulta
+                legítimo y se tratan. Pero en esta etapa se define algo más grande: cómo va a estar tu
+                corazón, tus huesos, tu metabolismo y tu cabeza durante las décadas que siguen.
+              </p>
+              <p>
+                Por eso el marco de trabajo es la longevidad saludable: preservar funcionalidad,
+                autonomía y calidad de vida. Lo que se decide ahora tiene efecto mucho después.
+              </p>
+            </div>
+          </section>
 
-      <section id="propuesta">
-        <div class="wrap">
-          <h2>Un traje a medida, no un protocolo</h2>
-          <p>
-            La propuesta es una evaluación integral con estratificación rigurosa de riesgos
-            —cardiovascular, óseo, mamario y metabólico— para diseñar un plan personalizado, hormonal
-            o no hormonal, basado en evidencia. Dos mujeres de la misma edad y con los mismos
-            síntomas pueden necesitar planes distintos, y la diferencia está en esos datos.
-          </p>
+          <section id="problema">
+            <div class="wrap">
+              <h2>Por qué la atención fragmentada no alcanza</h2>
+              <p>
+                Lo habitual es recorrer especialistas por separado: uno mira el hueso, otro el corazón,
+                otro los síntomas. El resultado son demoras, estudios duplicados y decisiones tomadas sin
+                ver el conjunto.
+              </p>
+              <p>
+                Eso empuja hacia dos errores opuestos y igual de caros. Por un lado, miedos ya
+                desactualizados a la terapia hormonal que dejan a mujeres sin un tratamiento que les
+                correspondía. Por el otro, riesgos reales —óseos, cardiovasculares, metabólicos— que
+                nadie llegó a medir porque no era “el tema de la consulta”.
+              </p>
+            </div>
+          </section>
 
-          <h3>Qué incluye la evaluación</h3>
-          <ul class="ticks">
-            <li>Evaluación de síntomas con cuestionarios estructurados, para poder medir cambios.</li>
-            <li>Riesgo cardiovascular.</li>
-            <li>Salud ósea: densitometría y cálculo de riesgo de fractura (FRAX).</li>
-            <li>Metabolismo: insulina, perfil lipídico, hígado graso.</li>
-            <li>Síndrome genitourinario y salud sexual.</li>
-            <li>
-              Terapia hormonal dentro de la ventana de oportunidad, con las vías de administración
-              más seguras — o alternativas no hormonales cuando corresponde.
-            </li>
-            <li>Pautas de nutrición y de ejercicio, que en esta etapa no son un accesorio.</li>
-          </ul>
-        </div>
-      </section>
+          <section id="propuesta">
+            <div class="wrap">
+              <h2>Un traje a medida, no un protocolo</h2>
+              <p>
+                La propuesta es una evaluación integral con estratificación rigurosa de riesgos
+                —cardiovascular, óseo, mamario y metabólico— para diseñar un plan personalizado, hormonal
+                o no hormonal, basado en evidencia. Dos mujeres de la misma edad y con los mismos
+                síntomas pueden necesitar planes distintos, y la diferencia está en esos datos.
+              </p>
 
-      <section id="credencial">
-        <div class="wrap">
-          <h2>Quién te atiende</h2>
-          <p>
-            Soy médica endocrinóloga y especialista en climaterio, con formación internacional en la
-            etapa (CISAM, 2026) y en el manejo de la paciente climatérica en el Hospital de Clínicas
-            de la Universidad de Buenos Aires. La etapa se aborda desde el sistema hormonal y
-            metabólico completo, que es de donde vengo.
-          </p>
-          <p class="crosslink"><a href="/sobre-mi/">Ver la formación completa →</a></p>
-        </div>
-      </section>
+              <h3>Qué incluye la evaluación</h3>
+              <ul class="ticks">
+                <li>Evaluación de síntomas con cuestionarios estructurados, para poder medir cambios.</li>
+                <li>Riesgo cardiovascular.</li>
+                <li>Salud ósea: densitometría y cálculo de riesgo de fractura (FRAX).</li>
+                <li>Metabolismo: insulina, perfil lipídico, hígado graso.</li>
+                <li>Síndrome genitourinario y salud sexual.</li>
+                <li>
+                  Terapia hormonal dentro de la ventana de oportunidad, con las vías de administración
+                  más seguras — o alternativas no hormonales cuando corresponde.
+                </li>
+                <li>Pautas de nutrición y de ejercicio, que en esta etapa no son un accesorio.</li>
+              </ul>
+            </div>
+          </section>
 
-      <section id="turno">
-        <div class="wrap">
-          <h2>Pedir un turno</h2>
-          <p>
-            La consulta de climaterio se coordina por WhatsApp: escribime y arreglamos día y horario,
-            presencial o por videollamada. El valor de la consulta se informa al reservar el turno.
-          </p>
-          <div class="actions">
-            <a
-              class="btn"
-              data-messaging="climaterio"
-              data-analytics-event="messaging"
-              data-analytics-label="cierre"
-              >Pedir turno por WhatsApp</a
-            >
-          </div>
-          <p class="small">
-            <a href="/como-es-la-consulta/">Cómo es la consulta y cómo prepararte</a>.
-          </p>
-        </div>
-      </section>
+          <section id="credencial">
+            <div class="wrap">
+              <h2>Quién te atiende</h2>
+              <p>
+                Soy médica endocrinóloga y especialista en climaterio, con formación internacional en la
+                etapa (CISAM, 2026) y en el manejo de la paciente climatérica en el Hospital de Clínicas
+                de la Universidad de Buenos Aires. La etapa se aborda desde el sistema hormonal y
+                metabólico completo, que es de donde vengo.
+              </p>
+              <p class="crosslink"><a href="/sobre-mi/">Ver la formación completa →</a></p>
+            </div>
+          </section>
 
-      <section id="novedades">
-        <div class="wrap">
-          <h2>Lo que escribo sobre esta etapa</h2>
-          <p>
-            Dejame tu correo y te llega lo que escribo sobre esta etapa, sin ruido. Confirmás por
-            mail y te podés dar de baja cuando quieras.
-          </p>
-          <p class="actions">
-            <a
-              class="btn btn--ghost"
-              data-newsletter="climaterio"
-              data-newsletter-embed
-              aria-controls="suscripcion-climaterio"
-              data-analytics-event="newsletter"
-              data-analytics-label="cierre"
-              data-analytics-audiencia="paciente"
-              >Suscribirme</a
-            >
-          </p>
-          <div class="subscribe__frame" id="suscripcion-climaterio" hidden>
-            <p class="subscribe__escape small">
-              ¿No te carga o no te toma el código?
-              <a
-                data-newsletter="climaterio"
-                data-analytics-event="newsletter"
-                data-analytics-label="escape"
-                data-analytics-audiencia="paciente"
-                >Abrilo en una pestaña aparte</a
-              >.
-            </p>
-          </div>
-          <p class="small crosslink">
-            ¿Sos profesional de la salud?
-            <a
-              data-newsletter="profesionales"
-              data-analytics-event="newsletter"
-              data-analytics-label="profesionales"
-              data-analytics-audiencia="profesional"
-              >Suscribite acá</a
-            >.
-          </p>
-          <p class="crosslink">
-            ¿Tu consulta es por otro motivo? La tiroides, el peso y la osteoporosis se ven en
-            <a href="/endocrinologia/">endocrinología</a>, y si todavía estás buscando un embarazo,
-            <a href="/fertilidad/">fertilidad</a>.
-          </p>
+          <section id="turno">
+            <div class="wrap">
+              <h2>Pedir un turno</h2>
+              <p>
+                La consulta de climaterio se coordina por WhatsApp: escribime y arreglamos día y horario,
+                presencial o por videollamada. El valor de la consulta se informa al reservar el turno.
+              </p>
+              <div class="actions">
+                <a
+                  class="btn"
+                  data-messaging="climaterio"
+                  data-analytics-event="messaging"
+                  data-analytics-label="cierre"
+                  >Pedir turno por WhatsApp</a
+                >
+              </div>
+              <p class="small">
+                <a href="/como-es-la-consulta/">Cómo es la consulta y cómo prepararte</a>.
+              </p>
+            </div>
+          </section>
+
+          <section id="novedades">
+            <div class="wrap">
+              <h2>Lo que escribo sobre esta etapa</h2>
+              <p>
+                Dejame tu correo y te llega lo que escribo sobre esta etapa, sin ruido. Confirmás por
+                mail y te podés dar de baja cuando quieras.
+              </p>
+              <p class="actions">
+                <a
+                  class="btn btn--ghost"
+                  data-newsletter="climaterio"
+                  data-newsletter-embed
+                  aria-controls="suscripcion-climaterio"
+                  data-analytics-event="newsletter"
+                  data-analytics-label="cierre"
+                  data-analytics-audiencia="paciente"
+                  >Suscribirme</a
+                >
+              </p>
+              <div class="subscribe__frame" id="suscripcion-climaterio" hidden>
+                <p class="subscribe__escape small">
+                  ¿No te carga o no te toma el código?
+                  <a
+                    data-newsletter="climaterio"
+                    data-analytics-event="newsletter"
+                    data-analytics-label="escape"
+                    data-analytics-audiencia="paciente"
+                    >Abrilo en una pestaña aparte</a
+                  >.
+                </p>
+              </div>
+              <p class="small crosslink">
+                ¿Sos profesional de la salud?
+                <a
+                  data-newsletter="profesionales"
+                  data-analytics-event="newsletter"
+                  data-analytics-label="profesionales"
+                  data-analytics-audiencia="profesional"
+                  >Suscribite acá</a
+                >.
+              </p>
+              <p class="crosslink">
+                ¿Tu consulta es por otro motivo? La tiroides, el peso y la osteoporosis se ven en
+                <a href="/endocrinologia/">endocrinología</a>, y si todavía estás buscando un embarazo,
+                <a href="/fertilidad/">fertilidad</a>.
+              </p>
+            </div>
+          </section>
         </div>
-      </section>
+
+        <!-- The context line on the other two cards is the length of the consultation. THIS ONE HAS
+             NO DECLARED LENGTH — not on this page, not in /como-es-la-consulta, not in facts.js — so
+             the line says how the turno is arranged instead, which is what the page itself states.
+             Writing "45 minutos" here to match the shape of the others would be this repository
+             inventing a business fact, and a made-up one reads exactly like a checked one (§26).
+             If the duration exists, it belongs in the page and in /como-es-la-consulta first, and
+             this line follows it.
+
+             The control is messaging rather than the scheduler because `config.agendas.climaterio`
+             is still null and this page converts through WhatsApp — the same primary control the
+             hero carries, and its label says where it goes. -->
+        <aside class="booking" aria-labelledby="tarjeta-turno">
+          <h2 id="tarjeta-turno">Reservar un turno</h2>
+          <p>Se coordina por WhatsApp, presencial o por videollamada.</p>
+          <a
+            class="btn"
+            data-messaging="climaterio"
+            data-analytics-event="messaging"
+            data-analytics-label="tarjeta"
+            >Pedir turno por WhatsApp</a
+          >
+        </aside>
+      </div>
     </main>
 
     <footer class="footer">
@@ -361,7 +398,7 @@
       </div>
     </div>
 
-    <script src="/facts.js?v=6" defer></script>
-    <script src="/site.js?v=6" defer></script>
+    <script src="/facts.js?v=7" defer></script>
+    <script src="/site.js?v=7" defer></script>
   </body>
 </html>
