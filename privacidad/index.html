@@ -18,25 +18,25 @@
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://doctoracuevillas.com/privacidad/" />
 
-    <link rel="icon" href="/assets/favicon.svg?v=3" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=3" />
+    <link rel="icon" href="/assets/favicon.svg?v=6" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=6" />
     <meta name="theme-color" content="#fffbf9" />
     <!-- The controls this host cannot serve as headers, expressed from inside the document instead.
          `frame-ancestors` is NOT among them — it is ignored in a meta policy and can only arrive as
          a response header, so on GitHub Pages this site has NO PROTECTION AGAINST FRAMING AT ALL.
          That is recorded as an absent control in brief.md rather than left to look like an oversight. -->
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src https://v3.envialosimple.com; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com https://*.clarity.ms; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms" />
 
     <!-- The two faces the first screen is set in. Without this they are discovered only after the
          stylesheet parses, and the headline's final paint waits on that — worth about a second of
          largest-contentful-paint on a throttled phone, measured rather than assumed. -->
-    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=3" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/figtree.woff2?v=3" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=6" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/figtree.woff2?v=6" as="font" type="font/woff2" crossorigin />
 
-    <link rel="stylesheet" href="/styles.css?v=3" />
-    <script src="/config.js?v=3"></script>
-    <script src="/analytics.js?v=3"></script>
+    <link rel="stylesheet" href="/styles.css?v=6" />
+    <script src="/config.js?v=6"></script>
+    <script src="/analytics.js?v=6"></script>
   </head>
 
   <body data-puerta="privacidad">
@@ -45,7 +45,7 @@
     <header class="nav">
       <div class="wrap nav__inner">
         <a class="nav__brand" href="/">
-          <img src="/assets/favicon.svg?v=3" alt="" width="28" height="28" />
+          <img src="/assets/favicon.svg?v=6" alt="" width="28" height="28" />
           Dra. Guadalupe Cuevillas
         </a>
 
@@ -95,21 +95,45 @@
 
           <h3>Medición de uso del sitio</h3>
           <p>
-            Si aceptás las cookies de medición, este sitio usa Google Analytics 4 a través de Google
-            Tag Manager para saber qué páginas se visitan, cuánto tiempo y desde qué tipo de
-            dispositivo y origen. Sirve para entender qué contenido resulta útil y qué no. Google
-            actúa como proveedor y puede procesar esos datos fuera de la Argentina, incluida su
-            infraestructura en los Estados Unidos.
+            Este sitio carga Google Tag Manager en todas sus páginas. Conviene ser precisa acá: el
+            contenedor <strong>se descarga siempre</strong>, apenas abrís la página, y eso implica
+            una conexión con un servidor de Google antes de que vos elijas nada. Lo que tu elección
+            controla no es si se descarga, sino <strong>qué puede hacer</strong>: hasta que aceptes,
+            todas las categorías arrancan denegadas, así que no se escriben cookies ni se guarda
+            ningún identificador que permita reconocerte entre una visita y la siguiente. En ese
+            estado Google puede igualmente recibir una señal anónima de que la página se abrió, sin
+            nada que la ate a vos.
           </p>
           <p>
-            Si rechazás, no se cargan esas cookies y el sitio funciona exactamente igual. Podés
-            cambiar de opinión borrando los datos del sitio en tu navegador: la próxima visita vuelve
-            a preguntarte.
+            Si aceptás, se habilita Google Analytics 4 para saber qué páginas se visitan, cuánto
+            tiempo y desde qué tipo de dispositivo y origen. Sirve para entender qué contenido
+            resulta útil y qué no. Google actúa como proveedor y puede procesar esos datos fuera de
+            la Argentina, incluida su infraestructura en los Estados Unidos.
+          </p>
+          <p>
+            Si rechazás, nada de eso se activa y el sitio funciona exactamente igual. Podés cambiar
+            de opinión borrando los datos del sitio en tu navegador: la próxima visita vuelve a
+            preguntarte.
           </p>
           <p class="small">
             Tu elección se guarda en tu propio navegador. Eso significa que este sitio guarda tu
             preferencia, pero no conserva una prueba auditable de ella: es una limitación de la
             arquitectura, no una omisión.
+          </p>
+
+          <h3>Grabación de la sesión</h3>
+          <p>
+            Si aceptás, además se activa <strong>Microsoft Clarity</strong>, que no cuenta visitas
+            sino que <strong>registra cómo se navega la página</strong>: por dónde movés el cursor,
+            qué tocás, hasta dónde bajás, y arma una reproducción de la visita y mapas de calor.
+            Sirve para ver qué se entiende y qué no —por ejemplo, si nadie llega al botón de turno—
+            y para corregirlo.
+          </p>
+          <p>
+            Este sitio no tiene formularios propios, así que no se captura nada que escribas en él.
+            Si rechazás, el script directamente <strong>no se descarga</strong>: a diferencia del
+            contenedor de etiquetas, acá no hay nada que llegue antes de tu elección. Microsoft actúa
+            como proveedor y puede procesar esos datos fuera de la Argentina.
           </p>
 
           <h3>Mensajes por WhatsApp</h3>
@@ -145,8 +169,8 @@
 
           <h2>Con quién se comparten</h2>
           <p>
-            Con nadie más allá de los proveedores nombrados arriba —Google, Meta, YouCanBookMe y
-            EnvíaloSimple—, cada uno para la función descripta. No se venden, alquilan ni ceden datos
+            Con nadie más allá de los proveedores nombrados arriba —Google, Microsoft, Meta,
+            YouCanBookMe y EnvíaloSimple—, cada uno para la función descripta. No se venden, alquilan ni ceden datos
             con fines comerciales o publicitarios.
           </p>
 
@@ -216,8 +240,9 @@
           <div>
             <h2>Contacto</h2>
             <ul>
-              <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
+              <li><a href="/como-es-la-consulta/#turno" data-analytics-event="cta_click" data-analytics-label="footer_turno">Reservar un turno</a></li>
               <li><a data-mailbox href="/contacto/" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
+              <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
               <li><a data-profile="instagram" href="/contacto/">Instagram @dracuevillas</a></li>
               <li><a href="/contacto/">Ubicaciones y mapas</a></li>
             </ul>
@@ -246,7 +271,7 @@
       </div>
     </div>
 
-    <script src="/facts.js?v=3"></script>
-    <script src="/site.js?v=3"></script>
+    <script src="/facts.js?v=6"></script>
+    <script src="/site.js?v=6"></script>
   </body>
 </html>

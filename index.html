@@ -52,15 +52,15 @@
     />
     <meta name="twitter:image" content="https://doctoracuevillas.com/assets/social.jpg" />
 
-    <link rel="icon" href="/assets/favicon.svg?v=3" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=3" />
+    <link rel="icon" href="/assets/favicon.svg?v=6" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=6" />
     <meta name="theme-color" content="#fffbf9" />
     <!-- The controls this host cannot serve as headers, expressed from inside the document instead.
          `frame-ancestors` is NOT among them — it is ignored in a meta policy and can only arrive as
          a response header, so on GitHub Pages this site has NO PROTECTION AGAINST FRAMING AT ALL.
          That is recorded as an absent control in brief.md rather than left to look like an oversight. -->
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; frame-src https://v3.envialosimple.com; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com https://*.clarity.ms; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.clarity.ms" />
 
     <!-- The typefaces are self-hosted in /assets/fonts, with their variable axes pinned at the
          values actually used: 92 KB for three faces instead of 264 KB for design space nobody varies.
@@ -72,15 +72,19 @@
     <!-- The two faces the first screen is set in. Without this they are discovered only after the
          stylesheet parses, and the headline's final paint waits on that — worth about a second of
          largest-contentful-paint on a throttled phone, measured rather than assumed. -->
-    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=3" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/figtree.woff2?v=3" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/fraunces.woff2?v=6" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/figtree.woff2?v=6" as="font" type="font/woff2" crossorigin />
 
-    <link rel="stylesheet" href="/styles.css?v=3" />
+    <link rel="stylesheet" href="/styles.css?v=6" />
 
     <!-- Order is the mechanism: config first, so the consent default executes before the tag
          container loads. Reversed, a banner is decoration — the tags have already fired. -->
-    <script src="/config.js?v=3"></script>
-    <script src="/analytics.js?v=3"></script>
+    <script src="/config.js?v=6"></script>
+    <script src="/analytics.js?v=6"></script>
+
+    <!-- BEGIN GENERATED: verification -->
+    <!-- No Search Console token set. See config.searchConsole.verification. -->
+    <!-- END GENERATED: verification -->
 
     <!-- BEGIN GENERATED: json-ld -->
     <script type="application/ld+json">
@@ -165,7 +169,7 @@
     <header class="nav">
       <div class="wrap nav__inner">
         <a class="nav__brand" href="/">
-          <img src="/assets/favicon.svg?v=3" alt="" width="28" height="28" />
+          <img src="/assets/favicon.svg?v=6" alt="" width="28" height="28" />
           Dra. Guadalupe Cuevillas
         </a>
 
@@ -217,10 +221,10 @@
                      because a messaging handoff is a departure this site cannot observe (§26). -->
                 <a
                   class="btn btn--ghost"
-                  data-messaging="home"
-                  data-analytics-event="messaging"
-                  data-analytics-label="hero"
-                  >Escribime por WhatsApp</a
+                  href="/como-es-la-consulta/"
+                  data-analytics-event="cta_click"
+                  data-analytics-label="hero_consulta"
+                  >Cómo es la consulta</a
                 >
               </div>
               <div class="cred">
@@ -236,7 +240,7 @@
             <figure class="figure">
               <img
                 class="portrait"
-                src="/assets/guada-retrato.webp?v=3"
+                src="/assets/guada-retrato.webp?v=6"
                 alt="La Dra. María Guadalupe Cuevillas en su consultorio"
                 width="760"
                 height="950"
@@ -394,8 +398,9 @@
           <div>
             <h2>Contacto</h2>
             <ul>
-              <li><a data-messaging="contacto" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
+              <li><a href="/como-es-la-consulta/#turno" data-analytics-event="cta_click" data-analytics-label="footer_turno">Reservar un turno</a></li>
               <li><a data-mailbox href="/contacto/" data-analytics-event="mail" data-analytics-label="footer">Escribirme por mail</a></li>
+              <li><a data-messaging="home" data-analytics-event="messaging" data-analytics-label="footer">WhatsApp</a></li>
               <li><a data-profile="instagram" href="/contacto/">Instagram @dracuevillas</a></li>
               <li><a href="/contacto/">Ubicaciones y mapas</a></li>
             </ul>
@@ -419,10 +424,10 @@
       <span>¿Querés un turno?</span>
       <a
         class="btn"
-        data-messaging="home"
-        data-analytics-event="messaging"
-        data-analytics-label="sticky"
-        >WhatsApp</a
+        href="/como-es-la-consulta/#turno"
+        data-analytics-event="cta_click"
+        data-analytics-label="sticky_turno"
+        >Reservar turno</a
       >
     </div>
 
@@ -440,7 +445,7 @@
       </div>
     </div>
 
-    <script src="/facts.js?v=3"></script>
-    <script src="/site.js?v=3"></script>
+    <script src="/facts.js?v=6"></script>
+    <script src="/site.js?v=6"></script>
   </body>
 </html>

@@ -74,9 +74,22 @@ const FIXTURES = [
       edit(dir, "index.html", 'data-messaging="home"', 'href="https://wa.me/5491159612588"'),
   },
   {
+    // The shape this arrives in: a snippet copied from the provider's dashboard straight into the
+    // markup, id and all, loading before the visitor has chosen anything.
+    name: "a session recording snippet pasted into the markup",
+    check: "check-config.mjs",
+    apply: (dir) =>
+      edit(
+        dir,
+        "index.html",
+        "<body data-puerta=\"home\">",
+        '<body data-puerta="home"><script>t.src="https://www.clarity.ms/tag/y0hmjqn23l"</script>',
+      ),
+  },
+  {
     name: "the asset version bumped in config but not in the markup",
     check: "check-config.mjs",
-    apply: (dir) => edit(dir, "config.js", "assetVersion: 3", "assetVersion: 4"),
+    apply: (dir) => edit(dir, "config.js", "assetVersion: 6", "assetVersion: 7"),
   },
   {
     // The defect this site is actually exposed to. It presents no form and declares no receiver,
@@ -182,8 +195,22 @@ const FIXTURES = [
       edit(
         dir,
         "index.html",
-        '<link rel="stylesheet" href="/styles.css?v=3" />',
+        '<link rel="stylesheet" href="/styles.css?v=6" />',
         '<link rel="stylesheet" href="https://fonts.example-cdn.test/css?family=X" />\n    <link rel="stylesheet" href="/styles.css?v=1" />',
+      ),
+  },
+  {
+    // The subscription form is loaded on click, never with the page. This is the check that keeps it
+    // that way — put the frame in the markup and it reaches the provider before the visitor has
+    // chosen anything, which is the failure the consent decision exists to prevent.
+    name: "the subscription frame embedded at first render instead of on request",
+    check: "check-assets.mjs",
+    apply: (dir) =>
+      edit(
+        dir,
+        "fertilidad/index.html",
+        '<div class="subscribe__frame" id="suscripcion-fertilidad" hidden>',
+        '<div class="subscribe__frame" id="suscripcion-fertilidad" hidden><iframe src="https://v3.envialosimple.com/form/x" title="x"></iframe>',
       ),
   },
   {
@@ -240,6 +267,15 @@ const FIXTURES = [
     check: "build-derived.mjs",
     args: ["--check"],
     apply: (dir) => edit(dir, "llms.txt", "# Dra. María Guadalupe Cuevillas", "# Otra Persona"),
+  },
+  {
+    // A hand-edited verification token is a property that never verifies, and the failure is silent:
+    // Search Console simply says it could not confirm ownership, weeks after somebody "tidied" it.
+    name: "the Search Console block hand-edited away from config.js",
+    check: "build-derived.mjs",
+    args: ["--check"],
+    apply: (dir) =>
+      edit(dir, "index.html", "<!-- No Search Console token set.", "<!-- token va aca."),
   },
   {
     // The blocks generated into every page, not only into the home page. The registration number and

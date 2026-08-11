@@ -31,7 +31,7 @@ section 5 below.
 | # | Decision | Answer | Owner |
 |---|---|---|---|
 | 1 | Measurement contract and container | `GTM-TCHKKB37`, already created. Container injected by `analytics.js` after the consent default, never by a tag in the markup. Contract below. | Juan |
-| 2 | Consent — jurisdiction, decision, **and what would change it** | `explicit`. Argentina, Ley 25.326. Decided by María Guadalupe Cuevillas, 2026-08-09. Argentine law does **not** require prior consent for analytics cookies; the stricter line was taken anyway because the audience is patients and the subject is health. Recorded in `config.js` with the condition that would reopen it. **This architecture cannot produce auditable proof of consent** — the record lives in the visitor's browser. | Guadalupe |
+| 2 | Consent — jurisdiction, decision, **and what would change it** | `explicit`. Argentina, Ley 25.326. Decided by María Guadalupe Cuevillas, 2026-08-09. **Widened 2026-08-11:** accepting now also starts a Microsoft Clarity session recording. That is a change to what personal data is collected, which §26 puts on the ask-before-acting list — it was requested by Juan, and the person who signed the consent decision is Guadalupe, so she should know that her yes now covers replay as well as counting. Argentine law does **not** require prior consent for analytics cookies; the stricter line was taken anyway because the audience is patients and the subject is health. Recorded in `config.js` with the condition that would reopen it. **This architecture cannot produce auditable proof of consent** — the record lives in the visitor's browser. | Guadalupe |
 | 3 | Canonical identity: domain, mailbox, brand | `doctoracuevillas.com` · `guada@doctoracuevillas.com` · "Dra. Guadalupe Cuevillas". One domain, one mailbox, one brand — replacing five scattered identities. | Juan |
 | 4 | Retired URLs and the redirect plan | The predecessor is `sites.google.com/view/naprofertility`, on a domain this project does not control. **No redirect can be served from here**, and GitHub Pages cannot serve rule-based redirects at all — `_redirects` is inert and says so at the top. The one redirect this site needs, `www` to the apex, is done by the host from the `CNAME` file. The equity on the old URLs is recovered by editing that page down to one line pointing here. The retired scheduler `naprofertilitydracuevillas.youcanbook.me` is de-indexed at the provider and must never be linked. | Juan |
 | 5 | Sender authentication | Not yet in place. `guada@doctoracuevillas.com` does not exist yet; the four mailing-list confirmation emails still send from a Gmail address. MX, SPF and DKIM must exist **before** the first campaign — burnt sending reputation takes months to recover. | Juan |
@@ -68,6 +68,7 @@ converts* and an event that arrives without it cannot be assigned to one afterwa
 | `cta_click` | outcome | `puerta`, `event_label` | Which in-page call to action moves people down a landing? |
 | `agenda_intent` | **intent** | `puerta`, `agenda`, `event_label` | Which door produces scheduler departures, and to which of the three agendas? |
 | `messaging_intent` | **intent** | `puerta`, `event_label` | Which control sends people to WhatsApp, and from which door? |
+| `cta_click` (labels ending `_turno`) | outcome | `puerta`, `event_label` | Does pushing people towards the scheduler instead of the messaging channel actually move them there? |
 | `newsletter_intent` | **intent** | `puerta`, `audiencia`, `event_label` | Which door produces list signups, and patient or professional? |
 | `mail_intent` | **intent** | `puerta`, `event_label` | Does anybody still use email rather than messaging? |
 
@@ -95,12 +96,14 @@ as a real blocker.
 | A scheduled check against the public URL | Nothing yet — but nothing in this architecture announces a failure | Juan | No logs, no alerts, no health endpoint. A dead scheduling link looks exactly like a working site. |
 | Mailbox `guada@doctoracuevillas.com` with MX/SPF/DKIM, plus forwarding from the historical Gmail accounts | The contact path, and every mailing-list send | Juan | The four EnvíaloSimple forms still confirm from `endodracuevillas@gmail.com`; they must be reinstalled once the domain sends. |
 | **Legal review of `/privacidad`** | Publication | Juan | A complete first draft is written from what the site actually does — controller, each collection, each processor, retention, Ley 25.326 rights, medical disclaimer. It is a draft, not a reviewed document. |
-| Scheduling link for climaterio | Nothing — the door converts through WhatsApp today and says so | Juan | `config.agendas.climaterio` is `null`. When it holds a URL, change the control **and its visible label together**. |
+| **Scheduling link for climaterio** | **Now the one door that cannot send anyone to a scheduler.** Every other conversion control on the site moved from messaging to booking; this one could not, so `/climaterio` is the exception on a site whose conversion story is now the agenda. Cosmetic this morning, expensive now | Juan | `config.agendas.climaterio` is `null`. When it holds a URL, change the control **and its visible label together**. |
 | Guadalupe's decision on publishing the private presencial consultation at Villanueva | Nothing — `/endocrinologia` currently says only that she sees patients there "por los canales de cada institución" | Guadalupe | The page does not claim what has not been decided. |
 | Professional photography (portrait + consulting room) | Nothing — three real phone photographs are in use | Guadalupe | See Assumed. |
 | Selection of 3–5 Instagram comments to quote as testimonials | Nothing — **no testimonial block was built** | Juan + Guadalupe | See Assumed: building an empty block invites it to be filled without the anonymisation rules. |
 | Lead magnets and the welcome automation per list | Nothing — the four forms already collect | Juan | The site promises "lo que escribo", not a specific download, so nothing on the page is a promise the platform cannot keep. |
-| GA4 configured inside GTM, Search Console verified, Metricool connected | Reading the measurement | Juan | The site emits; nothing consumes yet. |
+| GA4 property created and connected inside `GTM-TCHKKB37` | Reading the measurement | Juan | **Verified 2026-08-11: the container is EMPTY** — it returns its runtime and not one `G-` id. The site emits correctly (a real click in production produced `agenda_intent · puerta=fertilidad`); nothing is on the other end, and what was emitted is gone. Step-by-step in `measurement.md`. |
+| Search Console claimed and sitemap submitted | Search visibility | Juan | Not claimed. `config.searchConsole.verification` renders the token into the served markup when set — the verifier does not run scripts. DNS TXT is the better route. See `measurement.md`. |
+| Metricool connected to Instagram | Instagram reporting | Juan | — |
 | Edit `sites.google.com/view/naprofertility` down to one line pointing here | Recovering the predecessor's traffic | Juan | Cannot be done from this repository — see irreversible 4. |
 | `copy_google_sites_naprofertility.md` | Nothing | Juan | The brief says this file should be in the repo. It was never supplied; the copy was written from the brief itself. |
 
@@ -154,6 +157,19 @@ destination; these close the known wrong turns.
 - **Do not add a form** without also adding a receiver that persists the record, and without
   restoring `form-action 'self'` in `_headers`.
 - **Do not put the biography on the home page.** The home sells the three doors.
+- **Do not paste a tracking snippet into the markup**, however the provider's dashboard hands it to
+  you. The id belongs in `config.js` and the loading belongs in `analytics.js`, which is the one
+  place that decides what measurement happens and when — a snippet in the markup runs before the
+  visitor has chosen anything, on a site that decided to ask first. `check-config` now fails on the
+  session-recording form of this, which is the one that actually arrived.
+- **Do not put WhatsApp back as a primary or secondary button on a door.** It was on 24 controls
+  across nine pages and is now on 15, nine of which are the single footer entry. The practice does
+  not want to be reached mainly by message: the default path is the scheduler, and messaging is for
+  somebody who needs to ask something before booking. `/climaterio` is the deliberate exception,
+  and only until its agenda exists.
+- **Do not give the footer one shared prepared message.** It is generated once for nine pages, so a
+  single message would throw away the per-door origin on eight of them. The key comes from the
+  page's own route.
 - **Do not build a booking system.** v1 uses YouCanBookMe.
 - **Do not hand-edit anything between `BEGIN GENERATED` and `END GENERATED`,** in any page. Edit
   `facts.js` and run `node scripts/build-derived.mjs`.
@@ -197,6 +213,7 @@ error that was already fixed.
 | Extensionless URLs (`/fertilidad`), on the belief that the host maps them to `.html`. | **Replaced by directory indexes** (`/fertilidad/`). The belief was never verified and it carried every canonical URL on the site. A directory index needs no host behaviour at all. | Having to choose a host whose behaviour I could not test. |
 | The first identity: ink on white, hairline rules, monospaced plate captions, one annotation red. | **Discarded entirely.** It read as a newspaper. The audience arrives frightened about fertility or about a body that is changing, and austerity reads as coldness exactly there. Warmth is now the first priority and seriousness the second. | The client, in two rounds of review. |
 | Lighthouse measured 0.83 on mobile after the redesign, and the first instinct was that the budget was too tight for self-hosted fonts. | Wrong twice. The local server was not compressing what the host compresses, and the faces were being discovered only after the stylesheet parsed. Both were fixed rather than the threshold: **0.99, with LCP at 1.8s.** No floor was moved. | Running Lighthouse instead of reasoning about it. |
+| The privacy page's measurement paragraph, second attempt: "no se escriben cookies de análisis ni se registra tu navegación". | Still too strong. With consent denied the tag library is fetched before any choice — measured — and Google's consent mode is documented to keep sending cookieless pings in that state. The paragraph now claims only what is defensible: no cookies, no identifier that survives between visits, and an anonymous signal that the page opened. **Twice wrong in the same paragraph**, both times by describing the intent rather than the behaviour. | Instrumenting the live site to see what actually leaves it, and finding that my own method could not observe the ping either way — so the claim had to shrink to what evidence supports. |
 | The repository is the web root, so committing is publishing — §26's model, taken literally. | Still true for anything site-shaped, and **no longer true for the rest.** The repository was made public so GitHub Pages could serve it on the free plan, and the publish job was uploading the working tree whole: `brief.md`, `AGENTS.md` and the gate's own scripts would have been served from the practitioner's domain and indexed under her name. `scripts/stage-site.mjs` now builds the artifact by rule. On GitHub those documents are readable by a colleague; on `doctoracuevillas.com` they are not there at all. | Checking whether anything was published yet, and reading what the publish job actually uploads. |
 
 ---
@@ -210,6 +227,7 @@ inventory is the only record.
 |---|---|---|---|---|
 | Google Tag Manager | Container | `GTM-TCHKKB37` | Loads GA4 and any future tag | **No — restrict it.** A container id is public; the protection is the domain allowlist in the container's own settings |
 | Google Analytics 4 | Property | not yet created | Consumes the events above | n/a until it exists |
+| Microsoft Clarity | Project | `y0hmjqn23l` | **Session recording and heatmaps** — cursor, clicks, scrolling, replay of the visit. Added 2026-08-11 at the client's request. Loaded by `analytics.js` ONLY after the visitor accepts, never before; `clarityProjectId: null` switches it off, at the cost of a deploy | Restrict the project to `doctoracuevillas.com` in Clarity's own settings — the id is public and that allowlist is the only protection |
 | YouCanBookMe | Agenda | `primerconsultanapro` | First fertility consultation, 60 min | n/a (outbound link) |
 | YouCanBookMe | Agenda | `seguimientonapro` | Fertility follow-up, 45 min, existing patients only | n/a |
 | YouCanBookMe | Agenda | `endodracuevillas` | Endocrinology, 30 min | n/a |

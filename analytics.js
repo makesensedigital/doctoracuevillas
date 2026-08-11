@@ -37,6 +37,31 @@
     window.dataLayer.push(arguments);
   };
 
+  // ---------------------------------------------------------------- session recording
+  //
+  // Loaded ONLY after an affirmative choice, and never on page load. This is deliberately stricter
+  // than the tag container beside it: that one loads with everything denied and respects consent
+  // mode, which is defensible for counting. Recording a visit is not counting, and the safe default
+  // for it is not to arrive at all.
+  //
+  // Idempotent, because `grantConsent` also runs on a later visit from the stored choice.
+  const loadSessionRecording = function () {
+    const project = String(config.clarityProjectId || "").trim();
+    if (!project || window.__recordingLoaded) return;
+    window.__recordingLoaded = true;
+
+    window.clarity =
+      window.clarity ||
+      function () {
+        (window.clarity.q = window.clarity.q || []).push(arguments);
+      };
+
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.clarity.ms/tag/" + encodeURIComponent(project);
+    document.head.appendChild(s);
+  };
+
   // ---------------------------------------------------------------- consent, before anything
   // Under `explicit`, everything starts DENIED and only an affirmative choice updates it. Under
   // `notice-only` the decision recorded in config.js is that prior consent is not required in the
@@ -64,6 +89,7 @@
         functionality_storage: "granted",
         personalization_storage: "granted",
       });
+      loadSessionRecording();
       try {
         localStorage.setItem("consent-choice", "granted");
       } catch (e) {
@@ -83,6 +109,11 @@
       /* as above */
     }
   }
+
+  // Under `notice-only` the recorded decision is that prior consent is not required, so the same
+  // rule applies to recording as to counting. This site is `explicit`, so this branch does nothing
+  // here — it exists so that changing the mode changes both together rather than only one.
+  if (!config.consent || config.consent.mode !== "explicit") loadSessionRecording();
 
   // ---------------------------------------------------------------- the container
   const containerId = String(config.tagContainerId || "").trim();

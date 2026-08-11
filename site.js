@@ -64,6 +64,41 @@
     external(el, url);
   });
 
+  // ---------------------------------------------------------------- the subscription form
+  //
+  // The mailing form is a third party's page. Loading it with the rest of the page would contact
+  // that provider before the visitor has chosen anything, which is precisely what the consent
+  // decision exists to prevent — so NOTHING is requested until she asks for it by clicking. That is
+  // the remedy §26 names for an embed, and it is why the provider's own widget script is not used
+  // here at all: it is unversioned, has no integrity attribute, and writes into the document.
+  //
+  // It stays an INTENT. The submission happens inside a cross-origin frame, so this site can watch
+  // her ask for the form and can never watch her finish it.
+  document.querySelectorAll("[data-newsletter][data-newsletter-embed]").forEach(function (el) {
+    const slot = document.getElementById(el.getAttribute("aria-controls"));
+    if (!slot) return;
+    el.setAttribute("aria-expanded", "false");
+
+    el.addEventListener("click", function (event) {
+      const url = el.getAttribute("href");
+      if (!url || slot.dataset.loaded) return;
+      // Only now does anything leave the page, and it leaves for the provider, not for a new tab.
+      event.preventDefault();
+      slot.dataset.loaded = "1";
+
+      const frame = document.createElement("iframe");
+      frame.src = url;
+      // A frame with no title is an unlabelled landmark for anyone using a screen reader.
+      frame.title = "Formulario de suscripción";
+      slot.insertBefore(frame, slot.firstChild);
+      slot.hidden = false;
+      el.setAttribute("aria-expanded", "true");
+      el.hidden = true;
+      slot.setAttribute("tabindex", "-1");
+      slot.focus();
+    });
+  });
+
   document.querySelectorAll("[data-mailbox]").forEach(function (el) {
     el.setAttribute("href", "mailto:" + config.contactMailbox);
     if (!el.textContent.trim()) el.textContent = config.contactMailbox;
