@@ -29,7 +29,7 @@
       "(Omaha, Estados Unidos). Atiende fertilidad y salud del ciclo, climaterio y endocrinología " +
       "general, con un enfoque que estudia y corrige la causa hormonal y metabólica en lugar de " +
       "saltearla. Consulta por videollamada desde cualquier país, y en consultorio en el Hospital " +
-      "Universitario Austral (Pilar) y en Centro Médico Villanueva (Tigre).",
+      "Universitario Austral (Pilar y Escobar) y en Centro Médico Villanueva (Tigre).",
     // A practitioner has no founding date, and inventing one to fill a field is how a fact nobody
     // checked ends up in the structured data.
     foundingYear: null,
@@ -66,6 +66,24 @@
         telephone: null,
         hours: "Turnos por los canales del hospital",
       },
+      // THE STREET NUMBER IS CONFIRMED AT 642 — Guadalupe, 2026-08-11, asked directly because two
+      // numbers are in circulation. DO NOT "CORRECT" IT TO 650. The hospital's own page for this
+      // sede (hospitalaustral.edu.ar/pacientes/sedes/escobar/) publishes 650, so anybody who checks
+      // a source will find one that disagrees with this file and will be right about what it says.
+      // She attends there; she is the source, and 642 is also what the hospital's 2014 opening note
+      // and its Plan de Salud sucursal listing carry. Written down because an unexplained number
+      // that contradicts the obvious source gets "fixed" by the next person to look.
+      // The number lives only here — the footer, the structured data, llms.txt and the map link on
+      // /contacto all derive from it — plus the same number as prose in that card.
+      {
+        label: "Hospital Universitario Austral (Sede Escobar)",
+        street: "Juan P. Asborno 642",
+        city: "Belén de Escobar",
+        region: "Provincia de Buenos Aires",
+        country: "AR",
+        telephone: null,
+        hours: "Jueves y viernes por la mañana; turnos por los canales del hospital",
+      },
       {
         label: "Centro Médico Villanueva",
         street: "Complejo Vila Terra",
@@ -92,7 +110,7 @@
         name: "Fertilidad y salud del ciclo",
         summary: "Buscás un embarazo y querés entender y tratar la causa.",
         detail:
-          "SOP y resistencia a la insulina, sospecha de endometriosis, tiroides y prolactina, abortos recurrentes, factor masculino y salida de anticonceptivos.",
+          "SOP (SOMP) y resistencia a la insulina, sospecha de endometriosis, tiroides y prolactina, abortos recurrentes, factor masculino y salida de anticonceptivos.",
       },
       {
         id: "climaterio",
