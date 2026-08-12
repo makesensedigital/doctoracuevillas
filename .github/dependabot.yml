@@ -1,0 +1,43 @@
+# Version updates for the actions the delivery gate runs on — Handbook §22.
+#
+# WHY THIS FILE EXISTS
+#
+# On 2026-08-12 every `uses:` in `workflows/gate.yml` was found to be a major version behind, and
+# two of them were three behind. None of them had aged into that: all five current majors were
+# already published on the day this repository was created. The pins came in with the template
+# scaffold and nobody compared them against what existed.
+#
+# Nothing caught it because nothing was looking. This repository has a gate that refuses to publish
+# a site whose address disagrees with its own structured data — and no check at all on the workflow
+# that runs that gate. The signal that eventually surfaced it was a deprecation warning under a
+# green deploy, which is a signal you have to already suspect something to go and read.
+#
+# WHAT THIS DOES AND WHAT IT DELIBERATELY DOES NOT DO
+#
+# It opens a pull request when an action publishes a new version. It does not merge one. §22 treats
+# CI configuration as privileged surface and asks for a proposal rather than a convenience edit —
+# the pull request IS the proposal, the gate runs on its branch like any other, and a person decides.
+#
+# READ THE RELEASE NOTES BEFORE MERGING, every time. `upload-pages-artifact@v4` stopped putting
+# dotfiles in the artifact, and `.nojekyll` is a dotfile this site stages on purpose. Taken blind,
+# that upgrade removes a published file with a green build and no message anywhere. The workflow
+# now passes `include-hidden-files: true` for exactly that reason, and the note beside it says so.
+#
+# Grouped into ONE pull request per week rather than one per action: five separate branches for a
+# five-line change is how a queue of open Dependabot PRs becomes background noise nobody reads,
+# which returns this file to the state it was written to fix.
+version: 2
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "ci"

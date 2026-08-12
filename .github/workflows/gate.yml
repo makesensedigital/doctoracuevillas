@@ -30,6 +30,20 @@
 # It was three. The accessibility CLI was removed after its first run on a real runner failed
 # because the driver it bundles was tied to a Chrome the runner no longer had — see the note where
 # it used to be. Pinning a tool without pinning the browser it drives is not a pin.
+#
+# THE ACTIONS THEMSELVES ARE A THIRD KIND OF DEPENDENCY, and this file did not treat them as one
+# until 2026-08-12. Every `uses:` below was a major behind on the day the repository was created —
+# `checkout` and `setup-node` by three, `upload-pages-artifact` by two — because the pins arrived
+# with the template scaffold and nothing ever compared them against what was published. Nothing
+# noticed for three days: the gate checks the site, and no check in it looks at the gate.
+#
+# What surfaced it was a deprecation warning at the foot of a successful deploy, which is the worst
+# possible place for a signal — it costs nothing to scroll past and it only appears once something
+# is already end-of-life. So the notice moved to where a change is argued: `.github/dependabot.yml`
+# opens a pull request per action, and that pull request is the proposal §22 asks for. Dependabot
+# proposes; the gate runs on its branch; a person merges. Merging one without reading its release
+# notes is the same convenience edit §22 prohibits — see `include-hidden-files` in `publish` for
+# what one silent major cost here.
 
 name: Delivery gate
 
@@ -53,8 +67,8 @@ jobs:
     name: Site rules (§26)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
 
@@ -108,8 +122,8 @@ jobs:
     name: Links, accessibility, performance
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
 
@@ -203,7 +217,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # The domain file must travel with the artifact. Moving the publication origin from a branch
       # to a workflow and omitting it unbinds the custom domain SILENTLY — the site keeps working on
@@ -224,9 +238,17 @@ jobs:
       - name: Stage only what is site content
         run: node scripts/stage-site.mjs
 
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v6
+      # `include-hidden-files` IS LOAD-BEARING AND MUST NOT BE DROPPED. From v4 this action stopped
+      # putting dotfiles in the artifact, and `.nojekyll` is a dotfile — staged deliberately, listed
+      # in ROOT_FILES in scripts/stage-site.mjs. Without this input the upgrade would have removed a
+      # file from the published site silently: the artifact still builds, the deploy still succeeds,
+      # and nothing here or in the gate would say a word. Restored as an input rather than accepted,
+      # because "the artifact-based deploy probably does not run Jekyll anyway" is a belief and the
+      # file is a declaration.
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
+          include-hidden-files: true
       - id: deploy
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
