@@ -17,7 +17,7 @@ M.N. 149275 — Ministerio de Salud de la Nación, Argentina
 ## Consultorios
 
 - Hospital Universitario Austral: Av. Juan Domingo Perón 1500, Pilar, Provincia de Buenos Aires (Turnos por los canales del hospital)
-- Hospital Universitario Austral (Sede Escobar): Juan P. Asborno 642, Belén de Escobar, Provincia de Buenos Aires (Jueves y viernes por la mañana; turnos por los canales del hospital)
+- Hospital Universitario Austral (Sede Escobar): Juan P. Asborno 650, Belén de Escobar, Provincia de Buenos Aires (Jueves y viernes por la mañana; turnos por los canales del hospital)
 - Centro Médico Villanueva: Complejo Vila Terra, Tigre, Provincia de Buenos Aires (Según agenda)
 
 ## Secciones principales

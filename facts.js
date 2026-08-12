@@ -66,18 +66,23 @@
         telephone: null,
         hours: "Turnos por los canales del hospital",
       },
-      // THE STREET NUMBER IS CONFIRMED AT 642 — Guadalupe, 2026-08-11, asked directly because two
-      // numbers are in circulation. DO NOT "CORRECT" IT TO 650. The hospital's own page for this
-      // sede (hospitalaustral.edu.ar/pacientes/sedes/escobar/) publishes 650, so anybody who checks
-      // a source will find one that disagrees with this file and will be right about what it says.
-      // She attends there; she is the source, and 642 is also what the hospital's 2014 opening note
-      // and its Plan de Salud sucursal listing carry. Written down because an unexplained number
-      // that contradicts the obvious source gets "fixed" by the next person to look.
+      // THE STREET NUMBER IS 650, AND IT HAS MOVED ONCE ALREADY. The full sequence, because a fact
+      // that changed twice in a day is one somebody will change a third time:
+      //   642 shipped first — the standing instruction, then confirmed by Guadalupe on 2026-08-11.
+      //   650 replaced it hours later, on Juan's instruction, same day.
+      // 650 is also what the hospital's own page for this sede publishes
+      // (hospitalaustral.edu.ar/pacientes/sedes/escobar/), so the file and the obvious source now
+      // agree — which is the state that stops this from being re-litigated. 642 is what the
+      // hospital's 2014 opening note and its Plan de Salud sucursal listing still carry, and what
+      // the scraped directories repeat, so a source saying 642 is not new information.
+      // BEFORE CHANGING IT AGAIN: get it from somebody who has been to the door recently, and say
+      // in the commit who that was. A wrong number here sends a patient to the wrong address, and
+      // nothing in this architecture can observe that happening.
       // The number lives only here — the footer, the structured data, llms.txt and the map link on
       // /contacto all derive from it — plus the same number as prose in that card.
       {
         label: "Hospital Universitario Austral (Sede Escobar)",
-        street: "Juan P. Asborno 642",
+        street: "Juan P. Asborno 650",
         city: "Belén de Escobar",
         region: "Provincia de Buenos Aires",
         country: "AR",
