@@ -29,7 +29,7 @@
       "(Omaha, Estados Unidos). Atiende fertilidad y salud del ciclo, climaterio y endocrinología " +
       "general, con un enfoque que estudia y corrige la causa hormonal y metabólica en lugar de " +
       "saltearla. Consulta por videollamada desde cualquier país, y en consultorio en el Hospital " +
-      "Universitario Austral (Pilar y Escobar) y en Centro Médico Villanueva (Tigre).",
+      "Universitario Austral (Sede Escobar) y en Centro Médico Villanueva (Tigre).",
     // A practitioner has no founding date, and inventing one to fill a field is how a fact nobody
     // checked ends up in the structured data.
     foundingYear: null,
@@ -57,15 +57,16 @@
     // number, it is a messaging line, and it lives in config.js like every other external
     // identifier. The structured data derives it from there.
     locations: [
-      {
-        label: "Hospital Universitario Austral",
-        street: "Av. Juan Domingo Perón 1500",
-        city: "Pilar",
-        region: "Provincia de Buenos Aires",
-        country: "AR",
-        telephone: null,
-        hours: "Turnos por los canales del hospital",
-      },
+      // PILAR IS NOT HERE ANY MORE, AND ITS ABSENCE IS THE FACT — removed 2026-08-12 and ANSWERED
+      // THE SAME DAY: she is médica de staff of the Austral's Servicio de Endocrinología, and she
+      // sees patients in person ONLY in that hospital's consultorios externos at the Sede Escobar.
+      // Pilar was in the first build, taken from the brief, and was never separately checked; the
+      // Escobar sede was added beside it on 2026-08-11 rather than in place of it, which is what
+      // made both appear at once.
+      // The distinction the site now draws, and the reason there is prose about it on /sobre-mi:
+      // the affiliation is to a hospital whose campus is in Pilar; the CONSULTING ROOM is Escobar.
+      // An address published here is an invitation to travel to it, which is why an affiliation
+      // must not be listed as one.
       // THE STREET NUMBER IS 650, AND IT HAS MOVED ONCE ALREADY. The full sequence, because a fact
       // that changed twice in a day is one somebody will change a third time:
       //   642 shipped first — the standing instruction, then confirmed by Guadalupe on 2026-08-11.
@@ -89,9 +90,16 @@
         telephone: null,
         hours: "Jueves y viernes por la mañana; turnos por los canales del hospital",
       },
+      // "Complejo Vila Terra" was all the brief gave, and a complex is not an address: it named the
+      // place without saying where its door is. The street line comes from the centre's own site
+      // (cmvillanueva.com.ar, 2026-08-12), which publishes "Boulevard de todos los Santos 100,
+      // Complejo Comercial Vila Terra. Tigre, Provincia de Buenos Aires" in three places on one
+      // page. The complex is inside the Villanueva private-neighbourhood development at Dique
+      // Luján, so the name still earns its place — but as orientation in the card on /contacto,
+      // not as the street line the map is built from. Nobody here has been to the door.
       {
         label: "Centro Médico Villanueva",
-        street: "Complejo Vila Terra",
+        street: "Boulevard de todos los Santos 100",
         city: "Tigre",
         region: "Provincia de Buenos Aires",
         country: "AR",
