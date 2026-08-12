@@ -106,29 +106,32 @@
                 fértil, y cuando algo del sistema endócrino se desordena en el medio.
               </p>
             </div>
-            <!-- THE HERO PHOTOGRAPH ON THIS PAGE IS PENDING. The slot is prepared and the page is
-                 still whole: the arch crop and the peach block come from `.figure`/`.portrait`, the
-                 same treatment every other hero uses, and the declared box is now 760×950 like the
-                 others — the same 4:5 the file already has, so nothing shifts when it is swapped.
+            <!-- THE PHOTOGRAPH HERE IS A STOPGAP, chosen 2026-08-11, and it is the same one
+                 /climaterio uses — framed wider, but the same moment. That is a real cost and it was
+                 taken on purpose, so read this before "fixing" either page.
 
-                 WHAT IS MISSING: assets/guada-sobremi.webp, encoded at 760×950 in webp like the
-                 rest. When it lands, point the src below at it and rewrite the alt for what that
-                 photograph actually shows — the alt here describes the CURRENT image and would
-                 otherwise become a description of a picture nobody is looking at.
+                 WHY. The image this page carried until now was the best FIT — a posed corridor
+                 portrait, white coat, hospital — and the worst FILE. Its only source is 640×640, and
+                 a 4:5 crop of a 640-square is 512×640, which is what was published; every other hero
+                 comes from a 960×1280 photograph and is published at 760×950. So the browser was
+                 stretching it into the 760×950 box, and that was the softness Guadalupe saw. It was
+                 not under-encoded: at 49 KB per megapixel it sat inside the range of the others, so
+                 re-exporting it would have changed nothing. There was no sixth photograph.
 
-                 The filename above is written without quotes on purpose. `check-assets.mjs` reads a
-                 quoted path as a reference and fails the gate on a file that is not committed, which
-                 is the check doing its job: a reference to an absent asset is a 404 on the live site
-                 that raises nothing. So the slot waits here rather than pointing at nothing.
+                 WHAT REPLACES IT: a larger original of that corridor portrait — it is posed, with a
+                 Mater Dei lanyard, so a full-size file exists with whoever took it — or a photograph
+                 taken for this page. Either one ends the duplication with /climaterio.
 
-                 MIND THE NAME. The file in the repository is guada-sobre-mi.webp and the one being
-                 waited on is guada-sobremi.webp — one hyphen apart. They are two different files and
-                 two different URLs, and the second one is what this comment is about. -->
+                 WHEN IT ARRIVES: overwrite assets/guada-sobremi.webp at 760×950, rewrite the alt for
+                 what that photograph actually shows, and BUMP config.assetVersion. The URL does not
+                 change, so without the bump a returning visitor keeps the old picture — with no
+                 build there are no content-addressed filenames and `?v=` is the only invalidation
+                 there is. The gate checks the two agree; it cannot check that the pixels changed. -->
             <figure class="figure">
               <img
                 class="portrait"
-                src="/assets/guada-sobre-mi.webp?v=7"
-                alt="La Dra. María Guadalupe Cuevillas con ambo blanco, en un pasillo de hospital"
+                src="/assets/guada-sobremi.webp?v=7"
+                alt="La Dra. María Guadalupe Cuevillas en su consultorio, junto a la ventana"
                 width="760"
                 height="950"
                 fetchpriority="high"
@@ -148,9 +151,8 @@
               Médica, Fundación Héctor A. Barceló (2005–2013), promedio 8,56.
             </li>
             <li>
-              Especialista en Endocrinología: residencia y concurrencia en el Hospital General de
-              Agudos Dr. Teodoro Álvarez, y Curso Superior de Endocrinología de la Universidad de
-              Buenos Aires.
+              Especialista en Endocrinología: concurrencia en el Hospital General de Agudos Dr.
+              Teodoro Álvarez, y Curso Superior de Endocrinología de la Universidad de Buenos Aires.
             </li>
             <li>
               Medical Consultant en NaProTecnología — Pope Paul VI Institute, en Cuernavaca (México)
@@ -236,6 +238,7 @@
             <h2>Consultorios</h2>
             <ul>
               <li>Hospital Universitario Austral — Av. Juan Domingo Perón 1500, Pilar</li>
+              <li>Hospital Universitario Austral (Sede Escobar) — Juan P. Asborno 642, Belén de Escobar</li>
               <li>Centro Médico Villanueva — Complejo Vila Terra, Tigre</li>
               <li>Videoconsulta a todo el país y el exterior</li>
             </ul>
