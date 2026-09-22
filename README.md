@@ -135,12 +135,13 @@ exists — which is how a client's domain becomes claimable by a stranger.
 | Piece | Who owns the account | How it transfers |
 |---|---|---|
 | Domain registrar | Juan | Registrar transfer to an account in Guadalupe's name. **Do this before anything else depends on it** — an unclaimed domain pointing at a dead resource is how a client's name becomes claimable by a stranger |
-| DNS zone | Juan (to move to Cloudflare) | Moves with the domain |
+| DNS zone | Juan — DonWeb (*Hosting Revendedores*, cliente 41454948), nameservers `ns3.hostmar.com` and `ns4.hostmar.com` (confirmed in the public zone 2026-09-21); still slated to move to Cloudflare | Carries the GitHub Pages `A` records, the mail stack (SPF/DKIM/DMARC) and the Search Console verifying TXT. `www` CNAMEs to `makesensedigital.github.io`, so it points at the agency until the hosting moves. **Copy every record before switching nameservers** — a dropped TXT unverifies Search Console silently |
 | Domain verification | Juan | Re-verified by whoever holds the hosting account |
 | Repository | `makesensedigital` organisation | Transfer, or fork to Guadalupe's account. The site is nine static files; it does not need the org |
 | Hosting account | `makesensedigital` (GitHub Pages) | The artifact is the repository: transfer the repo and Pages follows |
-| Analytics property | Juan (not yet created) | Add Guadalupe as an administrator on the GA4 property at creation, not later |
-| Tag container | Juan — `GTM-TCHKKB37` | Add Guadalupe as a container administrator |
+| Analytics property | ~~Juan~~ **Done 2026-08-25** — GA4 `doctoracuevillas.com` (`514219489`) now sits in its own account `doctoracuevillas.com` (`406037496`), not in `Make Sense`. Administrators: Juan and `endodracuevillas@gmail.com`. Measurement id `G-2PXQZ6PZNE` | Nothing pending. It was called `make-sense-caf66` inside the agency account until that day, and the name alone cost one investigation into a site that "was not connected" |
+| Search Console | Juan — domain property `sc-domain:doctoracuevillas.com`, DNS-verified | `endodracuevillas@gmail.com` has full permission but is **not** an owner, and no console setting can make her one: on a domain property ownership *is* the DNS verification. She has to verify the domain herself with her own TXT record — steps in `measurement.md` §5. Keep the existing verifying TXT through any DNS or registrar move; removing it silently unverifies the property and breaks the GA4 link |
+| Tag container | Juan — `GTM-TCHKKB37`, in the GTM account `guadacuevillas` (`6370529813`) | Add Guadalupe as a container administrator. Unlike the GA4 property, this one was never inside the agency account |
 | Form receiver | **None** — this site presents no form | n/a |
 | Mailing platform | Juan — EnvíaloSimple, AdministratorID 203816 | Account handover, or export the four lists |
 | Scheduling links | Guadalupe — YouCanBookMe | Already hers |
