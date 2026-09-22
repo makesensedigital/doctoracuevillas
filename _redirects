@@ -34,9 +34,16 @@ https://www.doctoracuevillas.com/*  https://doctoracuevillas.com/:splat  301
 # visitor who lands on it moves and a crawler sees the new address. That is a task with an owner in
 # brief.md, not a line in this file.
 #
-# The retired scheduling page naprofertilitydracuevillas.youcanbook.me is in the same position, and
-# worse: it is still indexed and still shows old prices. It is de-indexed at the provider. NEVER LINK
-# IT FROM HERE — a link would re-establish exactly the signal being removed.
+# CHECKED 2026-09-21: that page still answers 200 with its full content — five sections, its own
+# navigation, and booking buttons pointing at the SAME two youcanbook.me schedulers this site uses.
+# It does not link here. So it is not a stale relic competing for nothing: it is a second live
+# funnel, on a Google-owned domain, taking the same traffic and producing bookings that no number on
+# this site can see. Still an owner task, and still the only place it can be fixed.
+#
+# The retired scheduling page naprofertilitydracuevillas.youcanbook.me was de-indexed at the
+# provider, and as of 2026-09-21 it answers 404 — so the old prices it used to show are gone with
+# it. NEVER LINK IT FROM HERE anyway: a link to a 404 re-establishes the signal being removed and
+# earns a broken link for it.
 #
 # ------------------------------------------------------------------ page URLs
 # Not listed, deliberately, and not needed on any host: every page is a directory index, so
