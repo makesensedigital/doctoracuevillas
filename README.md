@@ -135,7 +135,7 @@ exists — which is how a client's domain becomes claimable by a stranger.
 | Piece | Who owns the account | How it transfers |
 |---|---|---|
 | Domain registrar | Juan | Registrar transfer to an account in Guadalupe's name. **Do this before anything else depends on it** — an unclaimed domain pointing at a dead resource is how a client's name becomes claimable by a stranger |
-| DNS zone | Juan — DonWeb (*Hosting Revendedores*, cliente 41454948), nameservers `ns3/ns4.hostmar.com`; still slated to move to Cloudflare | Carries the GitHub Pages `A` records, the mail stack (SPF/DKIM/DMARC) and the Search Console verifying TXT. `www` CNAMEs to `makesensedigital.github.io`, so it points at the agency until the hosting moves. **Copy every record before switching nameservers** — a dropped TXT unverifies Search Console silently |
+| DNS zone | Juan — DonWeb (*Hosting Revendedores*, cliente 41454948), nameservers `ns3.hostmar.com` and `ns4.hostmar.com` (confirmed in the public zone 2026-09-21); still slated to move to Cloudflare | Carries the GitHub Pages `A` records, the mail stack (SPF/DKIM/DMARC) and the Search Console verifying TXT. `www` CNAMEs to `makesensedigital.github.io`, so it points at the agency until the hosting moves. **Copy every record before switching nameservers** — a dropped TXT unverifies Search Console silently |
 | Domain verification | Juan | Re-verified by whoever holds the hosting account |
 | Repository | `makesensedigital` organisation | Transfer, or fork to Guadalupe's account. The site is nine static files; it does not need the org |
 | Hosting account | `makesensedigital` (GitHub Pages) | The artifact is the repository: transfer the repo and Pages follows |
