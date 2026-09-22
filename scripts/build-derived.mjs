@@ -400,6 +400,28 @@ const robotsTxt = () => {
 //
 // Only pages meant to be found. Anything carrying `noindex` stays out — a sitemap that lists a
 // noindex page sends a crawler two contradictory instructions about the same URL.
+//
+// WHY THERE IS NO <lastmod>, DECIDED 2026-09-21 — and what would reverse it.
+//
+// Google reads `lastmod` and IGNORES `changefreq` and `priority`. So this file emits two fields
+// nothing consumes and omits the one that is read, which looks like an oversight and is not: both
+// honest sources for the date are broken here, and an inaccurate `lastmod` is worse than none —
+// Google discards the signal for the whole site once it stops trusting it.
+//
+//   From git history. Needs full history in CI, which is a gate change (§26 asks first). It also
+//   lands ONE COMMIT BEHIND, permanently: the sitemap is generated and committed BEFORE the commit
+//   whose date it would be claiming, so the file can never carry its own commit's date.
+//
+//   From a content hash. Works, and needs no gate change — but it needs a committed manifest of
+//   route → {hash, date} for `--check` to be deterministic in CI, which is a new file and a new
+//   surface to maintain for a signal worth very little at this size.
+//
+// WITH EIGHT URLS GOOGLE RECRAWLS THE WHOLE SITE OFTEN ENOUGH that the recrawl gain does not pay
+// for either. The two ignored fields stay rather than churn the artifact for no functional change.
+//
+// REVISIT THIS if the site grows past roughly thirty pages, or the day a page has to be recrawled
+// promptly for a reason that matters — a changed consulting-room address, a withdrawn claim.
+// At that point the manifest is the route to take, because it does not touch the gate.
 const sitemapXml = async (pages) => {
   const urls = pages
     .map(
