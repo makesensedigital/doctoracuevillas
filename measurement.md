@@ -195,6 +195,44 @@ why it was indexed before anyone opened the console.
 **GA4 ↔ Search Console:** linked since 2026-08-10, domain property to stream `15415188486`, so search
 queries appear beside behaviour instead of in a separate tab nobody opens.
 
+### 5b. The two "no se indexaron" emails are the architecture working — do not "fix" them
+
+Google has sent two *Nuevos motivos que impiden la indexación* notices, and **neither is a defect.**
+Both are written down here because the notice will arrive again, and the cost of not recording it is
+that the next person re-investigates from nothing — or worse, "corrects" it and breaks canonical
+identity to make a console message go away.
+
+| Notice | Date | What it actually is |
+|---|---|---|
+| *Página alternativa con etiqueta canónica adecuada* | 2026-08-16 | `…/index.html` serves 200 beside `…/`, and carries a canonical to the directory form. Google consolidates them. **"Adecuada" is the console saying the canonical was honoured.** |
+| *Página con redirección* | 2026-09-20 | The `www`, the `http` and the no-trailing-slash forms. Every one is a real 301 to the canonical URL. |
+
+**Why they appear at all:** the property is a **domain** property, `sc-domain:doctoracuevillas.com`,
+which is a strict superset — it covers `http`, `https`, the apex and every subdomain. So Google
+crawls and reports address forms that a URL-prefix property would never have shown. That is the
+price of the DNS route, and the DNS route is still the right one (§5).
+
+Verified against the live site on 2026-09-21, with a Googlebot user agent:
+
+```
+https://doctoracuevillas.com/            200
+https://www.doctoracuevillas.com/        301 → https://doctoracuevillas.com/
+http://doctoracuevillas.com/             301 → https://doctoracuevillas.com/
+http://www.doctoracuevillas.com/         301 → https://doctoracuevillas.com/
+https://doctoracuevillas.com/sobre-mi    301 → https://doctoracuevillas.com/sobre-mi/
+all 8 sitemap URLs                       200, none redirecting
+```
+
+The `www` 301 is served by GitHub Pages from the `CNAME` file, with `www` CNAMEd to
+`makesensedigital.github.io` — see `_redirects`, which says so and explains why the rules in it are
+inert. **Removing any of these redirects to empty the report would mean one page reachable at two
+addresses, which is the thing the redirects exist to prevent.**
+
+What WOULD be a defect, and is worth checking if the notice ever names a URL not in the list above:
+a sitemap URL that redirects, or an internal link written without its trailing slash. Neither exists
+today — every internal `href` on this site is already in canonical form, and the gate's link check
+walks them on a server that mirrors the host's redirect behaviour.
+
 ## 6. Verify before trusting any of it
 
 Neither automatic check GA4 offers is valid here — see Trap 2. Use these:

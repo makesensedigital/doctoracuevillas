@@ -80,11 +80,103 @@ const jsonLd = () => {
   if (facts.offerings && facts.offerings.length) {
     node.makesOffer = facts.offerings.map((o) => {
       const service = { "@type": "Service", name: o.name, description: o.summary };
-      if (o.url) service.url = `${origin}${o.url}`;
+      // An @id, so the door's OWN page can point at this node instead of describing the service a
+      // second time. Two descriptions of one service is the drift this file exists to prevent, and
+      // spread across two documents nothing would ever compare them.
+      if (o.url) {
+        service["@id"] = `${origin}${o.url}#service`;
+        service.url = `${origin}${o.url}`;
+      }
       return { "@type": "Offer", itemOffered: service };
     });
   }
   return JSON.stringify(node, null, 2);
+};
+
+// ------------------------------------------------------------------ per-page structured data
+//
+// WHY EVERY PAGE CARRIES ONE AND NOT ONLY THE HOME PAGE
+//
+// §26: a page is a search result. Each door takes traffic from search and from Instagram without the
+// home page having been read, and until this existed a result for `/fertilidad/` was a URL with no
+// machine-readable relationship to the practitioner the home page describes. Nothing told a crawler
+// — or an assistant answering a question about her — that the two pages are the same practice.
+//
+// NOTHING HERE ASSERTS A NEW FACT, which is the condition for generating it at all:
+//   · the practitioner is REFERENCED by @id, never described a second time;
+//   · a door's service is REFERENCED by the @id its `makesOffer` entry already carries;
+//   · the page's name and description are the ones already written in its own <head>.
+// One place per fact, and `--check` still catches drift in any of them.
+//
+// THE SPECIALTY IS DELIBERATELY NOT REPEATED ONTO THESE NODES. `facts.medicalSpecialty` is the one
+// specialty she is titled in, and stamping it on `/fertilidad/` would quietly widen a claim the
+// brief settled on purpose — see the `especialista` entry in brief.md.
+const PAGE_TYPES = {
+  "/fertilidad/": "MedicalWebPage",
+  "/climaterio/": "MedicalWebPage",
+  "/endocrinologia/": "MedicalWebPage",
+  "/como-es-la-consulta/": "WebPage",
+  "/sobre-mi/": "AboutPage",
+  "/contacto/": "ContactPage",
+  "/privacidad/": "WebPage",
+};
+
+// READ FROM THE DOCUMENT, not declared here. The <title> and the meta description ARE the page's
+// stated identity, written by hand as editorial copy. Restating them in this file would be a second
+// copy of the same sentence, and the pair would drift exactly the way everything else here does not.
+const metaOf = (doc, re) => {
+  const m = doc.match(re);
+  return m ? m[1].replace(/\s+/g, " ").trim() : null;
+};
+const titleOf = (doc) => metaOf(doc, /<title>([\s\S]*?)<\/title>/i);
+const descriptionOf = (doc) =>
+  metaOf(doc, /<meta\b[^>]*\bname="description"[^>]*\bcontent="([^"]*)"/i) ||
+  metaOf(doc, /<meta\b[^>]*\bcontent="([^"]*)"[^>]*\bname="description"/i);
+
+// The short crumb label comes from the navigation, so the breadcrumb and the menu entry can never
+// disagree about what a page is called.
+const crumbLabel = (route, doc) => {
+  const entry = navEntries().find((e) => e.href === route);
+  if (entry) return entry.label;
+  const title = titleOf(doc);
+  return title ? title.split("—")[0].trim() : route;
+};
+
+const pageJsonLd = (route, doc) => {
+  const type = PAGE_TYPES[route];
+  if (!type) return null;
+  const url = `${origin}${route}`;
+  const offering = (facts.offerings || []).find((o) => o.url === route);
+
+  const page = {
+    "@type": type,
+    "@id": `${url}#page`,
+    url,
+    inLanguage: facts.locale,
+    breadcrumb: { "@id": `${url}#breadcrumb` },
+  };
+  const name = titleOf(doc);
+  const description = descriptionOf(doc);
+  if (name) page.name = name;
+  if (description) page.description = description;
+
+  // What the page is about, stated once and BY REFERENCE. A door is about the service the home page
+  // already declares; the editorial pages are about the practitioner herself.
+  page.about = offering ? { "@id": `${url}#service` } : { "@id": `${origin}/#organization` };
+  if (route === "/sobre-mi/") page.mainEntity = { "@id": `${origin}/#organization` };
+
+  const breadcrumb = {
+    "@type": "BreadcrumbList",
+    "@id": `${url}#breadcrumb`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: `${origin}/` },
+      // The last crumb carries no `item`. It is the page being looked at, and pointing it at itself
+      // is the one thing Google's breadcrumb guidance asks you not to do.
+      { "@type": "ListItem", position: 2, name: crumbLabel(route, doc) },
+    ],
+  };
+
+  return JSON.stringify({ "@context": "https://schema.org", "@graph": [page, breadcrumb] }, null, 2);
 };
 
 // ------------------------------------------------------------------ offerings markup
@@ -380,10 +472,21 @@ for (const { file, route } of found) {
   if (!/<meta\s+name="robots"[^>]*content="[^"]*noindex/i.test(text)) pages.push(route);
 
   if (hasBlock(text, "json-ld")) {
+    // The home page carries the practitioner. Every other page carries itself, and points at her.
+    const body = route === "/" ? jsonLd() : pageJsonLd(route, text);
+    // Loud rather than silent: a page that opted into the block with no entry in PAGE_TYPES would
+    // otherwise keep whatever was last written into it, which is indistinguishable from working.
+    if (!body) {
+      throw new Error(
+        `${file} has a json-ld block and no entry in PAGE_TYPES for "${route}"\n` +
+          `      fix: add the route to PAGE_TYPES in scripts/build-derived.mjs, with the schema.org type that is TRUE of that page\n` +
+          `      rule: Handbook §26 (a page is a search result — nothing that has to be found is left without machine-readable identity)`,
+      );
+    }
     text = replaceBlock(
       text,
       "json-ld",
-      `<script type="application/ld+json">\n${jsonLd()
+      `<script type="application/ld+json">\n${body
         .split("\n")
         .map((l) => "  " + l)
         .join("\n")}\n</script>`,
