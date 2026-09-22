@@ -64,10 +64,48 @@ H1 and eleven explicit Markdown links, including identity, services, booking, lo
 - Remaining measured opportunities have zero time savings: unused third-party JavaScript 125.1 KiB
   mobile / 117.7 KiB desktop, unminified first-party JavaScript 5.8 KiB, and CSS 3.6 KiB.
 
+## The deployed measurement, 2026-09-21
+
+The measurement this document left open for six weeks. **It is Lighthouse CLI 12.8.2 run from a
+developer machine against `https://doctoracuevillas.com/`, not PageSpeed Insights**, and the
+difference is worth stating rather than glossing: PSI runs on Google's own infrastructure and, where
+a site has enough traffic, shows **CrUX field data** beside the lab run. This has neither. It is a
+lab measurement of the real deployed revision — which is precisely what was missing, since the
+2026-08-11 "after" column was a local server serving a revision the public URL did not yet have.
+
+| Metric | Mobile | Desktop | Target |
+|---|---:|---:|---:|
+| Performance | **100** | **100** | >= 90 mobile / >= 96 desktop |
+| Accessibility | 100 | 100 | 100 |
+| Best Practices | 100 | 100 | 100 |
+| SEO | 100 | 100 | 100 |
+| FCP | 1.1 s | 0.3 s | <= 1.8 s |
+| LCP | 1.6 s | 0.4 s | <= 2.5 s |
+| TBT | 30 ms | 0 ms | < 100 ms |
+| CLS | 0 | 0 | no regression |
+| Speed Index | 1.1 s | 0.3 s | <= 3.4 s |
+
+Every target is met, and mobile performance is a point above the local-after reading of 99.
+
+**The opportunities that remain are the ones this document already rejected, and they have not
+changed shape.** Recording them so the next run is not re-investigated:
+
+| Audit | Mobile | Desktop | Why it is still open |
+|---|---:|---:|---|
+| `uses-long-cache-ttl` | 10 resources | 10 resources | **The host.** GitHub Pages ignores `_headers`, so everything is served at `max-age=600` and the one-year immutable policy for `/assets/*` cannot be applied. This audit is the clearest measured evidence for the hosting argument in `_headers` and `brief.md` |
+| `unused-javascript` / `cache-insight` | 131 KiB | 130 KiB | Third-party — the tag container and what it loads. Not first-party code, and it is requested only after `load` |
+| `uses-responsive-images` | 7 KiB | 15 KiB | No image codec is installed; adding one needs approval. The saving is small enough that no binary was regenerated to chase it |
+| `unminified-css` | 4 KiB | 4 KiB | First-party, and minifying it adds a build step to a site that deliberately has none |
+| `legacy-javascript` | — | — | Third-party |
+
+Note `interactive` reads 4.0 s on mobile while TBT is 30 ms. That pair is the deferred third-party
+arriving during idle time after the page is already usable — the loading policy working as designed,
+not a regression.
+
 ## Pending, rejected and risks
 
-- **Public after measurement:** pending deployment. Run PageSpeed Insights mobile and desktop after
-  publishing, then replace the local-after column with public PSI results. No deployment was run.
+- ~~**Public after measurement:** pending deployment.~~ **MEASURED 2026-09-21 against the deployed
+  site — see the section below. Every target is met on both form factors.**
 - **Cache headers:** GitHub Pages ignores `_headers`; one-year immutable caching and short HTML TTLs
   cannot be implemented on the current host. Changing host is an explicit owner decision.
 - **Content-hashed assets and Brotli:** implementing these changes the publication pipeline and gate.
