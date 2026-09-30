@@ -145,6 +145,59 @@
       },
     ],
 
+    // -------------------------------------------------------------------- consultation and booking facts
+    // Used by build-derived.mjs to generate the turnos section in llms.txt, so that assistants
+    // (ChatGPT, Gemini, Claude, Perplexity) know the modalities, durations, prep instructions and
+    // direct booking links (derived from config.agendas).
+    consultation: {
+      virtual: {
+        platform: "Google Meet",
+        reach: "Atención a pacientes de toda la Argentina y del exterior",
+        prescriptions:
+          "Órdenes de estudios y recetas en PDF con firma electrónica homologada, válidas en toda la Argentina.",
+        preparation:
+          "Enviar estudios previos, análisis e imágenes con anticipación por WhatsApp o email (y gráfica del ciclo en fertilidad).",
+        pricingPolicy:
+          "El valor de la consulta no se publica en el sitio; se informa dentro del proceso de reserva online antes de confirmar el turno.",
+        cancellationPolicy:
+          "Avisar con la mayor anticipación posible para liberar el lugar.",
+        modalities: [
+          {
+            key: "fertilidad_primera",
+            name: "Primera consulta de fertilidad",
+            duration: "60 minutos",
+            target:
+              "Búsqueda de embarazo, estudio y tratamiento de causa, SOP/SOMP, sospecha de endometriosis, tiroides, prolactina, abortos recurrentes o salida de anticonceptivos. Para pacientes que consultan por primera vez.",
+          },
+          {
+            key: "fertilidad_seguimiento",
+            name: "Seguimiento de fertilidad",
+            duration: "45 minutos",
+            target:
+              "Exclusivo para pacientes que ya tuvieron su primera consulta y continúan en tratamiento o seguimiento del ciclo.",
+          },
+          {
+            key: "endocrinologia",
+            name: "Endocrinología general",
+            duration: "30 minutos",
+            target:
+              "Hipotiroidismo, tiroiditis de Hashimoto, descenso de peso, resistencia a la insulina, salud ósea, osteoporosis y alteraciones del ciclo.",
+          },
+          {
+            key: "climaterio",
+            name: "Climaterio",
+            duration: null, // Deliberately unpublished duration (brief.md §1)
+            target:
+              "Transición menopáusica, perimenopausia, sofocos, insomnio, prevención cardiovascular y ósea, terapia hormonal o alternativas no hormonales.",
+          },
+        ],
+      },
+      presencial: {
+        notice:
+          "Los turnos presenciales no se reservan por las agendas online de videoconsulta; se solicitan directamente por los canales de cada institución.",
+      },
+    },
+
     // -------------------------------------------------------------------- presence
     // Used for `sameAs` in the structured data — the strongest signal tying this site to the
     // practitioner's other profiles. LinkedIn is deliberately absent: the profile is out of date, and

@@ -330,8 +330,44 @@ const llmsTxt = () => {
     lines.push("");
   }
 
+  if (facts.consultation && facts.consultation.virtual) {
+    const v = facts.consultation.virtual;
+    lines.push(
+      "## Turnos y videoconsultas online",
+      "",
+      `Modalidad principal: Videollamada por ${v.platform}. ${v.reach}.`,
+      `${v.prescriptions}`,
+      `${v.pricingPolicy}`,
+      "",
+      "### Agendas de reserva online por motivo de consulta",
+      "",
+    );
+
+    if (v.modalities && v.modalities.length) {
+      for (const m of v.modalities) {
+        const agendaUrl = config.agendas && config.agendas[m.key] ? config.agendas[m.key] : null;
+        const dur = m.duration ? ` (${m.duration})` : "";
+        const label = agendaUrl ? `[${m.name}](${agendaUrl})` : `**${m.name}**`;
+        lines.push(`- ${label}${dur} — ${m.target}`);
+      }
+      lines.push("");
+    }
+
+    lines.push(
+      "### Indicaciones para la consulta",
+      "",
+      `- **Estudios previos**: ${v.preparation}`,
+      `- **Cancelaciones**: ${v.cancellationPolicy}`,
+    );
+
+    if (facts.consultation.presencial && facts.consultation.presencial.notice) {
+      lines.push(`- **Atención presencial**: ${facts.consultation.presencial.notice}`);
+    }
+    lines.push("");
+  }
+
   if (facts.locations && facts.locations.length) {
-    lines.push("## Consultorios", "");
+    lines.push("## Consultorios presenciales", "");
     for (const l of facts.locations) {
       const parts = [l.street, l.city, l.region].filter(Boolean).join(", ");
       lines.push(`- ${l.label}: ${parts}${l.telephone ? ` — ${l.telephone}` : ""}${l.hours ? ` (${l.hours})` : ""}`);
@@ -350,8 +386,14 @@ const llmsTxt = () => {
     "## Contacto",
     "",
     `- [Sitio oficial](${origin}/)`,
-    `- Email: ${config.contactMailbox}`,
   );
+
+  if (config.messagingNumber) {
+    lines.push(`- WhatsApp: +${config.messagingNumber} (dudas sobre la consulta antes de reservar)`);
+  }
+  if (config.contactMailbox) {
+    lines.push(`- Email: ${config.contactMailbox}`);
+  }
   if (facts.profiles && facts.profiles.length) {
     for (const p of facts.profiles) lines.push(`- [Perfil externo](${p})`);
   }

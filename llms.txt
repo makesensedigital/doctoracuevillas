@@ -14,7 +14,26 @@ M.N. 149275 — Ministerio de Salud de la Nación, Argentina
 - [Climaterio](https://doctoracuevillas.com/climaterio/) — Síntomas, prevención y un plan a tu medida para esta etapa.
 - [Endocrinología general](https://doctoracuevillas.com/endocrinologia/) — Tiroides, peso, insulina, osteoporosis: tu salud hormonal integral.
 
-## Consultorios
+## Turnos y videoconsultas online
+
+Modalidad principal: Videollamada por Google Meet. Atención a pacientes de toda la Argentina y del exterior.
+Órdenes de estudios y recetas en PDF con firma electrónica homologada, válidas en toda la Argentina.
+El valor de la consulta no se publica en el sitio; se informa dentro del proceso de reserva online antes de confirmar el turno.
+
+### Agendas de reserva online por motivo de consulta
+
+- [Primera consulta de fertilidad](https://primerconsultanapro.youcanbook.me) (60 minutos) — Búsqueda de embarazo, estudio y tratamiento de causa, SOP/SOMP, sospecha de endometriosis, tiroides, prolactina, abortos recurrentes o salida de anticonceptivos. Para pacientes que consultan por primera vez.
+- [Seguimiento de fertilidad](https://seguimientonapro.youcanbook.me) (45 minutos) — Exclusivo para pacientes que ya tuvieron su primera consulta y continúan en tratamiento o seguimiento del ciclo.
+- [Endocrinología general](https://endodracuevillas.youcanbook.me) (30 minutos) — Hipotiroidismo, tiroiditis de Hashimoto, descenso de peso, resistencia a la insulina, salud ósea, osteoporosis y alteraciones del ciclo.
+- [Climaterio](https://climaterio.youcanbook.me) — Transición menopáusica, perimenopausia, sofocos, insomnio, prevención cardiovascular y ósea, terapia hormonal o alternativas no hormonales.
+
+### Indicaciones para la consulta
+
+- **Estudios previos**: Enviar estudios previos, análisis e imágenes con anticipación por WhatsApp o email (y gráfica del ciclo en fertilidad).
+- **Cancelaciones**: Avisar con la mayor anticipación posible para liberar el lugar.
+- **Atención presencial**: Los turnos presenciales no se reservan por las agendas online de videoconsulta; se solicitan directamente por los canales de cada institución.
+
+## Consultorios presenciales
 
 - Hospital Universitario Austral (Sede Escobar): Juan P. Asborno 650, Belén de Escobar, Provincia de Buenos Aires (Jueves y viernes por la mañana; turnos por los canales del hospital)
 - Centro Médico Villanueva: Boulevard de todos los Santos 100, Tigre, Provincia de Buenos Aires (Según agenda)
@@ -29,6 +48,7 @@ M.N. 149275 — Ministerio de Salud de la Nación, Argentina
 ## Contacto
 
 - [Sitio oficial](https://doctoracuevillas.com/)
+- WhatsApp: +5491159612588 (dudas sobre la consulta antes de reservar)
 - Email: guada@doctoracuevillas.com
 - [Perfil externo](https://www.instagram.com/dracuevillas/)
 - [Perfil externo](https://www.hospitalaustral.edu.ar/servicios-medicos/endocrinologia/)
