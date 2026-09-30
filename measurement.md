@@ -146,6 +146,21 @@ worse than no figure, and the history cannot be recomputed once it exists.
 storage. Returning-visitor counts and attribution are therefore wrong in a known direction: sessions
 over-counted, returns under-counted. Read trends and pairs, never absolutes.
 
+**Second known bias, found 2026-09-21: there is a booking funnel this site cannot see at all.** The
+predecessor page `sites.google.com/view/naprofertility` is still live, still complete, and its two
+booking buttons point at `primerconsultanapro` and `seguimientonapro` — the **same** schedulers
+`config.agendas` uses. A patient can arrive there from search, book, and never touch
+`doctoracuevillas.com`.
+
+So `agenda_intent` is a **floor on demand, not a measure of it**, and the gap is not estimable from
+here: YouCanBookMe reports nothing back, and both funnels land in the same calendar with no field
+saying which one sent them. Do not read a flat `agenda_intent` as flat demand while that page is up.
+
+The one place the gap becomes visible is the scheduler's own side. If the two funnels ever need to be
+told apart before the old page comes down, it is done there — a distinguishing question or a separate
+booking page for the old site — never by inferring it from a number on this one. Closing the page is
+the owner task in `brief.md`, and it fixes the measurement as a side effect of fixing the traffic.
+
 ## 5. Search Console — done, by DNS
 
 The **domain property** `sc-domain:doctoracuevillas.com` is verified by the TXT record

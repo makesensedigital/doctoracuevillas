@@ -88,12 +88,32 @@ the markup because that is where the document had it is how a published contradi
 | The one-line description, the "what we do" paragraph | `facts.js` → `tagline`, `description` |
 | Services or products | `facts.js` → `offerings[]` |
 | Addresses, telephones, opening hours | `facts.js` → `locations[]` |
+| Consultation modalities, durations, prep instructions | `facts.js` → `consultation` |
+| Booking platform URLs (schedulers) | `config.js` → `agendas` |
 | Social profiles | `facts.js` → `profiles[]` |
 | Hero headline, section copy | `index.html` |
 | Page title and meta description | `index.html`, in the head |
 | Legal and privacy text | `privacy.html` |
 
 Then `node scripts/build-derived.mjs`, and the gate will tell you if anything drifted.
+
+### Machine-readable summary (`llms.txt`) and AI assistants
+
+AI tools (ChatGPT, Gemini, Claude, Perplexity) crawl the site and read `llms.txt` to answer questions
+from patients looking for appointments or specialist care. To keep assistants accurate and directing
+patients to the right scheduler without hand-editing:
+
+- **URLs stay in `config.js`**: `config.agendas` holds each provider URL (`fertilidad_primera`,
+  `fertilidad_seguimiento`, `endocrinologia`, `climaterio`).
+- **Clinical and booking facts stay in `facts.js`**: `facts.consultation` holds durations, target
+  audiences, prep instructions (sending tests in advance), and pricing/cancellation policies.
+- **`llms.txt` is derived**: `node scripts/build-derived.mjs` generates `llms.txt`. Never edit it by hand;
+  `node scripts/build-derived.mjs --check` fails the gate on any manual drift.
+
+Whenever an agenda URL or consultation policy changes:
+1. Update `config.agendas` and/or `facts.consultation`.
+2. Run `node scripts/build-derived.mjs` to regenerate `llms.txt`.
+3. Verify with `node scripts/test-gate.mjs`.
 
 If the document carries a fact that fits no field, that is a question rather than a licence to put
 it loose in the markup — and if it conflicts with a rule, see *Input from outside this repository*
