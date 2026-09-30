@@ -21,7 +21,7 @@
 // expressed. What replaces it is the defect that actually threatens this site: a form appearing on a
 // page with nothing behind it.
 
-import { cp, mkdtemp, rm, readFile, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, rm, readFile, writeFile } from "node:fs/promises";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { tmpdir } from "node:os";
@@ -285,6 +285,37 @@ const FIXTURES = [
     check: "build-derived.mjs",
     args: ["--check"],
     apply: (dir) => edit(dir, "contacto/index.html", "M.N. 149275", "M.N. 000000"),
+  },
+  {
+    // The PER-PAGE structured data, derived from the page's own <head>. A hand-edit here points a
+    // door at a service node that does not exist, and nothing on the rendered page looks wrong:
+    // the page reads correctly to a person and says something false to every crawler and assistant.
+    name: "a door's structured data hand-edited away from its own head",
+    check: "build-derived.mjs",
+    args: ["--check"],
+    apply: (dir) =>
+      edit(
+        dir,
+        "fertilidad/index.html",
+        '"@id": "https://doctoracuevillas.com/fertilidad/#service"',
+        '"@id": "https://doctoracuevillas.com/otra-cosa/#service"',
+      ),
+  },
+  {
+    // The failure path added with PAGE_TYPES, tested because a check that has never failed on
+    // purpose is not known to work. A page that opts into the block and receives nothing would
+    // otherwise keep whatever was last written into it, which reads exactly like a page that works.
+    name: "a page opting into structured data with no type declared for its route",
+    check: "build-derived.mjs",
+    args: ["--check"],
+    apply: async (dir) => {
+      await mkdir(join(dir, "turnos"), { recursive: true });
+      await writeFile(
+        join(dir, "turnos", "index.html"),
+        await readFile(join(dir, "privacidad", "index.html"), "utf8"),
+        "utf8",
+      );
+    },
   },
 ];
 
